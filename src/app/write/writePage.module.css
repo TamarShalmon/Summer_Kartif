@@ -1,0 +1,133 @@
+.container{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.select{
+  margin-bottom: 50px;
+  padding: 10px 20px;
+  margin-left: 50px;
+  width: max-content;
+}
+
+.editor {
+  display: flex;
+  gap: 20px;
+  height: 200px;
+  position: relative;
+}
+
+.button,
+.addButton {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: transparent;
+  border: 1px solid var(--textColor);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.addButton {
+  border-color: #1a8917;
+}
+
+.add {
+  display: flex;
+  gap: 20px;
+  background-color: var(--bg);
+  position: absolute;
+  z-index: 999;
+  width: 100%;
+  left: 50px;
+}
+
+.input{
+  padding: 50px;
+  font-size: 64px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: var(--textColor);
+}
+
+.input::placeholder{
+  color: #b3b3b1;
+}
+
+.textArea {
+  width: 100%;
+}
+
+.publish{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #1a8917;
+  color: white;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
+
+.uploadButton {
+  height: 12rem; /* Equivalent to h-48 */
+  border: 2px dotted; /* Equivalent to border-2 and border-dotted */
+  margin-top: 1rem; /* Equivalent to mt-4 */
+  display: grid; /* Equivalent to grid */
+  place-items: center; /* Equivalent to place-items-center */
+  background-color: #f1f5f9; /* Equivalent to bg-slate-100 */
+  border-radius: 0.375rem; /* Equivalent to rounded-md */
+  position: relative; /* Equivalent to relative */
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.disabled {
+  pointer-events: none; /* Equivalent to pointer-events-none */
+  opacity: 0.5; /* Makes the button appear disabled */
+}
+
+.iconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.uploadedImage {
+  position: absolute; /* Equivalent to absolute */
+  object-fit: cover; /* Equivalent to object-cover */
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0; /* Equivalent to inset-0 */
+}
+
+
+
+
+.removeIimageButton {
+  padding: 0.5rem 1rem; /* Equivalent to py-2 px-4 */
+  border-radius: 0.375rem; /* Equivalent to rounded-md */
+  font-weight: bold; /* Equivalent to font-bold */
+  width: fit-content; /* Equivalent to w-fit */
+  background-color: #dc2626; /* Equivalent to bg-red-600 */
+  color: white; /* Equivalent to text-white */
+  margin-bottom: 1rem; /* Equivalent to mb-4 */
+  border: none; /* Ensures no default border */
+  cursor: pointer; /* Adds a pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
+.removeIimageButton:hover {
+  background-color: #b91c1c; /* Darkens the background on hover */
+}
+
+.removeIimageButton:active {
+  background-color: #7f1d1d; /* Further darkens the background on click */
+}
