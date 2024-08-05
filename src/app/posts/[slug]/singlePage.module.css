@@ -1,3 +1,7 @@
+.container {
+  margin-top: 50px;
+}
+
 .infoContainer {
   display: flex;
   align-items: center;
@@ -62,10 +66,41 @@
   margin-top: 60px;
 }
 
-.description p {
+.description {
   font-size: 20px;
   font-weight: 300;
   margin-bottom: 20px;
+}
+
+.additionalImages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.additionalImageContainer {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.additionalImageContainer:hover {
+  transform: scale(1.05);
+}
+
+.additionalImage {
+  object-fit: cover;
+}
+
+.loading {
+  text-align: center;
+  font-size: 24px;
+  margin-top: 50px;
 }
 
 @media screen and (max-width: 1536px) {
@@ -73,22 +108,25 @@
     font-size: 54px;
   }
 }
+
 @media screen and (max-width: 1280px) {
   .title {
     font-size: 48px;
   }
 }
+
 @media screen and (max-width: 1024px) {
   .imageContainer {
     display: none;
   }
 }
+
 @media screen and (max-width: 640px) {
   .title {
     font-size: 36px;
   }
 
-  .description p{
+  .description {
     font-size: 18px;
   }
 }

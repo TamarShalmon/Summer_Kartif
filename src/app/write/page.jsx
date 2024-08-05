@@ -140,31 +140,6 @@ const WritePage = () => {
       <div className={styles.editor}>
 
 
-
-        {/* <button className={styles.button} onClick={() => setOpen(!open)}>
-          <Image src="/plus.png" alt="" width={16} height={16} />
-        </button>
-        {open && (
-          <div className={styles.add}>
-            <input
-              type="file"
-              id="image"
-              onChange={(e) => setFile(e.target.files[0])}
-              style={{ display: "none" }}
-            />
-            <button className={styles.addButton}>
-              <label htmlFor="image">
-                <Image src="/image.png" alt="" width={16} height={16} />
-              </label>
-            </button>
-            <button className={styles.addButton}>
-              <Image src="/external.png" alt="" width={16} height={16} />
-            </button>
-            <button className={styles.addButton}>
-              <Image src="/video.png" alt="" width={16} height={16} />
-            </button>
-          </div>
-        )} */}
         <ReactQuill
           className={styles.textArea}
           theme="bubble"
