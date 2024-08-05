@@ -1,6 +1,4 @@
-"use client";
-
-
+"use client"
 import Image from "next/image";
 import styles from "./writePage.module.css";
 import { useEffect, useState } from "react";
@@ -27,6 +25,9 @@ const WritePage = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [publicId, setPublicId] = useState("");
 
+
+  const [images, setImages] = useState([]);
+  const [mainImageIndex, setMainImageIndex] = useState(0);
 
   useEffect(() => {
     const uploadToCloudinary = async () => {
@@ -82,7 +83,8 @@ const WritePage = () => {
       body: JSON.stringify({
         title,
         desc: value,
-        img: imageUrl,
+        mainImage: images[mainImageIndex]?.url,
+        additionalImages: images.map(img => img.url),
         slug: slugify(title),
         catSlug: catSlug || "style", // If not selected, choose the general category
       }),
@@ -97,41 +99,30 @@ const WritePage = () => {
 
 
   const handleImageUpload = (result) => {
-    console.log("result: ", result);
     const info = result.info;
-
-
     if ("secure_url" in info && "public_id" in info) {
       const url = info.secure_url;
       const public_id = info.public_id;
-      setImageUrl(url);
-      setPublicId(public_id);
-      console.log("url: ", url);
-      console.log("public_id: ", public_id);
+      setImages(prev => [...prev, { url, public_id }]);
     }
   };
 
 
 
-  const removeImage = async (e) => {
-    e.preventDefault();
 
-
-    try {
-      const res = await fetch("api/removeImage", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ publicId }),
-      });
-
-
-      if (res.ok) {
-        setImageUrl("");
-        setPublicId("");
-      }
-    } catch (error) {
-      console.log(error);
+  const removeImage = (index) => {
+    setImages(prev => prev.filter((_, i) => i !== index));
+    if (mainImageIndex === index) {
+      setMainImageIndex(0);
+    } else if (mainImageIndex > index) {
+      setMainImageIndex(prev => prev - 1);
     }
+  };
+
+
+
+  const setMainImage = (index) => {
+    setMainImageIndex(index);
   };
 
 
@@ -168,35 +159,28 @@ const WritePage = () => {
       </div>
 
 
-      <CldUploadButton
-        uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
-        className={`${styles.uploadButton} ${imageUrl ? styles.disabled : ''}`}
-        onSuccess={handleImageUpload} // Update to use onSuccess
-      >
-        <div className={styles.iconContainer}>
-          <Image src="/image.png" alt="" width={16} height={16} />
-        </div>
-
-
-        {imageUrl && (
-          <Image
-            src={imageUrl}
-            fill
-            className={styles.uploadedImage}
-            alt={title}
-          />
-        )}
-      </CldUploadButton>
-
-
-      {publicId && (
-        <button
-          onClick={removeImage}
-          className={styles.removeIimageButton}
+      <div className={styles.imageUploadSection}>
+        <CldUploadButton
+          uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
+          onSuccess={handleImageUpload}
+          disabled={images.length >= 10}
         >
-          Remove Image
-        </button>
-      )}
+          Upload Image (Max 10)
+        </CldUploadButton>
+
+
+        <div className={styles.imagePreviewContainer}>
+          {images.map((image, index) => (
+            <div key={image.public_id} className={styles.imagePreview}>
+              <Image src={image.url} alt="" width={100} height={100} />
+              <button onClick={() => removeImage(index)}>Remove</button>
+              <button onClick={() => setMainImage(index)} disabled={index === mainImageIndex}>
+                {index === mainImageIndex ? 'Main Image' : 'Set as Main'}
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
 
 
       <button className={styles.publish} onClick={handleSubmit}>
@@ -206,5 +190,5 @@ const WritePage = () => {
   );
 };
 
-
 export default WritePage;
+
