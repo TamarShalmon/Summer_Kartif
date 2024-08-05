@@ -50,7 +50,7 @@ model User {
 }
 
 model VerificationToken {
-  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
   identifier String
   token      String   @unique
   expires    DateTime
@@ -67,18 +67,19 @@ model Category {
 }
 
 model Post {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt DateTime  @default(now())
-  slug      String    @unique
-  title     String
-  desc      String
-  img       String?
-  views     Int       @default(0)
-  catSlug   String
-  cat       Category  @relation(fields: [catSlug], references: [slug])
-  userEmail String
-  user      User      @relation(fields: [userEmail], references: [email])
-  comments  Comment[]
+  id               String    @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt        DateTime  @default(now())
+  slug             String    @unique
+  title            String
+  desc             String
+  img              String?
+  additionalImages String[]
+  views            Int       @default(0)
+  catSlug          String
+  cat              Category  @relation(fields: [catSlug], references: [slug])
+  userEmail        String
+  user             User      @relation(fields: [userEmail], references: [email])
+  comments         Comment[]
 }
 
 model Comment {
