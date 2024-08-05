@@ -1,3 +1,4 @@
+
 import Menu from "@/components/Menu/Menu";
 import styles from "./singlePage.module.css";
 import Image from "next/image";
@@ -48,11 +49,11 @@ const SinglePage = async ({ params }) => {
             </div>
           </div>
         </div>
-        <div className={styles.imageContainer}>
-          {data?.img && (
+        {data?.img && (
+          <div className={styles.imageContainer}>
             <Image src={data.img} alt="" fill className={styles.image} />
-          )}
-        </div>
+          </div>
+        )}
       </div>
       <div className={styles.content}>
         <div className={styles.post}>
@@ -60,13 +61,6 @@ const SinglePage = async ({ params }) => {
             className={styles.description}
             dangerouslySetInnerHTML={{ __html: data?.desc }}
           />
-          {data?.additionalImages && data.additionalImages.length > 0 && (
-            <div className={styles.additionalImages}>
-              {data.additionalImages.map((img, index) => (
-                <Image key={index} src={img} alt="" width={200} height={200} className={styles.additionalImage} />
-              ))}
-            </div>
-          )}
           <div className={styles.comment}>
             <Comments postSlug={slug} />
           </div>
@@ -76,5 +70,6 @@ const SinglePage = async ({ params }) => {
     </div>
   );
 };
+
 
 export default SinglePage;

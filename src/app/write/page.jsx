@@ -1,5 +1,6 @@
 "use client";
 
+
 import Image from "next/image";
 import styles from "./writePage.module.css";
 import { useEffect, useState } from "react";
@@ -7,17 +8,64 @@ import "react-quill/dist/quill.bubble.css";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import ReactQuill from "react-quill";
-import { CldUploadButton } from "next-cloudinary";
+import { CldUploadButton } from "next-cloudinary"
+
 
 const WritePage = () => {
   const { status } = useSession();
   const router = useRouter();
 
+
+  const [open, setOpen] = useState(false);
+  const [file, setFile] = useState(null);
+  const [media, setMedia] = useState("");
   const [value, setValue] = useState("");
   const [title, setTitle] = useState("");
   const [catSlug, setCatSlug] = useState("");
 
-  const [images, setImages] = useState([]);
+
+  const [imageUrl, setImageUrl] = useState("");
+  const [publicId, setPublicId] = useState("");
+
+
+  useEffect(() => {
+    const uploadToCloudinary = async () => {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "your_upload_preset"); // Set your upload preset
+
+
+      try {
+        const response = await fetch(
+          "https://api.cloudinary.com/v1_1/your_cloud_name/image/upload", // Use your Cloudinary cloud name
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+        const data = await response.json();
+        setMedia(data.secure_url);
+      } catch (error) {
+        console.error("Error uploading to Cloudinary", error);
+      }
+    };
+
+
+    if (file) {
+      uploadToCloudinary();
+    }
+  }, [file]);
+
+
+  if (status === "loading") {
+    return <div className={styles.loading}>Loading...</div>;
+  }
+
+
+  if (status === "unauthenticated") {
+    router.push("/");
+  }
+
 
   const slugify = (str) =>
     str
@@ -27,18 +75,19 @@ const WritePage = () => {
       .replace(/[\s_-]+/g, "-")
       .replace(/^-+|-+$/g, "");
 
+
   const handleSubmit = async () => {
     const res = await fetch("/api/posts", {
       method: "POST",
       body: JSON.stringify({
         title,
         desc: value,
-        img: images.length > 0 ? images[0].url : null,
-        additionalImages: images.slice(1, 4).map(img => img.url),
+        img: imageUrl,
         slug: slugify(title),
-        catSlug: catSlug || "style",
+        catSlug: catSlug || "style", // If not selected, choose the general category
       }),
     });
+
 
     if (res.status === 200) {
       const data = await res.json();
@@ -46,36 +95,46 @@ const WritePage = () => {
     }
   };
 
+
   const handleImageUpload = (result) => {
+    console.log("result: ", result);
     const info = result.info;
+
+
     if ("secure_url" in info && "public_id" in info) {
-      setImages(prev => [...prev, { url: info.secure_url, publicId: info.public_id }].slice(0, 4));
+      const url = info.secure_url;
+      const public_id = info.public_id;
+      setImageUrl(url);
+      setPublicId(public_id);
+      console.log("url: ", url);
+      console.log("public_id: ", public_id);
     }
   };
 
-  const removeImage = async (publicId) => {
+
+
+  const removeImage = async (e) => {
+    e.preventDefault();
+
+
     try {
-      const res = await fetch("/api/removeImage", {
+      const res = await fetch("api/removeImage", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ publicId }),
       });
 
+
       if (res.ok) {
-        setImages(prev => prev.filter(img => img.publicId !== publicId));
+        setImageUrl("");
+        setPublicId("");
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  if (status === "loading") {
-    return <div className={styles.loading}>Loading...</div>;
-  }
 
-  if (status === "unauthenticated") {
-    router.push("/");
-  }
 
   return (
     <div className={styles.container}>
@@ -97,6 +156,7 @@ const WritePage = () => {
         <option value="coding">coding</option>
       </select>
       <div className={styles.editor}>
+
         <ReactQuill
           className={styles.textArea}
           theme="bubble"
@@ -104,25 +164,40 @@ const WritePage = () => {
           onChange={setValue}
           placeholder="Tell your story..."
         />
+
       </div>
 
-      <div className={styles.imageUploadContainer}>
-        {images.map((image, index) => (
-          <div key={image.publicId} className={styles.imagePreview}>
-            <Image src={image.url} alt="" width={100} height={100} />
-            <button onClick={() => removeImage(image.publicId)}>Remove</button>
-          </div>
-        ))}
-        {images.length < 4 && (
-          <CldUploadButton
-            uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
-            className={styles.uploadButton}
-            onSuccess={handleImageUpload}
-          >
-            <Image src="/image.png" alt="" width={32} height={32} />
-          </CldUploadButton>
+
+      <CldUploadButton
+        uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
+        className={`${styles.uploadButton} ${imageUrl ? styles.disabled : ''}`}
+        onSuccess={handleImageUpload} // Update to use onSuccess
+      >
+        <div className={styles.iconContainer}>
+          <Image src="/image.png" alt="" width={16} height={16} />
+        </div>
+
+
+        {imageUrl && (
+          <Image
+            src={imageUrl}
+            fill
+            className={styles.uploadedImage}
+            alt={title}
+          />
         )}
-      </div>
+      </CldUploadButton>
+
+
+      {publicId && (
+        <button
+          onClick={removeImage}
+          className={styles.removeIimageButton}
+        >
+          Remove Image
+        </button>
+      )}
+
 
       <button className={styles.publish} onClick={handleSubmit}>
         Publish
@@ -130,5 +205,6 @@ const WritePage = () => {
     </div>
   );
 };
+
 
 export default WritePage;

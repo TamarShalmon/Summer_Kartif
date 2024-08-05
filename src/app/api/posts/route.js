@@ -47,12 +47,6 @@ export const GET = async (req) => {
 
 
 
-
-
-
-
-
-
 // CREATE A POST
 export const POST = async (req) => {
   const session = await getAuthSession();
@@ -66,11 +60,7 @@ export const POST = async (req) => {
   try {
     const body = await req.json();
     const post = await prisma.post.create({
-      data: { 
-        ...body, 
-        userEmail: session.user.email,
-        img: body.img || null,
-        additionalImages: body.additionalImages || [],       },
+      data: { ...body, userEmail: session.user.email },
     });
 
     return new NextResponse(JSON.stringify(post, { status: 200 }));
