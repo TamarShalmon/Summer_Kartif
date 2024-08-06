@@ -27,6 +27,9 @@
     "swr": "^2.2.2"
   },
   "devDependencies": {
-    "prisma": "^5.17.0"
+    "@types/node": "^22.1.0",
+    "@types/react": "^18.3.3",
+    "prisma": "^5.17.0",
+    "typescript": "^5.5.4"
   }
 }
