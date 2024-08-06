@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images:{
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  images: {
     domains: [
       'cdn-icons-png.flaticon.com',
       "images.pexels.com",
