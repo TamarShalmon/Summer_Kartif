@@ -163,9 +163,8 @@ const WritePage = () => {
         <CldUploadButton
           uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
           onSuccess={handleImageUpload}
-          disabled={images.length >= 10}
         >
-          Upload Image (Max 10)
+          Upload Image
         </CldUploadButton>
 
 
