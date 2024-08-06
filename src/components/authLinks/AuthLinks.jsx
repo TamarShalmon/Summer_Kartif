@@ -13,15 +13,15 @@ const AuthLinks = () => {
     <>
       {status === "unauthenticated" ? (
         <Link href="/login" className={styles.link}>
-          Login
+          התחבר
         </Link>
       ) : (
         <>
           <Link href="/write" className={styles.link}>
-            Write
+            פרסם המלצה 
           </Link>
           <span className={styles.link} onClick={signOut}>
-            Logout
+            התנתק
           </span>
         </>
       )}

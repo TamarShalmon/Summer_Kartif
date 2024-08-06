@@ -19,6 +19,7 @@ const nextConfig = {
       "firebasestorage.googleapis.com/",
       "mnirvana.co.il",
       "res.cloudinary.com",
+      "img.freepik.com",
     ],
   }
 }

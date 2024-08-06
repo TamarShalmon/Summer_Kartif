@@ -13,8 +13,7 @@ const getData = async () => {
     throw new Error("Failed to fetch data");
   }
 
-  const data = await res.json();
-  return data;
+  return res.json();
 };
 
 const CategoryList = () => {
@@ -23,48 +22,37 @@ const CategoryList = () => {
 
   useEffect(() => {
     getData()
-      .then((data) => {
-        console.log("Fetched data:", data);
-        setData(data);
-      })
+      .then(setData)
       .catch((error) => {
         console.error("Error fetching data:", error);
         setError(error);
       });
   }, []);
 
-  if (error) {
-    return <div>Error loading categories</div>;
-  }
-
-  if (!data) {
-    return <div>Loading...</div>;
-  }
-
-  if (!Array.isArray(data)) {
-    return <div>Data is not an array</div>;
-  }
+  if (error) return <div>Error loading categories</div>;
+  if (!data) return <div>Loading...</div>;
+  if (!Array.isArray(data)) return <div>Data is not an array</div>;
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>קטגוריות</h1>
+      {/* <h1 className={styles.title}>קטגוריות מומלצות</h1> */}
       <div className={styles.categories}>
         {data.map((item, index) => (
           <Link
             href={`/blog?cat=${item.slug}`}
-            className={`${styles.category} ${styles[item.slug]}`}
+            className={styles.category}
             key={`${item._id}-${index}`}
           >
             {item.img && (
               <Image
-                src={item.img}
+                src={`${item.img}`}
                 alt=""
-                width={32}
-                height={32}
+                width={300}
+                height={200}
                 className={styles.image}
               />
             )}
-            {item.title}
+            <span className={styles.categoryTitle}>{item.title}</span>
           </Link>
         ))}
       </div>
