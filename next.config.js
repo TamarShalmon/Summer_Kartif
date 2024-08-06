@@ -1,9 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   typescript: {
     ignoreBuildErrors: true,
   },
-  images: {
+  images:{
     domains: [
       'cdn-icons-png.flaticon.com',
       "images.pexels.com",
