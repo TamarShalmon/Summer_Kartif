@@ -6,6 +6,9 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  experimental: {
+    serverComponentsExternalPackages: ["@prisma/client"],
+  },
   images:{
     domains: [
       'cdn-icons-png.flaticon.com',
