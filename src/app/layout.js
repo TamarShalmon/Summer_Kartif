@@ -5,8 +5,13 @@ import Footer from "@/components/footer/Footer";
 import { ThemeContextProvider } from "@/context/ThemeContext";
 import ThemeProvider from "@/providers/ThemeProvider";
 import AuthProvider from "@/providers/AuthProvider";
+import { Fredoka } from 'next/font/google'
 
-const inter = Inter({ subsets: ["latin"] });
+const fredoka = Fredoka({
+  subsets: ['latin'],
+  weight: ['300'],
+  variable: '--font-fredoka',
+})
 
 export const metadata = {
   title: "Lama Dev Blog App",
@@ -15,8 +20,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="he" dir="rtl" className={fredoka.variable}>
+      <body className={fredoka.className}>
         <AuthProvider>
           <ThemeContextProvider>
             <ThemeProvider>

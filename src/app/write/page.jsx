@@ -65,6 +65,7 @@ const WritePage = () => {
 
   if (status === "unauthenticated") {
     router.push("/");
+    router.refresh("/");
   }
 
 
@@ -86,7 +87,7 @@ const WritePage = () => {
         mainImage: images[mainImageIndex]?.url,
         additionalImages: images.map(img => img.url),
         slug: slugify(title),
-        catSlug: catSlug || "style", // If not selected, choose the general category
+        catSlug: catSlug || "מסעדות", // If not selected, choose the general category
       }),
     });
 
@@ -94,6 +95,7 @@ const WritePage = () => {
     if (res.status === 200) {
       const data = await res.json();
       router.push(`/posts/${data.slug}`);
+      router.refresh("/")
     }
   };
 
@@ -139,12 +141,14 @@ const WritePage = () => {
         className={styles.select}
         onChange={(e) => setCatSlug(e.target.value)}
       >
-        <option value="style">style</option>
-        <option value="fashion">fashion</option>
-        <option value="food">food</option>
-        <option value="culture">culture</option>
-        <option value="travel">travel</option>
-        <option value="coding">coding</option>
+        <option value="בריכות">בריכות</option>
+        <option value="מעיינות">מעיינות</option>
+        <option value="אטרקציות">אטרקציות</option>
+        <option value="קטיף">קטיף</option>
+        <option value="מסעדות">מסעדות</option>
+        <option value="תערוכות">תערוכות</option>
+        <option value="מסלולים">מסלולים</option>
+
       </select>
       <div className={styles.editor}>
 

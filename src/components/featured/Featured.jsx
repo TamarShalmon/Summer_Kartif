@@ -6,19 +6,20 @@ const Featured = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>
-        <b>Hey, lama dev here!</b> Discover my stories and creative ideas.
+        <b>שלום לכל התושבים!</b> 
+        <br/>בואו תגלו מה יש בסביבה שלכם.
+        <br/>ברשת החברתית של כרטיף.
       </h1>
       <div className={styles.post}>
         <div className={styles.imgContainer}>
           <Image src="/p1.jpeg" alt="" fill className={styles.image} />
         </div>
         <div className={styles.textContainer}>
-          <h1 className={styles.postTitle}>Lorem ipsum dolor sit amet alim consectetur adipisicing elit.</h1>
+          <h1 className={styles.postTitle}>לכיש, חבל ארץ מהמם.</h1>
           <p className={styles.postDesc}>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-            Cupiditate, quam nisi magni ea laborum inventore voluptatum
-            laudantium repellat ducimus unde aspernatur fuga. Quo, accusantium
-            quisquam! Harum unde sit culpa debitis.
+           אתם תהנו מכל מה שיש בסביבה, בזכות הקהילה שלכם, שמשתפת אתכם 
+           אם תפרסמו המלצה, כך תעזרו לכולם לדעת מה יש.
+           תמליצו ותתנו תגובות ככה כולם יהנו
           </p>
           <button className={styles.button}>Read More</button>
         </div>

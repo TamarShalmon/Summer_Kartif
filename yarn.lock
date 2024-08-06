@@ -540,6 +540,11 @@
   dependencies:
     glob "7.1.7"
 
+"@next/font@^14.2.5":
+  version "14.2.5"
+  resolved "https://registry.npmjs.org/@next/font/-/font-14.2.5.tgz"
+  integrity sha512-e2f3M+tAuJPUyXwWtEPKlPfpPEKODiQvPjdxOWBZC+zgdGv18KfjTkEmopfkfpZ016yCvw5BmMPeuEU/uiDf9g==
+
 "@next/swc-win32-x64-msvc@13.4.19":
   version "13.4.19"
   resolved "https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-13.4.19.tgz"
@@ -2166,7 +2171,7 @@ next-cloudinary@^6.7.0:
     "@cloudinary-util/util" "^3.0.0"
     "@tsconfig/recommended" "^1.0.3"
 
-"next@^12 || ^13 || ^14", "next@^12.2.5 || ^13", next@13.4.19:
+next@*, "next@^12 || ^13 || ^14", "next@^12.2.5 || ^13", next@13.4.19:
   version "13.4.19"
   resolved "https://registry.npmjs.org/next/-/next-13.4.19.tgz"
   integrity sha512-HuPSzzAbJ1T4BD8e0bs6B9C1kWQ6gv8ykZoRWs5AQoiIuqbGHHdQO7Ljuvg05Q0Z24E2ABozHe6FxDvI6HfyAw==
