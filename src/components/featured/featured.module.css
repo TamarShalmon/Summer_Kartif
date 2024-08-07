@@ -3,7 +3,7 @@
 }
 
 .title {
-  font-size: 60px;
+  font-size: 55px;
   font-weight: 300;
   margin-bottom: 50px;
 
@@ -52,13 +52,13 @@
 
 @media screen and (max-width: 1280px) {
   .title {
-    font-size: 72px;
+    font-size: 45px;
   }
 }
 
 @media screen and (max-width: 1024px) {
   .title {
-    font-size: 64px;
+    font-size: 45px;
   }
 
   .imgContainer {
@@ -68,7 +68,7 @@
 
 @media screen and (max-width: 768px) {
   .title {
-    font-size: 48px;
+    font-size: 45px;
   }
 }
 

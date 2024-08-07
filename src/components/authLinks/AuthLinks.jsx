@@ -6,8 +6,16 @@ import { signOut, useSession } from "next-auth/react";
 
 const AuthLinks = () => {
   const [open, setOpen] = useState(false);
-
   const { status } = useSession();
+
+  const handleLinkClick = () => {
+    setOpen(false);
+  };
+
+  const handleSignOut = () => {
+    signOut();
+    setOpen(false);
+  };
 
   return (
     <>
@@ -18,29 +26,29 @@ const AuthLinks = () => {
       ) : (
         <>
           <Link href="/write" className={styles.link}>
-            פרסם המלצה 
+            פרסם המלצה
           </Link>
           <span className={styles.link} onClick={signOut}>
             התנתק
           </span>
         </>
       )}
-      <div className={styles.burger} onClick={() => setOpen(!open)}>
+      <div className={`${styles.burger} ${open ? styles.open : ''}`} onClick={() => setOpen(!open)}>
         <div className={styles.line}></div>
         <div className={styles.line}></div>
         <div className={styles.line}></div>
       </div>
       {open && (
         <div className={styles.responsiveMenu}>
-          <Link href="/">Homepage</Link>
-          <Link href="/">About</Link>
-          <Link href="/">Contact</Link>
-          {status === "notauthenticated" ? (
-            <Link href="/login">Login</Link>
+          <Link href="/" onClick={handleLinkClick}>דף הבית</Link>
+          {status === "unauthenticated" ? (
+            <Link href="/login" onClick={handleLinkClick}>התחבר</Link>
           ) : (
             <>
-              <Link href="/write">Write</Link>
-              <span className={styles.link}>Logout</span>
+              <Link href="/write" onClick={handleLinkClick}>פרסם המלצה</Link>
+              <span className={styles.links} onClick={handleSignOut}>
+                התנתק
+              </span>
             </>
           )}
         </div>

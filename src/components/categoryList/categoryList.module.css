@@ -33,20 +33,20 @@
 }
 
 .categoryTitle {
-     position: absolute;
-    bottom: 21px;
-    left: 18px;
-    right: 18px;
-    background-color: rgb(255 255 255 / 79%);
-    color: black;
-    padding: 4px;
-    text-align: center;
-    font-weight: bold;
-    font-size: 27px;
-    display: flex;
-    justify-content: center;
-    border-radius: 10px;
-    height: 45px;
+  position: absolute;
+  bottom: 207px;
+  left: 18px;
+  right: 18px;
+  background-color: rgb(255 255 255 / 79%);
+  color: black;
+  padding: 4px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 27px;
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+  height: 45px;
 }
 
 @media screen and (max-width: 768px) {
