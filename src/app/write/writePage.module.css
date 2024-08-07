@@ -150,6 +150,15 @@
   background-color: #146c12;
 }
 
+.textArea {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  min-height: 300px;
+}
+
+
+
 @media (max-width: 768px) {
   .container {
     padding: 1rem;
