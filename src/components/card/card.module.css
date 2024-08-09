@@ -1,13 +1,15 @@
 .container {
-  margin-bottom: 50px;
-  display: flex;
-  align-items: center;
-  gap: 50px;
+  width: 300px;
+  background-color: #f9f9f9;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  position: relative;
 }
 
 .imageContainer {
-  flex: 1;
-  height: 350px;
+  width: 100%;
+  height: 200px;
   position: relative;
 }
 
@@ -16,10 +18,13 @@
 }
 
 .textContainer {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
+  padding: 15px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .date {
@@ -32,9 +37,8 @@
 }
 
 .desc {
-  font-size: 18px;
-  font-weight: 300;
-  color: var(--softTextColor);
+  font-size: 14px;
+  color: #666;
 }
 
 .link {
@@ -43,8 +47,3 @@
   padding: 2px 0px;
 }
 
-@media screen and (max-width: 1280px) {
-  .imageContainer {
-    display: none;
-  }
-}

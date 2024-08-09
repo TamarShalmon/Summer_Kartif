@@ -20,7 +20,7 @@ const Card = ({ key, item }) => {
           <span className={styles.category}>{item.catSlug}<br />{item.user.name}</span>
         </div>
         <Link href={`/posts/${item.slug}`}>
-          <h1>{item.title}</h1>
+          <h2 className={styles.title}>{item.title}</h2>
         </Link>
         {/* <p className={styles.desc}>{item.desc.substring(0, 60)}</p> */}
         <div className={styles.desc} dangerouslySetInnerHTML={{ __html: item?.desc.substring(0, 60) }} />
