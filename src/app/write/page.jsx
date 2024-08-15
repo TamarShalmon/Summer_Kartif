@@ -76,26 +76,35 @@ const WritePage = () => {
 
 
   const handleSubmit = async () => {
-    const res = await fetch("/api/posts", {
-      method: "POST",
-      body: JSON.stringify({
-        title,
-        desc: value,
-        mainImage: images[mainImageIndex]?.url,
-        additionalImages: images.map(img => img.url),
-        slug: slugify(title),
-        catSlug: catSlug || "מסעדות", // If not selected, choose the general category
-      }),
-    });
+    try {
+      const res = await fetch("/api/posts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          desc: value,
+          mainImage: images[mainImageIndex]?.url,
+          additionalImages: images.map(img => img.url),
+          slug: slugify(title),
+          catSlug: catSlug || "מסעדות", // If not selected, choose the general category
+        }),
+      });
 
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
 
-    if (res.status === 200) {
       const data = await res.json();
+      console.log("Post created:", data);  // Log the response
       router.push(`/posts/${data.slug}`);
       router.refresh("/")
+
+    } catch (error) {
+      console.error("Error creating post:", error);
     }
   };
-
 
   const handleImageUpload = (result) => {
     const info = result.info;
