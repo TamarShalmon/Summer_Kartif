@@ -24,6 +24,13 @@
   line-height: 1.2;
 }
 
+.cat {
+  font-size: 22px;
+  margin-bottom: 30px;
+  color: var(--titleColor);
+  line-height: 1.2;
+}
+
 .user {
   display: flex;
   align-items: center;

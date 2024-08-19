@@ -61,7 +61,7 @@ export const POST = async (req) => {
   try {
     const body = await req.json();
 
-    // בדיקה אם הכותרת כבר קיימת
+    // Check if the title already exists
     const existingPost = await prisma.post.findFirst({
       where: {
         title: body.title
@@ -74,16 +74,32 @@ export const POST = async (req) => {
       );
     }
 
-    // אם הכותרת לא קיימת, המשך ליצירת הפוסט
-    
+    // Fetch the category image if the main image is not provided
+    let mainImage = body.mainImage;
+
+    if (!mainImage) {
+      const category = await prisma.category.findUnique({
+        where: {
+          slug: body.catSlug
+        },
+        select: {
+          img: true
+        }
+      });
+
+      mainImage = category?.img || null;
+    }
+
+    // Create the post
     const post = await prisma.post.create({
       data: {
         ...body,
         userEmail: session.user.email,
-        mainImage: body.mainImage || null,
+        mainImage: mainImage,
         additionalImages: body.additionalImages || [],
       },
     });
+
     revalidatePath("/");
     return new NextResponse(JSON.stringify(post, { status: 200 }));
   } catch (err) {

@@ -25,24 +25,45 @@ const WritePage = () => {
   const [title, setTitle] = useState("");
   const [catSlug, setCatSlug] = useState("");
 
-
   const [imageUrl, setImageUrl] = useState("");
   const [publicId, setPublicId] = useState("");
 
-
   const [images, setImages] = useState([]);
   const [mainImageIndex, setMainImageIndex] = useState(0);
+
+  const [categories, setCategories] = useState([]);
+
+  const [error, setError] = useState("");
+
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch("/api/categories");
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const data = await res.json();
+        setCategories(data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
 
   useEffect(() => {
     const uploadToCloudinary = async () => {
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("upload_preset", "your_upload_preset"); // Set your upload preset
+      formData.append("upload_preset", "your_upload_preset"); 
 
 
       try {
         const response = await fetch(
-          "https://api.cloudinary.com/v1_1/your_cloud_name/image/upload", // Use your Cloudinary cloud name
+          "https://api.cloudinary.com/v1_1/your_cloud_name/image/upload", 
           {
             method: "POST",
             body: formData,
@@ -83,6 +104,22 @@ const WritePage = () => {
 
 
   const handleSubmit = async () => {
+    setError("");
+
+    if (!title.trim()) {
+      setError("** יש להזין כותרת");
+      return;
+    }
+    if (!catSlug) {
+      setError("** יש לבחור קטגוריה");
+      return;
+    }
+    if (!value.trim()) {
+      setError("** יש להזין תוכן");
+      return;
+    }
+  
+
     try {
       const res = await fetch("/api/posts", {
         method: "POST",
@@ -95,7 +132,7 @@ const WritePage = () => {
           mainImage: images[mainImageIndex]?.url,
           additionalImages: images.map(img => img.url),
           slug: title,
-          catSlug: catSlug || "לאכול בחוץ", // If not selected, choose the general category
+          catSlug,
         }),
       });
 
@@ -104,12 +141,12 @@ const WritePage = () => {
       }
 
       const data = await res.json();
-      console.log("Post created:", data);  // Log the response
+      console.log("Post created:", data);
       router.push(`/posts/${data.slug}`);
-      router.refresh("/")
 
     } catch (error) {
       console.error("Error creating post:", error);
+      setError("אירעה שגיאה בעת יצירת הפוסט. נא לנסות שוב.");
     }
   };
 
@@ -142,68 +179,74 @@ const WritePage = () => {
 
 
   console.log(title)
+
+
   return (
     <div className={fredoka.className}>
-    <div className={styles.container}>
-      <input
-        type="text"
-        placeholder="תנו כותרת"
-        className={styles.input}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      <select
-        className={styles.select}
-        onChange={(e) => setCatSlug(e.target.value)}
-      >
-        <option value="בריכות">בריכות</option>
-        <option value="מעיינות">מעיינות</option>
-        <option value="אטרקציות">אטרקציות</option>
-        <option value="קטיף">קטיף</option>
-        <option value="לאכול בחוץ">לאכול בחוץ</option>
-        <option value="תערוכות">תערוכות</option>
-        <option value="מסלולים">מסלולים</option>
-
-      </select>
-      <div className={styles.editor}>
-
-        <textarea
-          className={styles.textArea}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          placeholder="על מה תמליצו?"
+      <div className={styles.container}>
+        <input
+          type="text"
+          placeholder="תנו כותרת"
+          className={styles.input}
+          onChange={(e) => setTitle(e.target.value)}
         />
-
-      </div>
-
-
-      <div className={styles.imageUploadSection}>
-        <CldUploadButton
-          uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
-          onSuccess={handleImageUpload}
-          className={styles.uploadButton}
+        <select
+          className={styles.select}
+          onChange={(e) => setCatSlug(e.target.value)}
+          value={catSlug}
+          required
         >
-          צרפו תמונות
-        </CldUploadButton>
-
-
-        <div className={styles.imagePreviewContainer}>
-          {images.map((image, index) => (
-            <div key={image.public_id} className={styles.imagePreview}>
-              <Image src={image.url} alt="" width={100} height={100} />
-              <button onClick={() => removeImage(index)}>מחק</button>
-              <button onClick={() => setMainImage(index)} disabled={index === mainImageIndex}>
-                {index === mainImageIndex ? 'תמונה ראשית ' : 'הגדר כראשית'}
-              </button>
-            </div>
+          <option value="">בחר קטגוריה</option>
+          {categories.map((category) => (
+            <option key={category.slug} value={category.slug}>
+              {category.title}
+            </option>
           ))}
+        </select>
+
+        <div className={styles.editor}>
+
+          <textarea
+            className={styles.textArea}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            placeholder="על מה תמליצו?"
+          />
+
         </div>
+
+
+        <div className={styles.imageUploadSection}>
+          <CldUploadButton
+            uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
+            onSuccess={handleImageUpload}
+            className={styles.uploadButton}
+          >
+            צרפו תמונות
+          </CldUploadButton>
+
+
+          <div className={styles.imagePreviewContainer}>
+            {images.map((image, index) => (
+              <div key={image.public_id} className={styles.imagePreview}>
+                <Image src={image.url} alt="" width={100} height={100} />
+                <button onClick={() => removeImage(index)}>מחק</button>
+                <button onClick={() => setMainImage(index)} disabled={index === mainImageIndex}>
+                  {index === mainImageIndex ? 'תמונה ראשית ' : 'הגדר כראשית'}
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {error && <div className={styles.error}>{error}</div>}
+
+
+
+        <button className={styles.publish} onClick={handleSubmit}>
+          פרסם המלצה
+        </button>
       </div>
-
-
-      <button className={styles.publish} onClick={handleSubmit}>
-        פרסם המלצה
-      </button>
-    </div>
     </div>
 
   );
