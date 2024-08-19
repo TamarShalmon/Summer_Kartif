@@ -5,6 +5,13 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { CldUploadButton } from "next-cloudinary"
+import { Fredoka } from 'next/font/google'
+
+const fredoka = Fredoka({
+  subsets: ['latin'],
+  weight: ['300'],
+  variable: '--font-fredoka',
+})
 
 
 const WritePage = () => {
@@ -88,7 +95,7 @@ const WritePage = () => {
           mainImage: images[mainImageIndex]?.url,
           additionalImages: images.map(img => img.url),
           slug: title,
-          catSlug: catSlug || "מסעדות", // If not selected, choose the general category
+          catSlug: catSlug || "לאכול בחוץ", // If not selected, choose the general category
         }),
       });
 
@@ -134,12 +141,13 @@ const WritePage = () => {
   };
 
 
-console.log(title)
+  console.log(title)
   return (
+    <div className={fredoka.className}>
     <div className={styles.container}>
       <input
         type="text"
-        placeholder="Title"
+        placeholder="תנו כותרת"
         className={styles.input}
         onChange={(e) => setTitle(e.target.value)}
       />
@@ -151,7 +159,7 @@ console.log(title)
         <option value="מעיינות">מעיינות</option>
         <option value="אטרקציות">אטרקציות</option>
         <option value="קטיף">קטיף</option>
-        <option value="מסעדות">מסעדות</option>
+        <option value="לאכול בחוץ">לאכול בחוץ</option>
         <option value="תערוכות">תערוכות</option>
         <option value="מסלולים">מסלולים</option>
 
@@ -162,7 +170,7 @@ console.log(title)
           className={styles.textArea}
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          placeholder="Tell your story..."
+          placeholder="על מה תמליצו?"
         />
 
       </div>
@@ -172,8 +180,9 @@ console.log(title)
         <CldUploadButton
           uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
           onSuccess={handleImageUpload}
+          className={styles.uploadButton}
         >
-          Upload Image
+          צרפו תמונות
         </CldUploadButton>
 
 
@@ -181,9 +190,9 @@ console.log(title)
           {images.map((image, index) => (
             <div key={image.public_id} className={styles.imagePreview}>
               <Image src={image.url} alt="" width={100} height={100} />
-              <button onClick={() => removeImage(index)}>Remove</button>
+              <button onClick={() => removeImage(index)}>מחק</button>
               <button onClick={() => setMainImage(index)} disabled={index === mainImageIndex}>
-                {index === mainImageIndex ? 'Main Image' : 'Set as Main'}
+                {index === mainImageIndex ? 'תמונה ראשית ' : 'הגדר כראשית'}
               </button>
             </div>
           ))}
@@ -192,9 +201,11 @@ console.log(title)
 
 
       <button className={styles.publish} onClick={handleSubmit}>
-        Publish
+        פרסם המלצה
       </button>
     </div>
+    </div>
+
   );
 };
 

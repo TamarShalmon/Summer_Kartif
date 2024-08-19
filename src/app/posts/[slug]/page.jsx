@@ -49,11 +49,6 @@ const SinglePage = async ({ params }) => {
             </div>
           </div>
         </div>
-        {data?.img && (
-          <div className={styles.imageContainer}>
-            <Image src={data.img} alt="" fill className={styles.image} />
-          </div>
-        )}
       </div>
       <div className={styles.content}>
         <div className={styles.post}>
@@ -66,6 +61,20 @@ const SinglePage = async ({ params }) => {
               <p>No description available.</p>
             }
           </div>
+          {data?.mainImage && (
+            <div className={styles.imageContainer}>
+              <Image src={data.mainImage} alt="" fill className={styles.image} />
+            </div>
+          )}
+          {data?.additionalImages && data.additionalImages.length > 0 && (
+            <div className={styles.additionalImagesContainer}>
+              {data.additionalImages.map((img, index) => (
+                <div key={index} className={styles.additionalImagesContainer}>
+                  <Image src={img} alt={`Additional Image ${index + 1}`} fill className={styles.additionalImages} />
+                </div>
+              ))}
+            </div>
+          )}
           <div className={styles.comment}>
             <Comments postSlug={slug} />
           </div>

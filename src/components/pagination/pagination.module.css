@@ -1,18 +1,24 @@
 .container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 10px;
 }
 
 .button {
   width: 100px;
   border: none;
+  border-radius: 10px;
   padding: 16px;
-  background-color: crimson;
+  background-color: rgb(29, 15, 17);
   color: white;
+  font-weight: bold;
   cursor: pointer;
+  font-size: 16px;
+  font-family: var(--font-fredoka); 
+
 }
 
 .button:disabled{
-  background-color: rgba(220, 20, 60, 0.473);
+  background-color: rgba(56, 44, 46, 0.473);
   cursor: not-allowed;
 }

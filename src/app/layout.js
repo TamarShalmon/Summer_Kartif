@@ -14,8 +14,8 @@ const fredoka = Fredoka({
 })
 
 export const metadata = {
-  title: "Lama Dev Blog App",
-  description: "The best blog app!",
+  title: "קטיפניקים ממליצים",
+  description: "המקומות הכי שווים דרך חוויות של החברים מהישוב",
 };
 
 export default function RootLayout({ children }) {

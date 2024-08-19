@@ -3,6 +3,13 @@
 import React from "react";
 import styles from "./pagination.module.css";
 import { useRouter } from "next/navigation";
+import { Fredoka } from 'next/font/google'
+
+const fredoka = Fredoka({
+  subsets: ['latin'],
+  weight: ['300'],
+  variable: '--font-fredoka',
+})
 
 const Pagination = ({ page, hasPrev, hasNext, cat }) => {
   const router = useRouter();
@@ -14,14 +21,14 @@ const Pagination = ({ page, hasPrev, hasNext, cat }) => {
         disabled={!hasPrev}
         onClick={() => router.push(`?page=${page - 1}&cat=${cat}`)} 
       >
-        Previous
+        הקודם
       </button>
       <button
         disabled={!hasNext}
         className={styles.button}
         onClick={() => router.push(`?page=${page + 1}&cat=${cat}`)}
       >
-        Next
+        הבא
       </button>
     </div>
   );
