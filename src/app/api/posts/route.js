@@ -1,5 +1,6 @@
 import { getAuthSession } from "@/utils/auth";
 import prisma from "@/utils/connect";
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 export const GET = async (req) => {
@@ -59,6 +60,22 @@ export const POST = async (req) => {
 
   try {
     const body = await req.json();
+
+    // בדיקה אם הכותרת כבר קיימת
+    const existingPost = await prisma.post.findFirst({
+      where: {
+        title: body.title
+      }
+    });
+
+    if (existingPost) {
+      return new NextResponse(
+        JSON.stringify({ message: "כותרת זו כבר קיימת. אנא בחר כותרת אחרת." }, { status: 400 })
+      );
+    }
+
+    // אם הכותרת לא קיימת, המשך ליצירת הפוסט
+    
     const post = await prisma.post.create({
       data: {
         ...body,
@@ -67,7 +84,7 @@ export const POST = async (req) => {
         additionalImages: body.additionalImages || [],
       },
     });
-
+    revalidatePath("/");
     return new NextResponse(JSON.stringify(post, { status: 200 }));
   } catch (err) {
     console.log(err);

@@ -87,7 +87,7 @@ const WritePage = () => {
           desc: value,
           mainImage: images[mainImageIndex]?.url,
           additionalImages: images.map(img => img.url),
-          slug: slugify(title),
+          slug: title,
           catSlug: catSlug || "מסעדות", // If not selected, choose the general category
         }),
       });
@@ -134,7 +134,7 @@ const WritePage = () => {
   };
 
 
-
+console.log(title)
   return (
     <div className={styles.container}>
       <input
