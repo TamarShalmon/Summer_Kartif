@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./featured.module.css";
 import Image from "next/image";
+import Search from "../search/search";
 
 const Featured = () => {
   return (
@@ -26,6 +27,7 @@ const Featured = () => {
           <button className={styles.button}>Read More</button>
         </div>
       </div> */}
+      <Search />
     </div>
   );
 };
