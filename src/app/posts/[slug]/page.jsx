@@ -29,28 +29,28 @@ const SinglePage = async ({ params }) => {
     <div className={styles.container}>
       <div className={styles.infoContainer}>
         <div className={styles.textContainer}>
-          <h1 className={styles.title}>{data?.title}</h1>
-          <div className={styles.cat}>{data?.catSlug}</div>
           <div className={styles.user}>
-            {data?.user?.image && (
+            {/* {data?.user?.image && (
               <div className={styles.userImageContainer}>
-                <Image
-                  src={data.user.image}
-                  alt=""
-                  fill
-                  className={styles.avatar}
-                />
+              <Image
+              src={data.user.image}
+              alt=""
+              fill
+              className={styles.avatar}
+              />
               </div>
-            )}
+              )} */}
             <div className={styles.userTextContainer}>
               <span className={styles.username}>
-                {data?.user?.name || "Unknown User"}
+                {data?.user?.name || "Unknown User"}{" "}
               </span>
-              <span className={styles.date}>{formattedDate}</span>
+              <span className={styles.date}>•{" "}{formattedDate}</span>
             </div>
           </div>
         </div>
       </div>
+      <div className={styles.cat}>{data?.catSlug}</div>
+      <h1 className={styles.title}>{data?.title}</h1>
       <div className={styles.content}>
         <div className={styles.post}>
           <div className={styles.description}>
@@ -62,15 +62,15 @@ const SinglePage = async ({ params }) => {
               <p>No description available.</p>
             }
           </div>
-          {data?.mainImage && (
+          {/* {data?.mainImage && (
             <div className={styles.imageContainer}>
               <Image src={data.mainImage} alt="" fill className={styles.image} />
             </div>
-          )}
+          )} */}
           {data?.additionalImages && data.additionalImages.length > 0 && (
             <div className={styles.additionalImagesContainer}>
               {data.additionalImages.map((img, index) => (
-                <div key={index} className={styles.additionalImagesContainer}>
+                <div key={index} >
                   <Image src={img} alt={`Additional Image ${index + 1}`} fill className={styles.additionalImages} />
                 </div>
               ))}

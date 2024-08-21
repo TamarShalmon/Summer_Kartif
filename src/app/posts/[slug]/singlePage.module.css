@@ -40,35 +40,35 @@
   border-radius: 10px;
 }
 
-.userImageContainer {
+/* .userImageContainer {
   width: 60px;
   height: 60px;
   position: relative;
   overflow: hidden;
   border-radius: 50%;
   border: 2px solid var(--softTextColor);
-}
+} */
 
-.avatar {
+/* .avatar {
   object-fit: cover;
-}
+} */
 
-.userTextContainer {
+/* .userTextContainer {
   display: flex;
   flex-direction: column;
   gap: 5px;
   color: var(--softTextColor);
-}
+} */
 
 .username {
   font-size: 20px;
-  font-weight: 600;
+  /* font-weight: 600; */
   color: var(--textColor);
 }
 
 .imageContainer {
   flex: 1;
-  height: 450px;
+  height: auto;
   position: relative;
   border-radius: 15px;
   overflow: hidden;
@@ -91,7 +91,6 @@
 
 .post {
   flex: 5;
-  margin-top: 60px;
 }
 
 .description {
@@ -102,10 +101,18 @@
 }
 
 .additionalImagesContainer {
-  flex: 1;
   display: flex;
-  height: 450px;
+  flex-wrap: wrap;
+  gap: 10px; 
+  justify-content: space-between; 
+  margin: 20px 0;
+}
+
+.additionalImagesContainer > div {
+  flex: 1 1 calc(33.333% - 10px); /* כל תמונה תתפוס שליש מהשורה, פחות הרווח */
+  max-width: calc(33.333% - 10px); /* מקסימום רוחב לכל תמונה */
   position: relative;
+  height: 300px; 
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
@@ -113,13 +120,14 @@
 
 .additionalImages {
   object-fit: cover;
+  width: 100%;
+  height: 100%;
   transition: transform 0.3s ease;
 }
 
 .additionalImages:hover {
   transform: scale(1.05);
 }
-
 
 .loading {
   text-align: center;
@@ -145,6 +153,11 @@
     width: 100%;
     height: 300px;
   }
+  .additionalImagesContainer > div {
+    flex: 1 1 calc(50% - 10px); /* כל תמונה תתפוס חצי שורה במסכים בינוניים */
+    max-width: calc(50% - 10px);
+  }
+
 }
 
 @media screen and (max-width: 768px) {
@@ -154,17 +167,25 @@
   .description {
     font-size: 16px;
   }
-  .additionalImages {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  .additionalImagesContainer > div {
+    flex: 1 1 calc(50% - 10px); /* כל תמונה תתפוס חצי שורה */
+    max-width: calc(50% - 10px);
   }
 }
 
-@media screen and (max-width: 640px) {
+/* @media screen and (max-width: 640px) {
   .title {
     font-size: 32px;
   }
   .user {
     flex-direction: column;
     align-items: flex-start;
+  }
+} */
+
+@media screen and (max-width: 480px) {
+  .additionalImagesContainer > div {
+    flex: 1 1 calc(100% - 10px); /* כל תמונה תתפוס את כל הרוחב במסכים קטנים מאוד */
+    max-width: calc(100% - 10px);
   }
 }
