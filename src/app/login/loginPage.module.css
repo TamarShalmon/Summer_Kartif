@@ -9,33 +9,33 @@
   background-color: var(--softBg);
   padding: 150px 200px;
   display: flex;
+  align-items: center;
   flex-direction: column;
   gap: 50px;
   border-radius: 10px;
 }
 
 .socialButton {
-  padding: 20px;
-  border-radius: 5px;
-  border: none;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #ffffff;
+  color: #333;
+  font-weight: bold;
+  padding: 15px 70px;
+  border-radius: 24px;
+  border: solid 1px #333;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 
-.socialButton:first-child {
-  background-color: #ff5555;
+.image {
+  margin-right: 12px;
 }
 
-.socialButton:nth-child(2) {
-  background-color: #111;
-}
 
-.socialButton:nth-child(3) {
-  background-color: #087bea;
+.logoImage {
+  object-fit: contain;
 }
 
 @media screen and (max-width: 768px) {
