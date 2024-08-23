@@ -1,17 +1,16 @@
 import React from "react";
 import styles from "./featured.module.css";
 import Image from "next/image";
-import Search from "../search/search";
 
 const Featured = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>
         {/* <b>ברוכים הבאים לבלוג !</b>  */}
-        {/* בואו לגלות את המקומות הכי שווים דרך חוויות של החברים מהישוב.
+        בואו לגלות את המקומות הכי שווים דרך חוויות של החברים מהישוב.
         <br/>כאן תוכלו לשתף ולהמליץ על מקומות בילוי,
-        <br/>אטרקציות וטיולים אהובים. */}
-        {/* <br/>בטוחים שתהנו! */}
+        <br/>אטרקציות וטיולים אהובים.
+        <br/>בטוחים שתהנו!
       </h1>
       {/* <div className={styles.post}>
         <div className={styles.imgContainer}>
@@ -27,7 +26,6 @@ const Featured = () => {
           <button className={styles.button}>Read More</button>
         </div>
       </div> */}
-      <Search />
     </div>
   );
 };

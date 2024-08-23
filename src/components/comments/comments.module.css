@@ -17,6 +17,9 @@
 .input {
   padding: 20px;
   width: 100%;
+  font-family: var(--font-fredoka); 
+  border-radius: 10px;
+  font-size: 16px;
 }
 
 .button {

@@ -3,6 +3,7 @@ import { signIn, useSession } from "next-auth/react";
 import styles from "./loginPage.module.css";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 const LoginPage = () => {
   const { status } = useSession();
@@ -21,7 +22,9 @@ const LoginPage = () => {
     <div className={styles.container}>
 
       <div className={styles.wrapper}>
-      <Image src="/logo.png" alt="logo" width={300} height={80} className={styles.logoImage} />
+        <Link href="/">
+          <Image src="/logo.png" alt="logo" width={300} height={80} className={styles.logoImage} />
+        </Link>
         <div className={styles.socialButton} onClick={() => signIn("google")}>
           התחברו עם Google
           <Image src="/google.png" alt="logo" width={30} height={30} className={styles.image} />

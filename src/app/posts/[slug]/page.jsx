@@ -21,9 +21,13 @@ const SinglePage = async ({ params }) => {
 
   const data = await getData(slug);
 
-  const formattedDate = new Date(data.createdAt)
-    .toLocaleDateString("en-GB")
-    .replace(/\//g, ".");
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
 
   return (
     <div className={styles.container}>
@@ -44,7 +48,7 @@ const SinglePage = async ({ params }) => {
               <span className={styles.username}>
                 {data?.user?.name || "Unknown User"}{" "}
               </span>
-              <span className={styles.date}>•{" "}{formattedDate}</span>
+              <span className={styles.date}>•{" "}{formatDate(data.createdAt)}</span>
             </div>
           </div>
         </div>
