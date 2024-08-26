@@ -77,7 +77,6 @@ model Post {
   userEmail        String
   user             User      @relation(fields: [userEmail], references: [email])
   comments         Comment[]
-  search           String
 }
 
 model Comment {
