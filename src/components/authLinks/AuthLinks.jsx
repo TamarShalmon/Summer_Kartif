@@ -28,6 +28,9 @@ const AuthLinks = () => {
           <Link href="/write" className={styles.link}>
             פרסם המלצה
           </Link>
+          <Link href="/userDashboard" className={styles.link}>
+            ההמלצות שלי
+          </Link>
           <span className={styles.link} onClick={signOut}>
             התנתק
           </span>
@@ -46,6 +49,7 @@ const AuthLinks = () => {
           ) : (
             <>
               <Link href="/write" onClick={handleLinkClick}>פרסם המלצה</Link>
+              <Link href="/userDashboard" onClick={handleLinkClick} >ההמלצות שלי</Link>
               <span className={styles.links} onClick={handleSignOut}>
                 התנתק
               </span>

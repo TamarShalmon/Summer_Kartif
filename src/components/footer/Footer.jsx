@@ -30,7 +30,7 @@ const Footer = () => {
         <div className={styles.list}>
           <span className={styles.listTitle}>מפת אתר</span>
           <Link href="/">דף הבית</Link>
-          <Link href="/">התחברות</Link>
+          <Link href="/login">התחברות</Link>
           <Link href="/">יצירת קשר</Link>
           <Link href="/">כל הזכויות שמורות</Link>
         </div>
