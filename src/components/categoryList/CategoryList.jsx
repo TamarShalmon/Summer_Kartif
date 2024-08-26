@@ -37,24 +37,26 @@ const CategoryList = () => {
     <div className={styles.container}>
       {/* <h1 className={styles.title}>קטגוריות מומלצות</h1> */}
       <div className={styles.categories}>
-        {data.map((item, index) => (
-          <Link
-            href={`/blog?cat=${item.slug}`}
-            className={styles.category}
-            key={`${item._id}-${index}`}
-          >
-            {item.img && (
-              <Image
-                src={`${item.img}`}
-                alt=""
-                width={300}
-                height={200}
-                className={styles.image}
-              />
-            )}
-            <span className={styles.categoryTitle}>{item.title}</span>
-          </Link>
-        ))}
+        {data.map((item, index) => {
+          return (
+            <Link
+              href={`/blog?cat=${item.slug}`}
+              className={styles.category}
+              key={`${item._id}-${index}`}
+            >
+              {item.img && (
+                <Image
+                  src={`${item.img}`}
+                  alt=""
+                  width={300}
+                  height={200}
+                  className={styles.image}
+                />
+              )}
+              <span className={styles.categoryTitle}>{item.title}</span>
+            </Link>
+          );
+        })}
       </div>
     </div>
   );

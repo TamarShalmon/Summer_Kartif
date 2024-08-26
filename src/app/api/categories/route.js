@@ -7,6 +7,7 @@ export const GET = async () => {
       select: {
         slug: true,
         title: true,
+        img: true,
       },
     });
 
