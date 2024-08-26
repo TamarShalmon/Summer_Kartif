@@ -37,10 +37,9 @@ const Footer = () => {
         <div className={styles.list}>
           <span className={styles.listTitle}>קטגוריות מובילות</span>
           <Link href="/">מעיינות</Link>
-          <Link href="/">בריכות</Link>
+          <Link href="/">בריכות שחייה</Link>
           <Link href="/">לאכול בחוץ</Link>
           <Link href="/">אטרקציות</Link>
-          <Link href="/">בריכות שחייה</Link>
         </div>
         {/* <div className={styles.list}>
           <span className={styles.listTitle}>Social</span>

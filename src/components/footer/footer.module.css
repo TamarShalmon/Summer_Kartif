@@ -1,10 +1,12 @@
 .container {
   margin-top: 50px;
-  padding: 20px 0px;
+  padding: 20px 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: var(--softTextColor);
+  color: white;
+  background-color: #3a3a3a79;
+  align-items: flex-end;
 }
 
 .info {
@@ -17,7 +19,8 @@
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  color: black;
+  line-height: 1.5;
 }
 
 .logoText {
@@ -55,6 +58,7 @@
   flex-direction: column;
   gap: 10px;
   font-weight: 300;
+  justify-content: flex-end;
 }
 
 .listTitle {
@@ -66,9 +70,9 @@
     gap: 50px;
   }
 }
+
 @media screen and (max-width: 768px) {
   .container {
-    flex-direction: column;
     gap: 50px;
   }
 
@@ -77,6 +81,7 @@
     justify-content: space-between;
   }
 }
+
 @media screen and (max-width: 640px) {
   .links {
     font-size: 14px;

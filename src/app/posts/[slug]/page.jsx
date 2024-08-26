@@ -44,22 +44,22 @@ const SinglePage = async ({ params }) => {
               </div>
               )} */}
             <div className={styles.userTextContainer}>
-              <span className={styles.username}>
-                {data?.user?.name || "Unknown User"}{" "}
-              </span>
-              <span className={styles.date}>•{" "}{formatDate(data.createdAt)}</span>
+              <div className={styles.cat}>{data?.catSlug}</div>
             </div>
           </div>
         </div>
       </div>
-      <div className={styles.cat}>{data?.catSlug}</div>
       <h1 className={styles.title}>{data?.title}</h1>
+      <span className={styles.username}>
+        {data?.user?.name || "Unknown User"}{" "}
+      </span>
+      <span className={styles.date}>|{" "}{formatDate(data.createdAt)}</span>
       <div className={styles.content}>
         <div className={styles.post}>
           <div className={styles.description}>
             {data?.desc ?
               data.desc.split('\n').map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
+                <p className={styles.p} key={index}>{paragraph}</p>
               ))
               :
               <p>No description available.</p>

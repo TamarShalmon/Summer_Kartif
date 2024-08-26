@@ -22,9 +22,9 @@ const LoginPage = () => {
     <div className={styles.container}>
 
       <div className={styles.wrapper}>
-        <Link href="/">
+        {/* <Link href="/">
           <Image src="/logo.png" alt="logo" width={300} height={80} className={styles.logoImage} />
-        </Link>
+        </Link> */}
         <div className={styles.socialButton} onClick={() => signIn("google")}>
           התחברו עם Google
           <Image src="/google.png" alt="logo" width={30} height={30} className={styles.image} />

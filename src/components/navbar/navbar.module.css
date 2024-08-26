@@ -25,6 +25,7 @@
   gap: 20px;
   font-size: 22px;
   font-weight: bold;
+  text-align: center;
 }
 
 @media screen and (max-width: 1280px) {
@@ -37,6 +38,10 @@
 @media screen and (max-width: 1024px) {
   .logo {
     text-align: left;
+  }
+  .links {
+    font-size: 16px;
+    gap: 9px;
   }
 }
 

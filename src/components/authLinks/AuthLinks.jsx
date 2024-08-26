@@ -26,7 +26,7 @@ const AuthLinks = () => {
       ) : (
         <>
           <Link href="/write" className={styles.link}>
-            פרסם המלצה
+            פרסום המלצה
           </Link>
           <Link href="/userDashboard" className={styles.link}>
             ההמלצות שלי

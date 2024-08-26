@@ -196,7 +196,7 @@ const WritePage = () => {
           value={catSlug}
           required
         >
-          <option value="">בחר קטגוריה</option>
+          <option value="">בחרו קטגוריה</option>
           {categories.map((category) => (
             <option key={category.slug} value={category.slug}>
               {category.title}
@@ -244,7 +244,7 @@ const WritePage = () => {
 
 
         <button className={styles.publish} onClick={handleSubmit}>
-          פרסם המלצה
+          פרסום המלצה
         </button>
       </div>
     </div>

@@ -1,9 +1,9 @@
 .title{
-  background-color: coral;
-  color: white;
+  background-color:  #cccccc;
   padding: 5px 10px;
   text-align: center;
-  text-transform: capitalize;
+  margin-top: 20px;
+  border-radius: 10px;
 }
 
 .content{
