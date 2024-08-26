@@ -26,9 +26,6 @@ export const GET = async (req) => {
         orderBy: {
           createdAt: 'desc',
         },
-        // select: {
-        //  _id: true,
-        // },
         include: {
           user: {
             select: {

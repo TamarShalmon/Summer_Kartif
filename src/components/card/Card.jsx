@@ -2,12 +2,12 @@ import Image from "next/image";
 import styles from "./card.module.css";
 import Link from "next/link";
 
-const Card = ({ key, item }) => {
+const Card = ({ item }) => {
   const formattedDate = new Date(item.createdAt).toLocaleDateString('en-GB').replace(/\//g, '.');
 
   return (
     <Link href={`/posts/${item.slug}`}>
-      <div className={styles.container} key={key}>
+      <div className={styles.container} >
         {item.mainImage && (
           <div className={styles.imageContainer}>
             <Image src={item.mainImage} alt="" fill className={styles.image} />

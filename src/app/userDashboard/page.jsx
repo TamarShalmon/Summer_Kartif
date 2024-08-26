@@ -10,10 +10,12 @@ const UserDashboard = async ({ searchParams }) => {
     }
 
     const page = parseInt(searchParams.page) || 1;
+    const { id } = searchParams;
+
 
     return (
         <div>
-            <UserPosts page={page} />
+            <UserPosts page={page} id={id} />
         </div>
     );
 };

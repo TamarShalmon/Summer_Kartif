@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./userPosts.module.css";
 import Pagination from "../pagination/Pagination";
 import Card from "../card/Card";
+import Link from "next/link";
 
 const fetchData = async (page) => {
   const res = await fetch(
@@ -19,9 +20,11 @@ const fetchData = async (page) => {
   return res.json();
 };
 
-const UserPosts = ({ page }) => {
+const UserPosts = ({ page, post }) => {
   const [posts, setPosts] = useState([]);
   const [count, setCount] = useState(0);
+
+
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -38,13 +41,38 @@ const UserPosts = ({ page }) => {
   const hasPrev = POST_PER_PAGE * (page - 1) > 0;
   const hasNext = POST_PER_PAGE * (page - 1) + POST_PER_PAGE < count;
 
+  const handleDelete = async (slug) => {
+    if (window.confirm("האם אתה בטוח שברצונך למחוק פוסט זה?")) {
+      try {
+        const res = await fetch(`/api/posts/${encodeURIComponent(slug)}`, {
+          method: 'DELETE',
+        });
+  
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(`Failed to delete the post: ${errorData.message}`);
+        }
+  
+        setPosts(posts.filter(post => post.slug !== slug));
+        router.refresh();
+      } catch (error) {
+        console.error("Error deleting post:", error);
+        alert(`אירעה שגיאה במחיקת הפוסט: ${error.message}`);
+      }
+    }
+  };
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>ההמלצות שלי</h1>
       <div className={styles.posts}>
         {posts && posts.length > 0 ? (
           posts.map((item) => (
-            <Card item={item} key={item.id} className={styles.post} />
+            <div key={item.id} className={styles.postWrapper}>
+              <Card item={item} className={styles.post} />
+              <Link href={`/edit-post/${item.slug}`}>Edit</Link>
+              <button onClick={() => handleDelete(item.slug)}>Delete</button>
+            </div>
           ))
         ) : (
           <p>אין המלצות להצגה, או שהן בטעינה...</p>
