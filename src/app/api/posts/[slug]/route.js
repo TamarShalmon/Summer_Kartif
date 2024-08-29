@@ -84,6 +84,7 @@ export const PUT = async (req, { params }) => {
 
       const post = await prisma.post.findUnique({
           where: { slug },
+          include: { cat: true }, // Include the current category to get its image
       });
 
       if (!post || post.userEmail !== session.user.email) {
@@ -92,6 +93,18 @@ export const PUT = async (req, { params }) => {
           );
       }
 
+      let updatedMainImage = mainImage;
+
+    // Check if the category was changed and no mainImage was provided
+    if (catSlug && catSlug !== post.catSlug && !mainImage) {
+      const newCategory = await prisma.category.findUnique({
+        where: { slug: catSlug },
+      });
+
+      if (newCategory && newCategory.img) {
+        updatedMainImage = newCategory.img;
+      }
+    }
 
       const updatedPost = await prisma.post.update({
           where: { slug },
@@ -99,7 +112,7 @@ export const PUT = async (req, { params }) => {
               title,
               desc,
               catSlug,
-              mainImage,
+              mainImage: updatedMainImage,
               additionalImages,
           },
       });
