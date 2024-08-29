@@ -47,14 +47,13 @@ const UserPosts = ({ page, post }) => {
         const res = await fetch(`/api/posts/${encodeURIComponent(slug)}`, {
           method: 'DELETE',
         });
-  
+
         if (!res.ok) {
           const errorData = await res.json();
           throw new Error(`Failed to delete the post: ${errorData.message}`);
         }
-  
+
         setPosts(posts.filter(post => post.slug !== slug));
-        router.refresh();
       } catch (error) {
         console.error("Error deleting post:", error);
         alert(`אירעה שגיאה במחיקת הפוסט: ${error.message}`);

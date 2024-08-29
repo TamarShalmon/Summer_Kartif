@@ -1,3 +1,4 @@
+import { getAuthSession } from "@/utils/auth";
 import prisma from "@/utils/connect";
 import { NextResponse } from "next/server";
 
@@ -90,6 +91,7 @@ export const PUT = async (req, { params }) => {
               JSON.stringify({ message: "Not Authorized!" }, { status: 403 })
           );
       }
+
 
       const updatedPost = await prisma.post.update({
           where: { slug },

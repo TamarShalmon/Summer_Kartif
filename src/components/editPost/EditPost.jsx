@@ -157,6 +157,8 @@ const EditPost = ({ post }) => {
                     const data = await res.json();
                     console.log("Post updated:", data);
                     router.push(`/posts/${data.slug}`);
+                    router.refresh();
+
             
                 } catch (error) {
                     console.error("Error updating post:", error);
