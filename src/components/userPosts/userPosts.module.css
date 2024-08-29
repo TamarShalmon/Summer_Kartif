@@ -16,3 +16,55 @@
   justify-content: space-around;
   padding-bottom: 30px;
 }
+
+.postWrapper {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+
+.button {
+  position: absolute;
+  bottom: 10px; /* מרחק מהתחתית */
+  left: 75px; /* מרחק מהימין */
+  padding: 5px 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+}
+
+.editButton {
+  background-color: #2196F3; 
+}
+
+.editButton:hover {
+  background-color: #1976D2;
+}
+
+.editButton:active {
+  background-color: #1565C0;
+  transform: translateY(2px);
+}
+
+.deleteButton {
+  background-color: #f44336; /* אדום */
+  bottom: 10px; /* מרחק מהתחתית */
+  left: 10px; /* מרחק מהימין והפרדה מכפתור Edit */
+  font-family: var(--font-fredoka);
+}
+
+.deleteButton:hover {
+  background-color: #e53935;
+}
+
+.deleteButton:active {
+  background-color: #d32f2f;
+  transform: translateY(2px);
+}
+
+

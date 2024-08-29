@@ -4,6 +4,13 @@ import styles from "./userPosts.module.css";
 import Pagination from "../pagination/Pagination";
 import Card from "../card/Card";
 import Link from "next/link";
+import { Fredoka } from 'next/font/google'
+
+const fredoka = Fredoka({
+  subsets: ['latin'],
+  weight: ['300'],
+  variable: '--font-fredoka',
+})
 
 const fetchData = async (page) => {
   const res = await fetch(
@@ -62,22 +69,31 @@ const UserPosts = ({ page, post }) => {
   };
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>ההמלצות שלי</h1>
-      <div className={styles.posts}>
-        {posts && posts.length > 0 ? (
-          posts.map((item) => (
-            <div key={item.id} className={styles.postWrapper}>
-              <Card item={item} className={styles.post} />
-              <Link href={`/edit-post/${item.slug}`}>Edit</Link>
-              <button onClick={() => handleDelete(item.slug)}>Delete</button>
-            </div>
-          ))
-        ) : (
-          <p>אין המלצות להצגה, או שהן בטעינה...</p>
-        )}
+    <div className={fredoka.className}>
+      <div className={styles.container}>
+        <h1 className={styles.title}>ההמלצות שלי</h1>
+        <div className={styles.posts}>
+          {posts && posts.length > 0 ? (
+            posts.map((item) => (
+              <div key={item.id} className={styles.postWrapper}>
+                <Card item={item} className={styles.posts} />
+                <Link href={`/edit-post/${item.slug}`} className={`${styles.button} ${styles.editButton}`}>
+                  עריכה
+                </Link>
+                <button
+                  onClick={() => handleDelete(item.slug)}
+                  className={`${styles.button} ${styles.deleteButton}`}
+                >
+                  מחיקה
+                </button>
+              </div>
+            ))
+          ) : (
+            <p>אין המלצות להצגה, או שהן בטעינה...</p>
+          )}
+        </div>
+        <Pagination page={page} hasPrev={hasPrev} hasNext={hasNext} />
       </div>
-      <Pagination page={page} hasPrev={hasPrev} hasNext={hasNext} />
     </div>
   );
 };
