@@ -36,7 +36,7 @@ const EditPost = ({ post }) => {
     const [region, setRegion] = useState("");
     const [regions, setRegions] = useState([]);
 
-    
+
     useEffect(() => {
         const fetchCategories = async () => {
             try {
@@ -65,10 +65,10 @@ const EditPost = ({ post }) => {
     useEffect(() => {
         // Fetch regions or use a predefined list
         setRegions([
-            "צפון-גולן", 
-            "צפון-גליל", 
-            "מרכז", 
-            "דרום", 
+            "צפון-גולן",
+            "צפון-גליל",
+            "מרכז",
+            "דרום",
             "ירושלים והסביבה"
         ]);
     }, []);
@@ -156,6 +156,10 @@ const EditPost = ({ post }) => {
         setMainImageIndex(index);
     };
 
+    const handleCancel = () => {
+        router.push("/userDashboard");
+    };
+
     return (
         <div className={fredoka.className}>
             <div className={styles.container}>
@@ -227,9 +231,15 @@ const EditPost = ({ post }) => {
 
                 {error && <div className={styles.error}>{error}</div>}
 
-                <button className={styles.publish} onClick={handleSubmit}>
-                    עדכן המלצה
-                </button>
+                <div className={styles.buttonContainer}>
+                    <button className={styles.publish} onClick={handleSubmit}>
+                        עדכן המלצה
+                    </button>
+                    <button className={styles.cancel} onClick={handleCancel}>
+                        ביטול עריכה
+                    </button>
+                </div>
+
             </div>
         </div>
     );

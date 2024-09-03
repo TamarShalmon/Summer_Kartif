@@ -5,6 +5,7 @@ import Pagination from "../pagination/Pagination";
 import Card from "../card/Card";
 import Link from "next/link";
 import { Fredoka } from 'next/font/google'
+import Modal from "../modal/Modal";
 
 const fredoka = Fredoka({
   subsets: ['latin'],
@@ -31,6 +32,8 @@ const UserPosts = ({ page, post }) => {
   const [posts, setPosts] = useState([]);
   const [count, setCount] = useState(0);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [postToDelete, setPostToDelete] = useState(null);
 
 
   useEffect(() => {
@@ -48,10 +51,14 @@ const UserPosts = ({ page, post }) => {
   const hasPrev = POST_PER_PAGE * (page - 1) > 0;
   const hasNext = POST_PER_PAGE * (page - 1) + POST_PER_PAGE < count;
 
-  const handleDelete = async (slug) => {
-    if (window.confirm("האם אתה בטוח שברצונך למחוק פוסט זה?")) {
+  const handleDeleteClick = (slug) => {
+    setPostToDelete(slug);
+    setIsModalOpen(true);
+  };
+  const handleDeleteConfirm = async () => {
+    if (postToDelete) {
       try {
-        const res = await fetch(`/api/posts/${encodeURIComponent(slug)}`, {
+        const res = await fetch(`/api/posts/${encodeURIComponent(postToDelete)}`, {
           method: 'DELETE',
         });
 
@@ -60,13 +67,16 @@ const UserPosts = ({ page, post }) => {
           throw new Error(`Failed to delete the post: ${errorData.message}`);
         }
 
-        setPosts(posts.filter(post => post.slug !== slug));
+        setPosts(posts.filter(post => post.slug !== postToDelete));
+        setIsModalOpen(false);
+        setPostToDelete(null);
       } catch (error) {
         console.error("Error deleting post:", error);
         alert(`אירעה שגיאה במחיקת הפוסט: ${error.message}`);
       }
     }
   };
+
 
   return (
     <div className={fredoka.className}>
@@ -81,7 +91,7 @@ const UserPosts = ({ page, post }) => {
                   עריכה
                 </Link>
                 <button
-                  onClick={() => handleDelete(item.slug)}
+                  onClick={() => handleDeleteClick(item.slug)}
                   className={`${styles.button} ${styles.deleteButton}`}
                 >
                   מחיקה
@@ -94,6 +104,12 @@ const UserPosts = ({ page, post }) => {
         </div>
         <Pagination page={page} hasPrev={hasPrev} hasNext={hasNext} />
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={handleDeleteConfirm}
+        message="בטוחים שברצונכם למחוק פוסט זה?"
+      />
     </div>
   );
 };
