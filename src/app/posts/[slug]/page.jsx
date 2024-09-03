@@ -25,7 +25,7 @@ const SinglePage = async ({ params }) => {
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
+    return `${day}.${month}.${year}`;
   };
 
   return (
@@ -44,7 +44,7 @@ const SinglePage = async ({ params }) => {
               </div>
               )} */}
             <div className={styles.userTextContainer}>
-              <div className={styles.cat}>{data?.catSlug}</div>
+              <div className={styles.cat}><strong>{data?.catSlug}</strong>{" | "}{data?.region}</div>
             </div>
           </div>
         </div>

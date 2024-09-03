@@ -16,9 +16,11 @@ const Card = ({ item }) => {
         <div className={styles.textContainer}>
           <div className={styles.detail}>
             <span className={styles.date}>
-              {formattedDate} -{" "}
+              {formattedDate} -{" "}{item.user.name}
             </span>
-            <span className={styles.category}>{item.catSlug}<br />{item.user.name}</span>
+            <span className={styles.category}>
+            <br />{item.catSlug} | {item.region}<br />
+            </span>
           </div>
           <h2 className={styles.title}>{item.title}</h2>
           {/* <p className={styles.desc}>{item.desc.substring(0, 60)}</p> */}
