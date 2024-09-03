@@ -38,15 +38,6 @@ const WritePage = () => {
   const [region, setRegion] = useState("");
   const [regions, setRegions] = useState([]);
 
-  useEffect(() => {
-    // Fetch regions or use a predefined list
-    setRegions([
-      "צפון-גולן", 
-      "צפון-גליל", 
-      "מרכז", 
-      "דרום", 
-      "ירושלים והסביבה"]);
-  }, []);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -65,6 +56,15 @@ const WritePage = () => {
     fetchCategories();
   }, []);
 
+  useEffect(() => {
+    // Fetch regions or use a predefined list
+    setRegions([
+      "צפון-גולן",
+      "צפון-גליל",
+      "מרכז",
+      "דרום",
+      "ירושלים והסביבה"]);
+  }, []);
 
   useEffect(() => {
     const uploadToCloudinary = async () => {

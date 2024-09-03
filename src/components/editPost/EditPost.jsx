@@ -13,7 +13,6 @@ const fredoka = Fredoka({
     variable: '--font-fredoka',
 })
 
-
 const EditPost = ({ post }) => {
     const { status } = useSession();
     const router = useRouter();
@@ -34,7 +33,10 @@ const EditPost = ({ post }) => {
 
     const [error, setError] = useState("");
 
+    const [region, setRegion] = useState("");
+    const [regions, setRegions] = useState([]);
 
+    
     useEffect(() => {
         const fetchCategories = async () => {
             try {
@@ -49,122 +51,88 @@ const EditPost = ({ post }) => {
             }
         };
         fetchCategories();
-
     }, []);
 
     useEffect(() => {
         setTitle(post.title || "");
         setValue(post.desc || "");
         setCatSlug(post.catSlug || "");
+        setRegion(post.region || "");
         setImages(post.additionalImages?.map(url => ({ url })) || []);
         setMainImageIndex(post.mainImageIndex || 0);
     }, [post]);
 
-
     useEffect(() => {
-        const uploadToCloudinary = async () => {
-            const formData = new FormData();
-            formData.append("file", file);
-            formData.append("upload_preset", "your_upload_preset");
-
-
-            try {
-                const response = await fetch(
-                    "https://api.cloudinary.com/v1_1/your_cloud_name/image/upload",
-                    {
-                        method: "POST",
-                        body: formData,
-                    }
-                );
-                const data = await response.json();
-                setMedia(data.secure_url);
-            } catch (error) {
-                console.error("Error uploading to Cloudinary", error);
-            }
-        };
-
-
-        if (file) {
-            uploadToCloudinary();
-        }
-    }, [file]);
-
+        // Fetch regions or use a predefined list
+        setRegions([
+            "צפון-גולן", 
+            "צפון-גליל", 
+            "מרכז", 
+            "דרום", 
+            "ירושלים והסביבה"
+        ]);
+    }, []);
 
     if (status === "loading") {
         return <div className={styles.loading}>Loading...</div>;
     }
-
 
     if (status === "unauthenticated") {
         router.push("/");
         router.refresh("/");
     }
 
+    const handleSubmit = async () => {
+        setError("");
 
-    const slugify = (str) =>
-        str
-            .toLowerCase()
-            .trim()
-            .replace(/[^\w\s-]/g, "")
-            .replace(/[\s_-]+/g, "-")
-            .replace(/^-+|-+$/g, "");
+        if (!title.trim()) {
+            setError("** יש להזין כותרת");
+            return;
+        }
+        if (!catSlug) {
+            setError("** יש לבחור קטגוריה");
+            return;
+        }
+        if (!value.trim()) {
+            setError("** יש להזין תוכן");
+            return;
+        }
+        if (!region) {
+            setError("** יש לבחור אזור");
+            return;
+        }
 
+        try {
+            const res = await fetch(`/api/posts/${post.slug}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    title,
+                    desc: value,
+                    mainImage: images[mainImageIndex]?.url,
+                    additionalImages: images.map(img => img.url),
+                    catSlug,
+                    region,
+                    postId: post.id,
+                }),
+            });
 
-            const handleSubmit = async () => {
-                setError("");
-            
-                if (!title.trim()) {
-                    setError("** יש להזין כותרת");
-                    return;
-                }
-                if (!catSlug) {
-                    setError("** יש לבחור קטגוריה");
-                    return;
-                }
-                if (!value.trim()) {
-                    setError("** יש להזין תוכן");
-                    return;
-                }
-            
-                try {
-                    const res = await fetch(`/api/posts/${post.slug}`, {
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            title,
-                            desc: value,
-                            mainImage: images[mainImageIndex]?.url,
-                            additionalImages: images.map(img => img.url),
-                            catSlug,
-                            postId: post.id,
-                        }),
-                    });
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
 
-                    console.log("Sending data:", {
-                        title,
-                        desc: value,
-                        mainImage: images[mainImageIndex]?.url,
-                        additionalImages: images.map(img => img.url),
-                        catSlug,
-                    });
-            
-                    if (!res.ok) {
-                        throw new Error(`HTTP error! status: ${res.status}`);
-                    }
-            
-                    const data = await res.json();
-                    console.log("Post updated:", data);
-                    router.push(`/posts/${data.slug}`);
-                    router.refresh();
+            const data = await res.json();
+            console.log("Post updated:", data);
+            router.push(`/posts/${data.slug}`);
+            router.refresh();
 
-            
-                } catch (error) {
-                    console.error("Error updating post:", error);
-                    setError("אירעה שגיאה בעת עדכון הפוסט. נא לנסות שוב.");
-                }
-            };
+        } catch (error) {
+            console.error("Error updating post:", error);
+            setError("אירעה שגיאה בעת עדכון הפוסט. נא לנסות שוב.");
+        }
+    };
 
     const handleImageUpload = (result) => {
         const info = result.info;
@@ -175,9 +143,6 @@ const EditPost = ({ post }) => {
         }
     };
 
-
-
-
     const removeImage = (index) => {
         setImages(prev => prev.filter((_, i) => i !== index));
         if (mainImageIndex === index) {
@@ -187,15 +152,9 @@ const EditPost = ({ post }) => {
         }
     };
 
-
-
     const setMainImage = (index) => {
         setMainImageIndex(index);
     };
-
-
-    console.log(title)
-
 
     return (
         <div className={fredoka.className}>
@@ -221,17 +180,28 @@ const EditPost = ({ post }) => {
                     ))}
                 </select>
 
-                <div className={styles.editor}>
+                <select
+                    className={styles.select}
+                    onChange={(e) => setRegion(e.target.value)}
+                    value={region}
+                    required
+                >
+                    <option value="">בחר אזור</option>
+                    {regions.map((r) => (
+                        <option key={r} value={r}>
+                            {r}
+                        </option>
+                    ))}
+                </select>
 
+                <div className={styles.editor}>
                     <textarea
                         className={styles.textArea}
                         value={value}
                         onChange={(e) => setValue(e.target.value)}
                         placeholder="על מה תמליצו?"
                     />
-
                 </div>
-
 
                 <div className={styles.imageUploadSection}>
                     <CldUploadButton
@@ -241,7 +211,6 @@ const EditPost = ({ post }) => {
                     >
                         צרפו תמונות
                     </CldUploadButton>
-
 
                     <div className={styles.imagePreviewContainer}>
                         {images.map((image, index) => (
@@ -258,14 +227,11 @@ const EditPost = ({ post }) => {
 
                 {error && <div className={styles.error}>{error}</div>}
 
-
-
                 <button className={styles.publish} onClick={handleSubmit}>
                     עדכן המלצה
                 </button>
             </div>
         </div>
-
     );
 };
 
