@@ -35,6 +35,18 @@ const WritePage = () => {
 
   const [error, setError] = useState("");
 
+  const [region, setRegion] = useState("");
+  const [regions, setRegions] = useState([]);
+
+  useEffect(() => {
+    // Fetch regions or use a predefined list
+    setRegions([
+      "צפון-גולן", 
+      "צפון-גליל", 
+      "מרכז", 
+      "דרום", 
+      "ירושלים והסביבה"]);
+  }, []);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -58,12 +70,12 @@ const WritePage = () => {
     const uploadToCloudinary = async () => {
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("upload_preset", "your_upload_preset"); 
+      formData.append("upload_preset", "your_upload_preset");
 
 
       try {
         const response = await fetch(
-          "https://api.cloudinary.com/v1_1/your_cloud_name/image/upload", 
+          "https://api.cloudinary.com/v1_1/your_cloud_name/image/upload",
           {
             method: "POST",
             body: formData,
@@ -118,7 +130,7 @@ const WritePage = () => {
       setError("** יש להזין תוכן");
       return;
     }
-  
+
 
     try {
       const res = await fetch("/api/posts", {
@@ -133,6 +145,8 @@ const WritePage = () => {
           additionalImages: images.map(img => img.url),
           slug: title,
           catSlug,
+          region,
+
         }),
       });
 
@@ -190,6 +204,7 @@ const WritePage = () => {
           className={styles.input}
           onChange={(e) => setTitle(e.target.value)}
         />
+
         <select
           className={styles.select}
           onChange={(e) => setCatSlug(e.target.value)}
@@ -200,6 +215,21 @@ const WritePage = () => {
           {categories.map((category) => (
             <option key={category.slug} value={category.slug}>
               {category.title}
+            </option>
+          ))}
+        </select>
+
+
+        <select
+          className={styles.select}
+          onChange={(e) => setRegion(e.target.value)}
+          value={region}
+          required
+        >
+          <option value="">בחרו אזור</option>
+          {regions.map((r) => (
+            <option key={r} value={r}>
+              {r}
             </option>
           ))}
         </select>

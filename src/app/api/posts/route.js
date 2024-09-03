@@ -8,6 +8,8 @@ export const GET = async (req) => {
 
   const page = searchParams.get("page");
   const cat = searchParams.get("cat");
+  const region = searchParams.get("region");
+
 
   const POST_PER_PAGE = 9;
 
@@ -16,6 +18,8 @@ export const GET = async (req) => {
     skip: POST_PER_PAGE * (page - 1),
     where: {
       ...(cat && { catSlug: cat }),
+      ...(region && { region }),
+
     },
     orderBy: {
       createdAt: 'desc',

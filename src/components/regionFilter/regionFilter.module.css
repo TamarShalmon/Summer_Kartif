@@ -1,0 +1,27 @@
+.filterContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 2rem 0 2rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    background-color: transparent;
+    color: var(--textColor);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+    font-family: var(--font-fredoka); 
+  
+  }
+
+  .select:focus {
+    border-color: var(--textColor);
+    outline: none;
+  }
