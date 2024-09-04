@@ -2,6 +2,13 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from 'next/navigation';
 import styles from "./regionFilter.module.css";
+import { Fredoka } from 'next/font/google'
+
+const fredoka = Fredoka({
+    subsets: ['latin'],
+    weight: ['300'],
+    variable: '--font-fredoka',
+})
 
 const RegionFilter = ({ initialRegion }) => {
     const [region, setRegion] = useState(initialRegion || "");
@@ -47,20 +54,23 @@ const RegionFilter = ({ initialRegion }) => {
     };
 
     return (
-        <div className={styles.filterContainer}>
-            <select
-                value={region}
-                onChange={handleRegionChange}
-                className={styles.select}
-            >
-                <option value="">כל האזורים</option>
-                {regions.map((r) => (
-                    <option key={r} value={r}>
-                        {r}
-                    </option>
-                ))}
-            </select>
+        <div className={fredoka.className}>
+            <div className={styles.filterContainer}>
+                <select
+                    value={region}
+                    onChange={handleRegionChange}
+                    className={styles.select}
+                >
+                    <option value="">כל האזורים</option>
+                    {regions.map((r) => (
+                        <option key={r} value={r}>
+                            {r}
+                        </option>
+                    ))}
+                </select>
+            </div>
         </div>
+
     );
 };
 

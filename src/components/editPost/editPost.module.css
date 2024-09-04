@@ -87,7 +87,7 @@
   transition: background-color 0.3s ease;
   font-size: 1rem;
   font-family: var(--font-fredoka); 
-  font-weight: bold;
+  /* font-weight: bold; */
 
 }
 

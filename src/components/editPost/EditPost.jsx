@@ -222,7 +222,8 @@ const EditPost = ({ post }) => {
                         onSuccess={handleImageUpload}
                         className={styles.uploadButton}
                     >
-                        צרפו תמונות
+                        {<strong>צרפו תמונות</strong>}
+                        {<span> (עד 10mb לכל תמונה) </span>}
                     </CldUploadButton>
 
                     <div className={styles.imagePreviewContainer}>

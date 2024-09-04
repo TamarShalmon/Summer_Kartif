@@ -36,10 +36,10 @@ const Footer = () => {
         </div>
         <div className={styles.list}>
           <span className={styles.listTitle}>קטגוריות מובילות</span>
-          <Link href="/">מעיינות</Link>
-          <Link href="/">בריכות שחייה</Link>
-          <Link href="/">לאכול בחוץ</Link>
-          <Link href="/">אטרקציות</Link>
+          <Link href="/blog?cat=מעיינות">מעיינות</Link>
+          <Link href="/blog?cat=מקומות לינה">מקומות לינה</Link>
+          <Link href="/blog?cat=לאכול בחוץ">לאכול בחוץ</Link>
+          <Link href="/blog?cat=אטרקציות">אטרקציות</Link>
         </div>
         {/* <div className={styles.list}>
           <span className={styles.listTitle}>Social</span>

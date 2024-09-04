@@ -6,6 +6,7 @@ import { ThemeContextProvider } from "@/context/ThemeContext";
 import ThemeProvider from "@/providers/ThemeProvider";
 import AuthProvider from "@/providers/AuthProvider";
 import { Fredoka } from 'next/font/google'
+import FooterTamar from "@/components/footerTamar/FooterTamar";
 
 const fredoka = Fredoka({
   subsets: ['latin'],
@@ -30,6 +31,7 @@ export default function RootLayout({ children }) {
                   <Navbar />
                   {children}
                   <Footer />
+                  <FooterTamar  />
                 </div>
                 {/* <Footer className="wrapper1" /> */}
               </div>
