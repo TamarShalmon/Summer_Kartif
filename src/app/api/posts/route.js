@@ -2,6 +2,8 @@ import { getAuthSession } from "@/utils/auth";
 import prisma from "@/utils/connect";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
+import { v4 as uuidv4 } from 'uuid';
+
 
 export const GET = async (req) => {
   const { searchParams } = new URL(req.url);
@@ -64,19 +66,7 @@ export const POST = async (req) => {
 
   try {
     const body = await req.json();
-
-    // Check if the title already exists
-    const existingPost = await prisma.post.findFirst({
-      where: {
-        title: body.title
-      }
-    });
-
-    if (existingPost) {
-      return new NextResponse(
-        JSON.stringify({ message: "כותרת זו כבר קיימת. אנא בחר כותרת אחרת." }, { status: 400 })
-      );
-    }
+    const slug = uuidv4(); // Generate a unique ID for the slug  
 
     // Fetch the category image if the main image is not provided
     let mainImage = body.mainImage;
@@ -98,6 +88,7 @@ export const POST = async (req) => {
     const post = await prisma.post.create({
       data: {
         ...body,
+        slug,
         userEmail: session.user.email,
         mainImage: mainImage,
         additionalImages: body.additionalImages || [],
