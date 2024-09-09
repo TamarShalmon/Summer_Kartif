@@ -35,9 +35,9 @@ export default function RootLayout({ children }) {
                 </div>
                 <div className="footer">
                   <Footer />
+                  <FooterTamar />
                 </div>
 
-                <FooterTamar />
                 {/* <Footer className="wrapper1" /> */}
               </div>
             </ThemeProvider>
