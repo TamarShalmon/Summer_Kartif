@@ -61,6 +61,7 @@ model Category {
   title String
   img   String?
   Posts Post[]
+  order Int 
 }
 
 model Post {

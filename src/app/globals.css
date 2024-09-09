@@ -39,7 +39,7 @@ a {
 
 .container {
   min-height: 100vh;
-  background-color: var(--bg);
+  background-color: #E7E8D8;
   color: var(--textColor);
 }
 
@@ -49,6 +49,20 @@ a {
   margin-right: auto;
   padding-left: 80px;
   padding-right: 80px;
+}
+
+.navbar{
+  padding-left: 40px;
+  padding-right: 40px;
+  background-color: #BC9F8B;
+  position: sticky;
+  top: 0px; /* כמה רחוק מהחלק העליון של הדף */
+  z-index: 100; /* כדי לוודא שהיא מעל רכיבים אחרים אם יש חפיפה */
+}
+
+.footer{
+  padding-left: 40px;
+  padding-right: 40px;
 }
 
 

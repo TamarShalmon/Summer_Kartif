@@ -12,7 +12,7 @@
   font-size: 2.5rem;
   padding: 1rem 0;
   border: none;
-  border-bottom: 2px solid var(--softBg);
+  border-bottom: 2px solid #6b6a69;
   outline: none;
   background-color: transparent;
   color: var(--textColor);
@@ -26,14 +26,14 @@
 }
 
 .input::placeholder {
-  color: #b3b3b1;
+  color: #6b6a69;
 }
 
 .select {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 0.5rem;
-  background-color: transparent;
+  background-color: #fafafa;
   color: var(--textColor);
   font-size: 1rem;
   cursor: pointer;
@@ -58,7 +58,7 @@
   width: 100%;
   height: 300px;
   font-size: 1.1rem;
-  background-color: transparent;
+  background-color: #fafafa;
   color: var(--textColor);
   border: none;
   resize: vertical;

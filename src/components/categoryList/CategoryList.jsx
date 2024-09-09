@@ -1,32 +1,45 @@
 "use client"
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styles from "./categoryList.module.css";
 import Link from "next/link";
 import Image from "next/image";
 
-const getData = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/categories`, {
-    cache: "no-store",
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
-};
-
 const CategoryList = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
+  const [isSticky, setIsSticky] = useState(false);
+  const categoryListRef = useRef(null);
 
   useEffect(() => {
-    getData()
-      .then(setData)
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        setError(error);
-      });
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/categories`, {
+          cache: "no-store",
+        });
+        if (!res.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const jsonData = await res.json();
+        setData(jsonData);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        setError(err);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (categoryListRef.current) {
+        const { bottom } = categoryListRef.current.getBoundingClientRect();
+        setIsSticky(bottom <= 0);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   if (error) return <div>Error loading categories</div>;
@@ -34,11 +47,10 @@ const CategoryList = () => {
   if (!Array.isArray(data)) return <div>Data is not an array</div>;
 
   return (
-    <div className={styles.container}>
-      {/* <h1 className={styles.title}>קטגוריות מומלצות</h1> */}
-      <div className={styles.categories}>
-        {data.map((item, index) => {
-          return (
+    <>
+      <div className={styles.container} ref={categoryListRef}>
+        <div className={styles.categories}>
+          {data.map((item, index) => (
             <Link
               href={`/blog?cat=${item.slug}`}
               className={styles.category}
@@ -55,10 +67,21 @@ const CategoryList = () => {
               )}
               <span className={styles.categoryTitle}>{item.title}</span>
             </Link>
-          );
-        })}
+          ))}
+        </div>
       </div>
-    </div>
+      <div className={`${styles.stickyCategories} ${isSticky ? styles.visible : ''}`}>
+        {data.map((item, index) => (
+          <Link
+            href={`/blog?cat=${item.slug}`}
+            className={styles.stickyCategory}
+            key={`sticky-${item._id}-${index}`}
+          >
+            {item.title}
+          </Link>
+        ))}
+      </div>
+    </>
   );
 };
 

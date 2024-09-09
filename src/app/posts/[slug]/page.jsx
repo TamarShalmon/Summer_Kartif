@@ -25,7 +25,7 @@ const SinglePage = async ({ params }) => {
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
-    return `${day}.${month}.${year}`;
+    return `${day}/${month}/${year}`;
   };
 
   return (
@@ -50,9 +50,9 @@ const SinglePage = async ({ params }) => {
         </div>
       </div>
       <h1 className={styles.title}>{data?.title}</h1>
-      <span className={styles.username}>
-        {data?.user?.name || "Unknown User"}{" "}
-      </span>
+        <span className={styles.username}>
+          {data?.user?.name || "Unknown User"}{" "}
+        </span>
       <span className={styles.date}>|{" "}{formatDate(data.createdAt)}</span>
       <div className={styles.content}>
         <div className={styles.post}>

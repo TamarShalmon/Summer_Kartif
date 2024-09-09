@@ -167,6 +167,8 @@ const WritePage = () => {
       const data = await res.json();
       console.log("Post created:", data);
       router.push(`/posts/${data.slug}`);
+      router.refresh();   
+
 
     } catch (error) {
       console.error("Error creating post:", error);

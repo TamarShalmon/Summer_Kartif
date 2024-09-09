@@ -9,10 +9,13 @@ export const GET = async () => {
         title: true,
         img: true,
       },
+      orderBy: {
+        order: 'asc',  
+      },
     });
 
     return new NextResponse(JSON.stringify(categories, { status: 200 }));
-    
+
   } catch (err) {
     console.log(err);
     return new NextResponse(

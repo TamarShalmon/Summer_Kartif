@@ -34,7 +34,7 @@
   align-items: center;
   justify-content: center;
   gap: 20px;
-  background-color: #cccccc;
+  background-color: #B5CFB7;
   padding: 15px;
   border-radius: 10px;
 }
@@ -61,7 +61,7 @@
 
 .username {
   font-size: 20px;
-  /* font-weight: 600; */
+  font-weight: 600;
   color: var(--textColor);
 }
 
