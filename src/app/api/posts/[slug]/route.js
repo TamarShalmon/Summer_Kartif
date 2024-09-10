@@ -80,12 +80,16 @@ export const PUT = async (req, { params }) => {
       const body = await req.json();
       console.log("Received body:", body); // Log the received data
 
-      const { title, desc, catSlug, mainImage, additionalImages } = body;
+      const { title, desc, catSlug, mainImage, additionalImages, region  } = body;
 
       const post = await prisma.post.findUnique({
           where: { slug },
-          include: { cat: true }, // Include the current category to get its image
-      });
+          // include: { cat: true }, // Include the current category to get its image
+          select: {
+            userEmail: true,
+            catSlug: true
+          },
+        });
 
       if (!post || post.userEmail !== session.user.email) {
           return new NextResponse(
@@ -99,6 +103,7 @@ export const PUT = async (req, { params }) => {
     if (catSlug && catSlug !== post.catSlug && !mainImage) {
       const newCategory = await prisma.category.findUnique({
         where: { slug: catSlug },
+        select: { img: true },
       });
 
       if (newCategory && newCategory.img) {
@@ -114,6 +119,7 @@ export const PUT = async (req, { params }) => {
               catSlug,
               mainImage: updatedMainImage,
               additionalImages,
+              region,
           },
       });
 
