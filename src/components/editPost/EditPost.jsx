@@ -133,7 +133,7 @@ const EditPost = ({ post }) => {
             }
 
             const data = await res.json();
-            console.log("Post updated:", data);
+            // console.log("Post updated:", data);
             router.push(`/posts/${data.slug}`);
             router.refresh();
 

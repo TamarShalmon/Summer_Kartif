@@ -17,7 +17,7 @@ export const GET = async () => {
     return new NextResponse(JSON.stringify(categories, { status: 200 }));
 
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     return new NextResponse(
       JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
     );

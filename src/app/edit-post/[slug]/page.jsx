@@ -24,7 +24,7 @@ const EditPage = async ({ params }) => {
   }
   const post = await getPost(slug);
 
-  console.log("tamar:", slug)
+  // console.log("slug:", slug)
 
 
 

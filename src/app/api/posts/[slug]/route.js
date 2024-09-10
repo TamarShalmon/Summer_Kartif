@@ -15,7 +15,7 @@ export const GET = async (req, { params }) => {
 
     return new NextResponse(JSON.stringify(post, { status: 200 }));
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     return new NextResponse(
       JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
     );
@@ -78,7 +78,7 @@ export const PUT = async (req, { params }) => {
 
   try {
       const body = await req.json();
-      console.log("Received body:", body); // Log the received data
+      // console.log("Received body:", body); // Log the received data
 
       const { title, desc, catSlug, mainImage, additionalImages, region  } = body;
 

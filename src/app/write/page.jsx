@@ -165,7 +165,7 @@ const WritePage = () => {
       }
 
       const data = await res.json();
-      console.log("Post created:", data);
+      // console.log("Post created:", data);
       router.push(`/posts/${data.slug}`);
       router.refresh();   
 
@@ -204,7 +204,7 @@ const WritePage = () => {
   };
 
 
-  console.log(title)
+  // console.log(title)
 
 
   return (

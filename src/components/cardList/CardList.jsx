@@ -51,7 +51,7 @@ const CardList = async ({ page, cat, region }) => {
       </div>
     );
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     return <div>Something went wrong!</div>;
   }
 };

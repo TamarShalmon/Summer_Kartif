@@ -25,7 +25,7 @@ export const authOptions = {
 export const getAuthSession = () => {
   try {
     const session = getServerSession(authOptions);
-    console.log("Session:", session);
+    // console.log("Session:", session);
     return session;
   } catch (error) {
     console.error("Error getting auth session:", error);

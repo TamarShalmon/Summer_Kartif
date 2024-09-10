@@ -21,7 +21,7 @@ const fetcher = async (url) => {
 
   if (!res.ok) {
     const error = new Error(data.message);
-    // console.error("Fetch error:", error);
+    console.error("Fetch error:", error);
     throw error;
   }
 
@@ -60,7 +60,7 @@ const Comments = ({ postSlug }) => {
       //   throw new Error("Failed to submit comment");
       // }
       // const result = await response.json();
-      // console.log("Comment submitted successfully:", result);
+      // // console.log("Comment submitted successfully:", result);
       mutate(); // Re-fetch comments after submitting
       setDesc("");
     // } catch (error) {

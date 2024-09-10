@@ -6,10 +6,10 @@ import { NextResponse } from "next/server";
 export const GET = async (req) => {
   const { searchParams } = new URL(req.url);
   const postSlug = searchParams.get("postSlug");
-  console.log("postSlug:", postSlug);
+  // console.log("postSlug:", postSlug);
 
   try {
-    console.log("Fetching comments for postSlug:", postSlug);
+    // console.log("Fetching comments for postSlug:", postSlug);
     const comments = await prisma.comment.findMany({
       where: {
         ...(postSlug && { postSlug }),
@@ -17,7 +17,7 @@ export const GET = async (req) => {
       include: { user: true },
     });
     
-    console.log("Prisma query result:", comments);
+    // console.log("Prisma query result:", comments);
     return new NextResponse(JSON.stringify(comments, { status: 200 }));
   } catch (err) {
     console.error("Error fetching comments:", err);
@@ -39,16 +39,16 @@ export const POST = async (req) => {
 
   try {
     const body = await req.json();
-    console.log("Received body:", body); // Log
+    // console.log("Received body:", body); // Log
 
     const comment = await prisma.comment.create({
       data: { ...body, userEmail: session.user.email },
     });
 
-    console.log("Comment created:", comment); // Log
+    // console.log("Comment created:", comment); // Log
     return new NextResponse(JSON.stringify(comment, { status: 200 }));
   } catch (err) {
-    console.log("Error creating comment:", err); // Log
+    // console.log("Error creating comment:", err); // Log
     return new NextResponse(
       JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
     );
