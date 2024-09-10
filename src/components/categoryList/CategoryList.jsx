@@ -14,7 +14,7 @@ const CategoryList = () => {
     const fetchData = async () => {
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/categories`, {
-          cache: "no-store",
+        cache: "default", // You can also try "default" or "no-store"
         });
         if (!res.ok) {
           throw new Error("Failed to fetch data");
