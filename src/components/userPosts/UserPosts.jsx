@@ -67,6 +67,9 @@ const UserPosts = ({ page, post }) => {
           throw new Error(`Failed to delete the post: ${errorData.message}`);
         }
 
+        const data = await res.json();
+        console.log(data.message); // Log the success message
+
         setPosts(posts.filter(post => post.slug !== postToDelete));
         setIsModalOpen(false);
         setPostToDelete(null);

@@ -29,7 +29,8 @@ const fetcher = async (url) => {
 };
 
 const Comments = ({ postSlug }) => {
-  const { status } = useSession();
+
+  const { status, session } = useSession();
   const { data, mutate, isLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/api/comments`,
     fetcher
@@ -47,22 +48,22 @@ const Comments = ({ postSlug }) => {
   const handleSubmit = async () => {
     // console.log("Submitting comment:", { desc, postSlug });
     // try {
-      // const response = 
-      await fetch("/api/comments", {
-        method: "POST",
-        body: JSON.stringify({ desc, postSlug }),
-        
-        // headers: {
-        //   "Content-Type": "application/json",
-        // },
-      });
-      // if (!response.ok) {
-      //   throw new Error("Failed to submit comment");
-      // }
-      // const result = await response.json();
-      // // console.log("Comment submitted successfully:", result);
-      mutate(); // Re-fetch comments after submitting
-      setDesc("");
+    // const response = 
+    await fetch("/api/comments", {
+      method: "POST",
+      body: JSON.stringify({ desc, postSlug }),
+
+      // headers: {
+      //   "Content-Type": "application/json",
+      // },
+    });
+    // if (!response.ok) {
+    //   throw new Error("Failed to submit comment");
+    // }
+    // const result = await response.json();
+    // // console.log("Comment submitted successfully:", result);
+    mutate(); // Re-fetch comments after submitting
+    setDesc("");
     // } catch (error) {
     //   // console.error("Error submitting comment:", error);
     // }
@@ -80,7 +81,8 @@ const Comments = ({ postSlug }) => {
     <div className={fredoka.className}>
       <div className={styles.container}>
         <h1 className={styles.title}>תגובות</h1>
-        {status === "authenticated" ? (
+
+        {!session?.user?.approved ? (
           <div className={styles.write}>
             <textarea
               placeholder="מה אתם חושבים? שתפו אותנו בתגובות"
@@ -95,6 +97,7 @@ const Comments = ({ postSlug }) => {
         ) : (
           <Link href="/login">התחברו כדי לכתוב תגובות להמלצות</Link>
         )}
+
         <div className={styles.comments}>
           {isLoading
             ? "loading"

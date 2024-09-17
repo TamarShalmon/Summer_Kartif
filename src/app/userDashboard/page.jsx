@@ -9,6 +9,10 @@ const UserDashboard = async ({ searchParams }) => {
         redirect('/login'); // Redirect to login page if not authenticated
     }
 
+    if (!session?.user?.approved) {
+        redirect("/pending-approval");;
+      }
+
     const page = parseInt(searchParams.page) || 1;
     const { id } = searchParams;
 

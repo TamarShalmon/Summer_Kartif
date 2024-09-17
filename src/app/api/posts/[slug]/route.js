@@ -37,6 +37,7 @@ export const DELETE = async (req, { params }) => {
   try {
     const post = await prisma.post.findUnique({
       where: { slug },
+      include: { comments: true },
     });
 
     if (!post) {
@@ -51,9 +52,16 @@ export const DELETE = async (req, { params }) => {
       );
     }
 
+    // Delete all comments associated with the post
+    await prisma.comment.deleteMany({
+      where: { postSlug: slug },
+    });
+
+    // Now delete the post
     await prisma.post.delete({
       where: { slug },
     });
+    router.refresh("/");
 
     return new NextResponse(JSON.stringify({ message: "Post Deleted!" }, { status: 200 }));
   } catch (err) {

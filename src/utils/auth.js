@@ -19,13 +19,25 @@ export const authOptions = {
     // }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: "/",
+  },
+  callbacks: {
+    async session({ session, user }) {
+      const dbUser = await prisma.user.findUnique({
+        where: { email: user.email },
+      });
+      session.user.approved = dbUser?.approved || false;
+      return session;
+    },
+  },
   debug: true,
 };
 
 export const getAuthSession = () => {
   try {
     const session = getServerSession(authOptions);
-    // console.log("Session:", session);
+    console.log("Session:", session);
     return session;
   } catch (error) {
     console.error("Error getting auth session:", error);

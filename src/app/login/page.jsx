@@ -3,34 +3,37 @@ import { signIn, useSession } from "next-auth/react";
 import styles from "./loginPage.module.css";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link";
+import { useEffect } from "react";
 
 const LoginPage = () => {
-  const { status } = useSession();
-
+  const { data: session, status } = useSession();
   const router = useRouter();
 
+  useEffect(() => {
+    if (status === "authenticated") {
+      if (session.user.approved) {
+        router.push("/"); 
+      } else {
+        router.push("/pending-approval");
+      }
+    }
+  }, [session, status, router]);
+
   if (status === "loading") {
-    return <div className={styles.loading}>Loading...</div>;
+    return <div className={styles.loading}>טוען...</div>;
   }
 
-  if (status === "authenticated") {
-    router.push("/")
-  }
+  const handleSignIn = () => {
+    signIn("google");
+  };
 
   return (
     <div className={styles.container}>
-
       <div className={styles.wrapper}>
-        {/* <Link href="/">
-          <Image src="/logo.png" alt="logo" width={300} height={80} className={styles.logoImage} />
-        </Link> */}
-        <div className={styles.socialButton} onClick={() => signIn("google")}>
+        <div className={styles.socialButton} onClick={handleSignIn}>
           התחברו עם Google
           <Image src="/google.png" alt="logo" width={30} height={30} className={styles.image} />
         </div>
-        {/* <div className={styles.socialButton}>Sign in with Github</div> */}
-        {/* <div className={styles.socialButton}>Sign in with Facebook</div> */}
       </div>
     </div>
   );

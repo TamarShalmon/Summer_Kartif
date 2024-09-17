@@ -22,11 +22,14 @@ const EditPage = async ({ params }) => {
   if (!session) {
     redirect('/login'); // Redirect to login page if not authenticated
   }
+
+  if (!session?.user?.approved) {
+      redirect("/pending-approval");;
+    }
+
+    
   const post = await getPost(slug);
-
   // console.log("slug:", slug)
-
-
 
   return (
     <div>
