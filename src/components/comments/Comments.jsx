@@ -30,43 +30,24 @@ const fetcher = async (url) => {
 
 const Comments = ({ postSlug }) => {
 
-  const { status, session } = useSession();
+  const { status, data: session } = useSession();
   const { data, mutate, isLoading } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/comments`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/comments?postSlug=${postSlug}`,
     fetcher
   );
   // console.log("Client postSlug:", postSlug);
   // console.log("Fetched comments:", data);
 
-  // Filter comments based on postSlug
-  const filteredComments = data?.filter((comment) => comment.postSlug === postSlug);
-  // console.log("filteredComments:", filteredComments);
-
-
   const [desc, setDesc] = useState("");
 
   const handleSubmit = async () => {
     // console.log("Submitting comment:", { desc, postSlug });
-    // try {
-    // const response = 
     await fetch("/api/comments", {
       method: "POST",
       body: JSON.stringify({ desc, postSlug }),
-
-      // headers: {
-      //   "Content-Type": "application/json",
-      // },
     });
-    // if (!response.ok) {
-    //   throw new Error("Failed to submit comment");
-    // }
-    // const result = await response.json();
-    // // console.log("Comment submitted successfully:", result);
     mutate(); // Re-fetch comments after submitting
     setDesc("");
-    // } catch (error) {
-    //   // console.error("Error submitting comment:", error);
-    // }
   };
 
   const formatDate = (dateString) => {
@@ -101,7 +82,7 @@ const Comments = ({ postSlug }) => {
         <div className={styles.comments}>
           {isLoading
             ? "loading"
-            : filteredComments?.map((item) => (
+            : data?.map((item) => (
               <div className={styles.comment} key={item.id}>
                 <div className={styles.user}>
                   {item?.user?.image && (
