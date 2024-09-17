@@ -10,7 +10,7 @@ const UserDashboard = async ({ searchParams }) => {
     }
 
     if (!session?.user?.approved) {
-        redirect("/pending-approval");;
+        redirect("/pendingApproval");;
       }
 
     const page = parseInt(searchParams.page) || 1;

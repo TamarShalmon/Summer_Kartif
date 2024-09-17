@@ -14,7 +14,7 @@ const LoginPage = () => {
       if (session.user.approved) {
         router.push("/"); 
       } else {
-        router.push("/pending-approval");
+        router.push("/pendingApproval");
       }
     }
   }, [session, status, router]);

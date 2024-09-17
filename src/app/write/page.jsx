@@ -25,7 +25,7 @@ const WritePage = async ({ params }) => {
   }
 
   if (!session?.user?.approved) {
-    redirect("/pending-approval");;
+    redirect("/pendingApproval");;
   }
 
 
