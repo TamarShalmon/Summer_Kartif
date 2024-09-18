@@ -31,11 +31,46 @@
 }
 
 .confirmButton {
-  background-color: #d9534f;
+  background-color: #8E3B46;
   color: white;
 }
 
-.cancelButton {
-  background-color: #f0ad4e;
-  color: white;
+.confirmButton {
+  background-color: #8E3B46;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: var(--font-fredoka);
 }
+
+.confirmButton:hover {
+  background-color: rgb(133, 22, 22);
+}
+
+.confirmButton:active {
+  background-color:rgb(104, 16, 16);
+  transform: translateY(2px);
+}
+
+
+.cancelButton {
+  background-color: #F4A261; 
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: var(--font-fredoka);
+}
+
+.cancelButton:hover {
+  background-color: #E98E50;
+}
+
+.cancelButton:active {
+  background-color: #D77A3D; 
+  transform: translateY(2px);
+}
+

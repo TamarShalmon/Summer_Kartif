@@ -6,13 +6,14 @@ import Image from "next/image";
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { Fredoka } from 'next/font/google'
+import { Fredoka } from 'next/font/google';
+import Modal from "../modal/Modal"; // ייבוא המודל
 
 const fredoka = Fredoka({
   subsets: ['latin'],
   weight: ['300'],
   variable: '--font-fredoka',
-})
+});
 
 const fetcher = async (url) => {
   const res = await fetch(url);
@@ -24,12 +25,10 @@ const fetcher = async (url) => {
     console.error("Fetch error:", error);
     throw error;
   }
-
   return data;
 };
 
 const Comments = ({ postSlug }) => {
-
   const { status, data: session } = useSession();
   const { data, mutate, isLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/api/comments?postSlug=${postSlug}`,
@@ -39,6 +38,8 @@ const Comments = ({ postSlug }) => {
   // console.log("Fetched comments:", data);
 
   const [desc, setDesc] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [commentToDelete, setCommentToDelete] = useState(null);
 
   const handleSubmit = async () => {
     // console.log("Submitting comment:", { desc, postSlug });
@@ -46,8 +47,33 @@ const Comments = ({ postSlug }) => {
       method: "POST",
       body: JSON.stringify({ desc, postSlug }),
     });
-    mutate(); // Re-fetch comments after submitting
+    mutate();
     setDesc("");
+  };
+
+  const handleDeleteClick = (commentId) => {
+    console.log("Opening modal for comment:", commentId);
+    setCommentToDelete(commentId);
+    setIsModalOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (commentToDelete) {
+      try {
+        const res = await fetch(`/api/comments?id=${commentToDelete}`, {
+          method: "DELETE",
+        });
+        if (res.ok) {
+          mutate(); // רענון הנתונים לאחר מחיקה
+          setIsModalOpen(false); // סגירת המודל לאחר המחיקה
+          setCommentToDelete(null); // איפוס ה-state
+        } else {
+          console.error("Failed to delete comment");
+        }
+      } catch (error) {
+        console.error("Error deleting comment:", error);
+      }
+    }
   };
 
   const formatDate = (dateString) => {
@@ -63,7 +89,7 @@ const Comments = ({ postSlug }) => {
       <div className={styles.container}>
         <h1 className={styles.title}>תגובות</h1>
 
-        {!session?.user?.approved ? (
+        {session?.user?.approved ? (
           <div className={styles.write}>
             <textarea
               placeholder="מה אתם חושבים? שתפו אותנו בתגובות"
@@ -100,12 +126,25 @@ const Comments = ({ postSlug }) => {
                   </div>
                 </div>
                 <p className={styles.desc}>{item.desc}</p>
+                {session?.user?.email === item.user.email && (
+                  <button onClick={() => handleDeleteClick(item.id)} className={styles.deleteButton}>
+                    מחק תגובה
+                  </button>
+                )}
               </div>
             ))}
         </div>
       </div>
-    </div>
 
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}  
+          onClose={() => setIsModalOpen(false)}
+          onConfirm={handleDeleteConfirm}
+          message="בטוחים שברצונכם למחוק תגובה זו?"
+        />
+      )}
+    </div>
   );
 };
 

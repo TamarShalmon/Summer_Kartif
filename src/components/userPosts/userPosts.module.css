@@ -39,31 +39,31 @@
 }
 
 .editButton {
-  background-color: #2196F3; 
+  background-color: #9AAEBB; 
 }
 
 .editButton:hover {
-  background-color: #1976D2;
+  background-color: #607D8B   ;
 }
 
 .editButton:active {
-  background-color: #1565C0;
+  background-color: #1565C0  ;
   transform: translateY(2px);
 }
 
 .deleteButton {
-  background-color: #f44336; /* אדום */
+  background-color: #8E3B46; 
   bottom: 10px; /* מרחק מהתחתית */
   left: 10px; /* מרחק מהימין והפרדה מכפתור Edit */
   font-family: var(--font-fredoka);
 }
 
 .deleteButton:hover {
-  background-color: #e53935;
+  background-color: #B71C1C  ;
 }
 
 .deleteButton:active {
-  background-color: #d32f2f;
+  background-color: #C62828 ;
   transform: translateY(2px);
 }
 

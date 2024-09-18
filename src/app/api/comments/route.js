@@ -16,7 +16,7 @@ export const GET = async (req) => {
       },
       include: { user: true },
     });
-    
+
     // console.log("Prisma query result:", comments);
     return new NextResponse(JSON.stringify(comments, { status: 200 }));
   } catch (err) {
@@ -49,6 +49,51 @@ export const POST = async (req) => {
     return new NextResponse(JSON.stringify(comment, { status: 200 }));
   } catch (err) {
     // console.log("Error creating comment:", err); // Log
+    return new NextResponse(
+      JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
+    );
+  }
+};
+
+
+// DELETE A COMMENT
+export const DELETE = async (req) => {
+  const session = await getAuthSession();
+  if (!session) {
+    return new NextResponse(
+      JSON.stringify({ message: "Not Authenticated!" }, { status: 401 })
+    );
+  }
+
+  try {
+    const { searchParams } = new URL(req.url);
+    const commentId = searchParams.get("id");
+
+    const comment = await prisma.comment.findUnique({
+      where: { id: commentId },
+    });
+
+    if (!comment) {
+      return new NextResponse(
+        JSON.stringify({ message: "Comment not found!" }, { status: 404 })
+      );
+    }
+
+    if (comment.userEmail !== session.user.email) {
+      return new NextResponse(
+        JSON.stringify({ message: "Not Authorized!" }, { status: 403 })
+      );
+    }
+
+    await prisma.comment.delete({
+      where: { id: commentId },
+    });
+
+    return new NextResponse(
+      JSON.stringify({ message: "Comment has been deleted" }, { status: 200 })
+    );
+  } catch (err) {
+    console.error(err);
     return new NextResponse(
       JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
     );
