@@ -74,12 +74,13 @@
 
   .links {
     width: 100%;
-    justify-content: space-between;
+    justify-content: space-around;
   }
 }
 @media screen and (max-width: 640px) {
   .links {
     font-size: 14px;
+    justify-content: space-around;
   }
 }
 
