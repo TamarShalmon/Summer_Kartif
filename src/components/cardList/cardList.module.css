@@ -10,9 +10,21 @@
 }
 
 .posts {
-  display: flex;
-  gap: 30px;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 עמודות */
+  gap: 20px;
+  justify-items: center; /* ממקם את התוכן במרכז */
   padding-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+  .posts {
+    grid-template-columns: repeat(2, 1fr); /* שני עמודות במסכים קטנים יותר */
+  }
+}
+
+@media (max-width: 480px) {
+  .posts {
+    grid-template-columns: 1fr; /* עמודה אחת במסכים ממש קטנים */
+  }
 }

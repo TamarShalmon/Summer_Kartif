@@ -1,16 +1,37 @@
-import React from "react";
+"use client"
+import React, { useEffect, useState } from "react";
 import styles from "./featured.module.css";
 import Image from "next/image";
 
 const Featured = () => {
+  const [fontSize, setFontSize] = useState(55); // גודל פונט התחלתי
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrolled = window.scrollY;
+
+      if (scrolled > 0) {
+        setFontSize(20); // הקטן ל-20px כאשר יש גלילה כלשהי
+      } else {
+        setFontSize(55); // הגודל המקורי אם אין גלילה
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    // הסרה של המאזין כשמרכיב יוצא מהדף
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>
-        {/* <b>ברוכים הבאים לבלוג !</b>  */}
+      <h1 className={styles.title} style={{ fontSize: `${fontSize}px` }}>
         בואו לגלות את המקומות הכי שווים דרך חוויות של החברים מהישוב.
-        <br/>כאן תוכלו לשתף ולהמליץ על מקומות בילוי,
-        <br/>אטרקציות וטיולים אהובים.
-        <br/>בטוחים שתהנו!
+        <br />כאן תוכלו לשתף ולהמליץ על מקומות בילוי,
+        <br />אטרקציות וטיולים אהובים.
+        <br />בטוחים שתהנו!
       </h1>
       {/* <div className={styles.post}>
         <div className={styles.imgContainer}>
