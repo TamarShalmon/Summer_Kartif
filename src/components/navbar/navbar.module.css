@@ -17,7 +17,8 @@
 
 .betaText {
   font-size: 22px;
-  /* font-weight: bold; */
+  writing-mode: vertical-rl; /* מציג את הטקסט אנכית מימין לשמאל */
+  text-orientation: mixed;   /* שומר על כיוון התווים במצב קריא */  /* font-weight: bold; */
 }
 
 .links {
