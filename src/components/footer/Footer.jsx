@@ -10,7 +10,7 @@ const Footer = () => {
         <div className={styles.logo}>
           <Link href="/" className={styles.logo} >
             <Image src="/logo.png" alt="logo" width={300} height={80} className={styles.logoImage} />
-            <span className={styles.betaText}>beta</span>
+            {/* <span className={styles.betaText}>beta</span> */}
           </Link>
         </div>
         <p className={styles.desc}>

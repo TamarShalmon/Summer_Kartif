@@ -12,7 +12,7 @@ const LoginPage = () => {
   useEffect(() => {
     if (status === "authenticated") {
       if (session.user.approved) {
-        router.push("/"); 
+        router.push("/");
       } else {
         router.push("/pendingApproval");
       }
@@ -30,9 +30,18 @@ const LoginPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
+        <div className={styles.text}>
+          <br /><b>לרגל השקת האתר, הכניסה פתוחה לכולם!
+          <br />בעוד שבועיים הוספת המלצות ותגובות לאתר תתאפשר לתושבי כרמי קטיף בלבד.</b>
+        </div>
         <div className={styles.socialButton} onClick={handleSignIn}>
           התחברו עם Google
           <Image src="/google.png" alt="logo" width={30} height={30} className={styles.image} />
+        </div>
+        <div className={styles.text}>
+          <br /><b>רוצים גם פלטפורמה כזו לקהילה שלכם?</b>
+          <br />פנו אליי ונגשים את זה יחד!
+          <br />tamar.shalmon1@gmail.com
         </div>
       </div>
     </div>

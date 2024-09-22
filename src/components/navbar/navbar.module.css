@@ -3,22 +3,18 @@
   align-items: flex-end;
   justify-content: space-between;
   height: 85px;
-  padding-bottom: 5px;
+  padding-bottom: 7px;
 }
 
 .logo {
   display: flex;
   align-items: flex-end;
+  margin-bottom: -5px; /* הוספת מרווח שלילי לתיקון יישור הלוגו */
+
 }
 
 .logoImage {
   object-fit: contain;
-}
-
-.betaText {
-  font-size: 22px;
-  writing-mode: vertical-rl; /* מציג את הטקסט אנכית מימין לשמאל */
-  text-orientation: mixed;   /* שומר על כיוון התווים במצב קריא */  /* font-weight: bold; */
 }
 
 .links {

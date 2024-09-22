@@ -7,12 +7,13 @@
 
 .wrapper {
   background-color: #B5CFB7;
-  padding: 90px 200px;
+  padding: 50px 125px;
   display: flex;
   align-items: center;
   flex-direction: column;
   gap: 50px;
   border-radius: 10px;
+  align-items: stretch;
 }
 
 .socialButton {
@@ -38,17 +39,22 @@
   object-fit: contain;
 }
 
+.text {
+  font-size: 18px;
+}
+
 @media screen and (max-width: 768px) {
   .wrapper {
     padding: 50px 100px;
   }
 }
+
 @media screen and (max-width: 640px) {
   .wrapper {
     padding: 30px;
   }
 
-  .socialButton{
+  .socialButton {
     font-weight: 400;
     font-size: 14px;
   }
