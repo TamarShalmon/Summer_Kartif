@@ -89,7 +89,7 @@
 
 @media screen and (max-width: 768px) {
   .categories {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   }
   
   .category {
@@ -112,5 +112,11 @@
   .stickyCategory {
     margin: 2px;
     font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .categories {
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
   }
 }
