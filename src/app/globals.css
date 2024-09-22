@@ -61,8 +61,8 @@ a {
 }
 
 .footer{
-  padding-left: 40px;
-  padding-right: 40px;
+  padding-left: 60px;
+  padding-right: 60px;
   background-color: #CADABF;
 }
 
@@ -74,24 +74,22 @@ a {
 }
 @media screen and (max-width: 1280px) {
   .wrapper {
-    max-width: 1024px;
+    max-width: 1155px;
   }
 }
 @media screen and (max-width: 1024px) {
   .wrapper {
-    max-width: 768px;
-    padding-left: 40px;
-    padding-right: 40px;
+    max-width: 925px;
   }
 }
 @media screen and (max-width: 768px) {
   .wrapper {
-    max-width: 640px;
+    max-width: 695px;
   }
 }
 @media screen and (max-width: 640px) {
   .wrapper {
-    max-width: 475px;
+    max-width: 635px;
   }
 
   .navbar{

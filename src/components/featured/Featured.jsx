@@ -1,7 +1,6 @@
 "use client"
 import React, { useEffect, useState } from "react";
 import styles from "./featured.module.css";
-import Image from "next/image";
 
 const Featured = () => {
   const [fontSize, setFontSize] = useState(55); // גודל פונט התחלתי
@@ -13,15 +12,24 @@ const Featured = () => {
       if (scrolled > 0) {
         setFontSize(20); // הקטן ל-20px כאשר יש גלילה כלשהי
       } else {
-        setFontSize(55); // הגודל המקורי אם אין גלילה
+        // אם המסך בגודל קטן מ-640px, גודל הפונט יהיה 36px, אחרת 45px או 55px לפי גודל המסך
+        if (window.innerWidth <= 640) {
+          setFontSize(36);
+        } else if (window.innerWidth <= 930) {
+          setFontSize(45);
+        } else {
+          setFontSize(55);
+        }
       }
     };
 
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleScroll); // לעדכן גם בעת שינוי גודל חלון
 
     // הסרה של המאזין כשמרכיב יוצא מהדף
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
     };
   }, []);
 
@@ -33,22 +41,9 @@ const Featured = () => {
         <br />אטרקציות וטיולים אהובים.
         <br />בטוחים שתהנו!
       </h1>
-      {/* <div className={styles.post}>
-        <div className={styles.imgContainer}>
-          <Image src="/p1.jpeg" alt="" fill className={styles.image} />
-        </div>
-        <div className={styles.textContainer}>
-          <h1 className={styles.postTitle}>לכיש, חבל ארץ מהמם.</h1>
-          <p className={styles.postDesc}>
-           אתם תהנו מכל מה שיש בסביבה, בזכות הקהילה שלכם, שמשתפת אתכם 
-           אם תפרסמו המלצה, כך תעזרו לכולם לדעת מה יש.
-           תמליצו ותתנו תגובות ככה כולם יהנו
-          </p>
-          <button className={styles.button}>Read More</button>
-        </div>
-      </div> */}
     </div>
   );
 };
 
 export default Featured;
+
