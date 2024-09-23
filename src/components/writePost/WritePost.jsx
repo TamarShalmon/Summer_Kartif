@@ -33,6 +33,7 @@ const WritePage = () => {
   const [categories, setCategories] = useState([]);
 
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const [region, setRegion] = useState("");
   const [regions, setRegions] = useState([]);
@@ -135,6 +136,7 @@ const WritePage = () => {
 
   const handleSubmit = async () => {
     setError("");
+    setSuccessMessage("");
 
     if (!title.trim()) {
       setError("** יש להזין כותרת");
@@ -148,7 +150,6 @@ const WritePage = () => {
       setError("** יש להזין תוכן");
       return;
     }
-
 
     try {
       const res = await fetch("/api/posts", {
@@ -180,6 +181,7 @@ const WritePage = () => {
       }
 
       const data = await res.json();
+      setSuccessMessage("ההמלצה מתפרסמת, אנא המתן");
       // console.log("Post created:", data);
       router.push(`/posts/${data.slug}`);
       router.refresh();
@@ -344,8 +346,7 @@ const WritePage = () => {
         </div>
 
         {error && <div className={styles.error}>{error}</div>}
-
-
+        {successMessage && <div className={styles.success}>{successMessage}</div>}
 
         <button className={styles.publish} onClick={handleSubmit}>
           פרסום המלצה

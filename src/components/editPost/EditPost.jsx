@@ -26,6 +26,7 @@ const EditPost = ({ post }) => {
     const [categories, setCategories] = useState([]);
 
     const [error, setError] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
 
     const [region, setRegion] = useState("");
     const [regions, setRegions] = useState([]);
@@ -102,6 +103,7 @@ const EditPost = ({ post }) => {
 
     const handleSubmit = async () => {
         setError("");
+        setSuccessMessage("");
 
         if (!title.trim()) {
             setError("** יש להזין כותרת");
@@ -150,6 +152,7 @@ const EditPost = ({ post }) => {
             }
 
             const data = await res.json();
+            setSuccessMessage("ההמלצה מתפרסמת, אנא המתן");
             // console.log("Post updated:", data);
             router.push(`/posts/${data.slug}`);
             router.refresh();
@@ -305,6 +308,7 @@ const EditPost = ({ post }) => {
                 </div>
 
                 {error && <div className={styles.error}>{error}</div>}
+                {successMessage && <div className={styles.success}>{successMessage}</div>}
 
                 <div className={styles.buttonContainer}>
                     <button className={styles.publish} onClick={handleSubmit}>

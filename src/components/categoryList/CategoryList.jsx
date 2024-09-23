@@ -43,7 +43,7 @@ const CategoryList = () => {
   }, []);
 
   if (error) return <div>Error loading categories</div>;
-  if (!data) return <div>Loading...</div>;
+  if (!data) return <div>טוען קטגוריות...</div>;
   if (!Array.isArray(data)) return <div>Data is not an array</div>;
 
   return (
