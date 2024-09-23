@@ -92,6 +92,14 @@ export const POST = async (req) => {
         userEmail: session.user.email,
         mainImage: mainImage,
         additionalImages: body.additionalImages || [],
+        entryFee: body.entryFee || null,
+        parking: body.parking || null,
+        shadedSeating: body.shadedSeating || null,
+        waterDepth: body.waterDepth || null,
+        recommendedGear: body.recommendedGear || null,
+        difficulty: body.difficulty || null,
+        duration: body.duration || null,
+        season: body.season || null,
       },
     });
 

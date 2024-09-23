@@ -31,8 +31,8 @@ const LoginPage = () => {
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <div className={styles.text}>
-          <br /><b>לרגל השקת האתר, הכניסה פתוחה לכולם!
-          <br />בעוד שבועיים הוספת המלצות ותגובות לאתר תתאפשר לתושבי כרמי קטיף בלבד.</b>
+        {/* <br /><b>לרגל השקת האתר, הכניסה פתוחה לכולם!
+        <br />בשבועיים הקרובים, האתר פתוח להוספת המלצות ותגובות. לאחר מכן, יתאפשר לתושבי כרמי קטיף בלבד.</b> */}
         </div>
         <div className={styles.socialButton} onClick={handleSignIn}>
           התחברו עם Google

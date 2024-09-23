@@ -21,7 +21,7 @@ const RegionFilter = ({ initialRegion }) => {
         setRegions([
             "כרמי קטיף והסביבה 😎",
             "חרמון גולן ועמק החולה",
-            "גליל עליון וגליל מערב",
+            "גליל עליון וגליל מערבי",
             "גליל תחתון",
             "חיפה והכרמל",
             "עמק יזרעאל ועמק המעיינות",

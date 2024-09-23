@@ -17,7 +17,6 @@ const getData = async (slug) => {
 
 const SinglePage = async ({ params }) => {
   const { slug } = params;
-
   const data = await getData(slug);
 
   const formatDate = (dateString) => {
@@ -50,12 +49,20 @@ const SinglePage = async ({ params }) => {
         </div>
       </div>
       <h1 className={styles.title}>{data?.title}</h1>
-        <span className={styles.username}>
-          {data?.user?.name || "Unknown User"}{" "}
-        </span>
+      <span className={styles.username}>
+        {data?.user?.name || "Unknown User"}{" "}
+      </span>
       <span className={styles.date}>|{" "}{formatDate(data.createdAt)}</span>
       <div className={styles.content}>
         <div className={styles.post}>
+          {data?.difficulty && <div className={styles.description}><b>דרגת קושי, מתאים למשפחות:</b> {data.difficulty}</div>}
+          {data?.duration && <div className={styles.description}><b>משך המסלול:</b> {data.duration}</div>}
+          {data?.season && <div className={styles.description}><b>עונת הטיול:</b> {data.season}</div>}
+          {data?.shadedSeating && <div className={styles.description}><b>מקומות ישיבה מוצלים:</b> {data.shadedSeating}</div>}
+          {data?.waterDepth && <div className={styles.description}><b>עומק מים:</b> {data.waterDepth}</div>}
+          {data?.recommendedGear && <div className={styles.description}><b>ציוד מומלץ:</b> {data.recommendedGear}</div>}
+          {data?.entryFee && <div className={styles.description}><b>כניסה בתשלום:</b> {data.entryFee}</div>}
+          {data?.parking && <div className={styles.description}><b>הסדרי חניה:</b> {data.parking}</div>}
           <div className={styles.description}>
             {data?.desc ?
               data.desc.split('\n').map((paragraph, index) => (
@@ -79,6 +86,8 @@ const SinglePage = async ({ params }) => {
               ))}
             </div>
           )}
+
+
           <div className={styles.comment}>
             <Comments postSlug={slug} />
           </div>

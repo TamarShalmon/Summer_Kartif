@@ -18,7 +18,6 @@ const WritePage = () => {
   const { status } = useSession();
   const router = useRouter();
 
-  const [open, setOpen] = useState(false);
   const [file, setFile] = useState(null);
   const [media, setMedia] = useState("");
   const [value, setValue] = useState("");
@@ -37,6 +36,15 @@ const WritePage = () => {
 
   const [region, setRegion] = useState("");
   const [regions, setRegions] = useState([]);
+
+  const [entryFee, setEntryFee] = useState("");
+  const [parking, setParking] = useState("");
+  const [shadedSeating, setShadedSeating] = useState("");
+  const [waterDepth, setWaterDepth] = useState("");
+  const [recommendedGear, setRecommendedGear] = useState("");
+  const [difficulty, setDifficulty] = useState("");
+  const [duration, setDuration] = useState("");
+  const [season, setSeason] = useState("");
 
 
   useEffect(() => {
@@ -61,7 +69,7 @@ const WritePage = () => {
     setRegions([
       "כרמי קטיף והסביבה 😎",
       "חרמון גולן ועמק החולה",
-      "גליל עליון וגליל מערב",
+      "גליל עליון וגליל מערבי",
       "גליל תחתון",
       "חיפה והכרמל",
       "עמק יזרעאל ועמק המעיינות",
@@ -156,7 +164,14 @@ const WritePage = () => {
           slug: title,
           catSlug,
           region,
-
+          entryFee,
+          parking,
+          shadedSeating,
+          waterDepth,
+          recommendedGear,
+          difficulty,
+          duration,
+          season,
         }),
       });
 
@@ -167,12 +182,58 @@ const WritePage = () => {
       const data = await res.json();
       // console.log("Post created:", data);
       router.push(`/posts/${data.slug}`);
-      router.refresh();   
+      router.refresh();
 
 
     } catch (error) {
       console.error("Error creating post:", error);
       setError("אירעה שגיאה בעת יצירת הפוסט. נא לנסות שוב.");
+    }
+  };
+
+  const renderCategorySpecificFields = () => {
+    switch (catSlug) {
+      case "מעיינות":
+        return (
+          <>
+            <input className={styles.select} type="text" placeholder="באיזו עונה טיילתם?" value={season} onChange={(e) => setSeason(e.target.value)} />
+            <input className={styles.select} type="text" placeholder="מה עומק המים?" value={waterDepth} onChange={(e) => setWaterDepth(e.target.value)} />
+            <input className={styles.select} type="text" placeholder="האם יש מקומות ישיבה מוצלים?" value={shadedSeating} onChange={(e) => setShadedSeating(e.target.value)} />
+            <input className={styles.select} type="text" placeholder="איזה ציוד הייתם ממליצים להביא?" value={recommendedGear} onChange={(e) => setRecommendedGear(e.target.value)} />
+            <input className={styles.select} type="text" placeholder="כניסה בתשלום? כמה?" value={entryFee} onChange={(e) => setEntryFee(e.target.value)} />
+            <input className={styles.select} type="text" placeholder="הסדרי חניה" value={parking} onChange={(e) => setParking(e.target.value)} />
+          </>
+        );
+      case "מסלולי טיול":
+        return (
+          <>
+            <input className={styles.select} type="text" placeholder="דרגת קושי, מתאים למשפחות?" value={difficulty} onChange={(e) => setDifficulty(e.target.value)} />
+            <input className={styles.select} type="text" placeholder="משך המסלול" value={duration} onChange={(e) => setDuration(e.target.value)} />
+            <input className={styles.select} type="text" placeholder="באיזו עונה טיילתם?" value={season} onChange={(e) => setSeason(e.target.value)} />
+            <input className={styles.select} type="text" placeholder="איזה ציוד הייתם ממליצים להביא?" value={recommendedGear} onChange={(e) => setRecommendedGear(e.target.value)} />
+            <input className={styles.select} type="text" placeholder="הכניסה בתשלום? כמה?" value={entryFee} onChange={(e) => setEntryFee(e.target.value)} />
+            <input className={styles.select} type="text" placeholder="הסדרי חניה" value={parking} onChange={(e) => setParking(e.target.value)} />
+          </>
+        );
+      case "תערוכות":
+      case "אטרקציות":
+        return (
+          <>
+            <input className={styles.select} type="text" placeholder="לאיזה טווח גילאים מתאים?" value={difficulty} onChange={(e) => setDifficulty(e.target.value)} />
+            <input className={styles.select} type="text" placeholder="כניסה בתשלום? כמה?" value={entryFee} onChange={(e) => setEntryFee(e.target.value)} />
+            <input className={styles.select} type="text" placeholder="הסדרי חניה" value={parking} onChange={(e) => setParking(e.target.value)} />
+          </>
+        );
+      case "קטיף":
+        return (
+          <>
+            <input className={styles.select} type="text" placeholder="באיזו עונה טיילתם?" value={season} onChange={(e) => setSeason(e.target.value)} />
+            <input className={styles.select} type="text" placeholder="כניסה בתשלום? כמה?" value={entryFee} onChange={(e) => setEntryFee(e.target.value)} />
+            <input className={styles.select} type="text" placeholder="הסדרי חניה" value={parking} onChange={(e) => setParking(e.target.value)} />
+          </>
+        );
+      default:
+        return null;
     }
   };
 
@@ -246,15 +307,15 @@ const WritePage = () => {
           ))}
         </select>
 
-        <div className={styles.editor}>
+        {renderCategorySpecificFields()}
 
+        <div className={styles.editor}>
           <textarea
             className={styles.textArea}
             value={value}
             onChange={(e) => setValue(e.target.value)}
             placeholder="על מה תמליצו?"
           />
-
         </div>
 
 

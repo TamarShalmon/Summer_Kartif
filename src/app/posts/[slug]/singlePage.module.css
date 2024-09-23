@@ -66,7 +66,8 @@
 }
 
 .p{
-  margin-top: 30px;
+  margin-top: 45px;
+  margin-bottom: 45px;  
 }
 
 .imageContainer {
@@ -90,6 +91,7 @@
 .content {
   display: flex;
   gap: 50px;
+  padding-top: 55px;
 }
 
 .post {
@@ -100,7 +102,7 @@
   font-size: 18px;
   line-height: 0;
   color: var(--textColor);
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
 .additionalImagesContainer {

@@ -79,33 +79,33 @@ export const PUT = async (req, { params }) => {
   const { slug } = params;
 
   if (!session) {
-      return new NextResponse(
-          JSON.stringify({ message: "Not Authenticated!" }, { status: 401 })
-      );
+    return new NextResponse(
+      JSON.stringify({ message: "Not Authenticated!" }, { status: 401 })
+    );
   }
 
   try {
-      const body = await req.json();
-      // console.log("Received body:", body); // Log the received data
+    const body = await req.json();
+    // console.log("Received body:", body); // Log the received data
 
-      const { title, desc, catSlug, mainImage, additionalImages, region  } = body;
+    const { title, desc, catSlug, mainImage, additionalImages, region, entryFee, parking, shadedSeating, waterDepth, recommendedGear, difficulty, duration, season } = body;
 
-      const post = await prisma.post.findUnique({
-          where: { slug },
-          // include: { cat: true }, // Include the current category to get its image
-          select: {
-            userEmail: true,
-            catSlug: true
-          },
-        });
+    const post = await prisma.post.findUnique({
+      where: { slug },
+      // include: { cat: true }, // Include the current category to get its image
+      select: {
+        userEmail: true,
+        catSlug: true
+      },
+    });
 
-      if (!post || post.userEmail !== session.user.email) {
-          return new NextResponse(
-              JSON.stringify({ message: "Not Authorized!" }, { status: 403 })
-          );
-      }
+    if (!post || post.userEmail !== session.user.email) {
+      return new NextResponse(
+        JSON.stringify({ message: "Not Authorized!" }, { status: 403 })
+      );
+    }
 
-      let updatedMainImage = mainImage;
+    let updatedMainImage = mainImage;
 
     // Check if the category was changed and no mainImage was provided
     if (catSlug && catSlug !== post.catSlug && !mainImage) {
@@ -119,23 +119,31 @@ export const PUT = async (req, { params }) => {
       }
     }
 
-      const updatedPost = await prisma.post.update({
-          where: { slug },
-          data: {
-              title,
-              desc,
-              catSlug,
-              mainImage: updatedMainImage,
-              additionalImages,
-              region,
-          },
-      });
+    const updatedPost = await prisma.post.update({
+      where: { slug },
+      data: {
+        title,
+        desc,
+        catSlug,
+        mainImage: updatedMainImage,
+        additionalImages,
+        region,
+        entryFee,
+        parking,
+        shadedSeating,
+        waterDepth,
+        recommendedGear,
+        difficulty,
+        duration,
+        season,
+      },
+    });
 
-      return new NextResponse(JSON.stringify(updatedPost, { status: 200 }));
+    return new NextResponse(JSON.stringify(updatedPost, { status: 200 }));
   } catch (err) {
-      console.error("Server error:", err); // Detailed error logging
-      return new NextResponse(
-          JSON.stringify({ message: "Something went wrong!", error: err.message }, { status: 500 })
-      );
+    console.error("Server error:", err); // Detailed error logging
+    return new NextResponse(
+      JSON.stringify({ message: "Something went wrong!", error: err.message }, { status: 500 })
+    );
   }
 };

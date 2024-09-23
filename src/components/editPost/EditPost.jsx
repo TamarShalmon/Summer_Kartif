@@ -17,15 +17,9 @@ const EditPost = ({ post }) => {
     const { status } = useSession();
     const router = useRouter();
 
-    const [file, setFile] = useState(null);
-    const [media, setMedia] = useState("");
     const [value, setValue] = useState("");
     const [title, setTitle] = useState("");
     const [catSlug, setCatSlug] = useState("");
-
-    const [imageUrl, setImageUrl] = useState("");
-    const [publicId, setPublicId] = useState("");
-
     const [images, setImages] = useState([]);
     const [mainImageIndex, setMainImageIndex] = useState(0);
 
@@ -36,6 +30,14 @@ const EditPost = ({ post }) => {
     const [region, setRegion] = useState("");
     const [regions, setRegions] = useState([]);
 
+    const [entryFee, setEntryFee] = useState("");
+    const [parking, setParking] = useState("");
+    const [shadedSeating, setShadedSeating] = useState("");
+    const [waterDepth, setWaterDepth] = useState("");
+    const [recommendedGear, setRecommendedGear] = useState("");
+    const [difficulty, setDifficulty] = useState("");
+    const [duration, setDuration] = useState("");
+    const [season, setSeason] = useState("");
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -60,14 +62,21 @@ const EditPost = ({ post }) => {
         setRegion(post.region || "");
         setImages(post.additionalImages?.map(url => ({ url })) || []);
         setMainImageIndex(post.mainImageIndex || 0);
+        setEntryFee(post.entryFee || "");
+        setParking(post.parking || "");
+        setShadedSeating(post.shadedSeating || "");
+        setWaterDepth(post.waterDepth || "");
+        setRecommendedGear(post.recommendedGear || "");
+        setDifficulty(post.difficulty || "");
+        setDuration(post.duration || "");
+        setSeason(post.season || "");
     }, [post]);
 
     useEffect(() => {
-        // Fetch regions or use a predefined list
         setRegions([
             "כרמי קטיף והסביבה 😎",
             "חרמון גולן ועמק החולה",
-            "גליל עליון וגליל מערב",
+            "גליל עליון וגליל מערבי",
             "גליל תחתון",
             "חיפה והכרמל",
             "עמק יזרעאל ועמק המעיינות",
@@ -125,6 +134,14 @@ const EditPost = ({ post }) => {
                     catSlug,
                     region,
                     postId: post.id,
+                    entryFee,
+                    parking,
+                    shadedSeating,
+                    waterDepth,
+                    recommendedGear,
+                    difficulty,
+                    duration,
+                    season,
                 }),
             });
 
@@ -169,6 +186,52 @@ const EditPost = ({ post }) => {
         router.push("/userDashboard");
     };
 
+    const renderCategorySpecificFields = () => {
+        switch (catSlug) {
+            case "מעיינות":
+                return (
+                    <>
+                        <input className={styles.select} type="text" placeholder="באיזו עונה טיילתם?" value={season} onChange={(e) => setSeason(e.target.value)} />
+                        <input className={styles.select} type="text" placeholder="מה עומק המים?" value={waterDepth} onChange={(e) => setWaterDepth(e.target.value)} />
+                        <input className={styles.select} type="text" placeholder="האם יש מקומות ישיבה מוצלים?" value={shadedSeating} onChange={(e) => setShadedSeating(e.target.value)} />
+                        <input className={styles.select} type="text" placeholder="איזה ציוד הייתם ממליצים להביא?" value={recommendedGear} onChange={(e) => setRecommendedGear(e.target.value)} />
+                        <input className={styles.select} type="text" placeholder="כניסה בתשלום? כמה?" value={entryFee} onChange={(e) => setEntryFee(e.target.value)} />
+                        <input className={styles.select} type="text" placeholder="הסדרי חניה" value={parking} onChange={(e) => setParking(e.target.value)} />
+                    </>
+                );
+            case "מסלולי טיול":
+                return (
+                    <>
+                        <input className={styles.select} type="text" placeholder="דרגת קושי, מתאים למשפחות?" value={difficulty} onChange={(e) => setDifficulty(e.target.value)} />
+                        <input className={styles.select} type="text" placeholder="משך המסלול" value={duration} onChange={(e) => setDuration(e.target.value)} />
+                        <input className={styles.select} type="text" placeholder="באיזו עונה טיילתם?" value={season} onChange={(e) => setSeason(e.target.value)} />
+                        <input className={styles.select} type="text" placeholder="איזה ציוד הייתם ממליצים להביא?" value={recommendedGear} onChange={(e) => setRecommendedGear(e.target.value)} />
+                        <input className={styles.select} type="text" placeholder="הכניסה בתשלום? כמה?" value={entryFee} onChange={(e) => setEntryFee(e.target.value)} />
+                        <input className={styles.select} type="text" placeholder="הסדרי חניה" value={parking} onChange={(e) => setParking(e.target.value)} />
+                    </>
+                );
+            case "תערוכות":
+            case "אטרקציות":
+                return (
+                    <>
+                        <input className={styles.select} type="text" placeholder="לאיזה טווח גילאים מתאים?" value={difficulty} onChange={(e) => setDifficulty(e.target.value)} />
+                        <input className={styles.select} type="text" placeholder="כניסה בתשלום? כמה?" value={entryFee} onChange={(e) => setEntryFee(e.target.value)} />
+                        <input className={styles.select} type="text" placeholder="הסדרי חניה" value={parking} onChange={(e) => setParking(e.target.value)} />
+                    </>
+                );
+            case "קטיף":
+                return (
+                    <>
+                        <input className={styles.select} type="text" placeholder="באיזו עונה טיילתם?" value={season} onChange={(e) => setSeason(e.target.value)} />
+                        <input className={styles.select} type="text" placeholder="כניסה בתשלום? כמה?" value={entryFee} onChange={(e) => setEntryFee(e.target.value)} />
+                        <input className={styles.select} type="text" placeholder="הסדרי חניה" value={parking} onChange={(e) => setParking(e.target.value)} />
+                    </>
+                );
+            default:
+                return null;
+        }
+    };
+
     return (
         <div className={fredoka.className}>
             <div className={styles.container}>
@@ -206,6 +269,8 @@ const EditPost = ({ post }) => {
                         </option>
                     ))}
                 </select>
+
+                {renderCategorySpecificFields()}
 
                 <div className={styles.editor}>
                     <textarea
@@ -249,7 +314,6 @@ const EditPost = ({ post }) => {
                         ביטול עריכה
                     </button>
                 </div>
-
             </div>
         </div>
     );
