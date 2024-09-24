@@ -65,10 +65,10 @@
   color: var(--textColor);
 }
 
-.p{
-  margin-top: 45px;
-  margin-bottom: 45px;  
-}
+/* .p{
+  /* margin-top: 45px;
+  margin-bottom: 45px;   */
+/* } */ 
 
 .imageContainer {
   flex: 1;
@@ -91,7 +91,7 @@
 .content {
   display: flex;
   gap: 50px;
-  padding-top: 55px;
+  padding-top: 30px;
 }
 
 .post {
@@ -100,9 +100,9 @@
 
 .description {
   font-size: 18px;
-  line-height: 0;
+  line-height: 24px;
   color: var(--textColor);
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 .additionalImagesContainer {
