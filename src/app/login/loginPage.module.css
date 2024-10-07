@@ -2,18 +2,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 60px;
+  min-height: 100vh;
+  background-color: #f0f4f0;
+  margin: 40px 210px;
 }
 
 .wrapper {
-  background-color: #B5CFB7;
-  padding: 50px 125px;
+  background-color: #ffffff;
+  padding: 40px;
   display: flex;
-  align-items: center;
   flex-direction: column;
-  gap: 50px;
+  gap: 20px;
   border-radius: 10px;
-  align-items: stretch;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
 }
 
 .socialButton {
@@ -28,7 +31,13 @@
   border: solid 1px #333;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+  transition: background-color 0.3s;
 }
+
+
+.socialButton:hover {
+  background-color: #3367D6;
+} 
 
 .image {
   margin-right: 12px;
@@ -42,6 +51,46 @@
 .text {
   font-size: 18px;
 }
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #777;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #ddd;
+}
+
+.divider span {
+  padding: 0 10px;
+}
+
+.registerLink {
+  text-align: center;
+  font-size: 16px;
+}
+
+.registerLink a {
+  color: #4285F4;
+  text-decoration: none;
+}
+
+.registerLink a:hover {
+  text-decoration: underline;
+}
+
+.infoText {
+  text-align: center;
+  font-size: 16px;
+  color: #555;
+  margin-top: 20px;
+}
+
 
 @media screen and (max-width: 768px) {
   .wrapper {

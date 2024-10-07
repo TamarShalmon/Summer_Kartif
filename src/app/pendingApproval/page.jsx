@@ -13,7 +13,7 @@ const PendingApprovalPage = () => {
     if (status === "unauthenticated") {
       router.push("/login");
     } else if (status === "authenticated" && session.user.approved) {
-      router.push("/dashboard");
+      router.push("/");
     }
   }, [session, status, router]);
 

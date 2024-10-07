@@ -22,7 +22,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="he" dir="rtl" className={fredoka.variable}>
-      <body className={fredoka.className}>
+      <body className={fredoka.variable} >
         <AuthProvider>
           <ThemeContextProvider>
             <ThemeProvider>
