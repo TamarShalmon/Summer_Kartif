@@ -21,36 +21,25 @@
   max-width: 400px;
 }
 
-.socialButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #ffffff;
-  color: #333;
+.title {
+  font-size: 24px;
   font-weight: bold;
-  padding: 15px 20px;
-  border-radius: 24px;
-  border: solid 1px #333;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-  font-size: 18px;
-}
-
-.socialButton:hover {
-  background-color: #3367D6;
-  color: #ffffff;
-}
-
-.image {
-  margin-right: 12px;
-  width: 24px;
-  height: 24px;
-}
-
-.text {
-  font-size: 16px;
   text-align: center;
+  color: #333;
+}
+
+.loginLink {
+  text-align: center;
+  font-size: 16px;
+}
+
+.loginLink a {
+  color: #4285F4;
+  text-decoration: underline;
+}
+
+.loginLink a:hover {
+  text-decoration: underline;
 }
 
 .divider {
@@ -72,19 +61,6 @@
   padding: 0 10px;
 }
 
-.registerLink {
-  text-align: center;
-  font-size: 16px;
-}
-
-.registerLink a {
-  color: #4285F4;
-  text-decoration: underline;
-}
-
-.registerLink a:hover {
-  text-decoration: underline;
-}
 
 .infoText {
   text-align: center;
@@ -95,10 +71,6 @@
 @media screen and (max-width: 768px) {
   .wrapper {
     padding: 30px;
-  }
-
-  .socialButton {
-    padding: 12px 15px;
   }
 }
 
@@ -112,19 +84,11 @@
     padding: 20px;
   }
 
-  .socialButton {
-    padding: 10px;
-    font-size: 15px;
+  .title {
+    font-size: 20px;
   }
 
-  .image {
-    width: 20px;
-    height: 20px;
-  }
-
-  .text,
-  .infoText,
-  .registerLink {
+  .loginLink {
     font-size: 15px;
   }
 }

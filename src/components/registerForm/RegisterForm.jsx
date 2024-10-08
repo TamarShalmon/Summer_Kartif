@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import styles from "./registerForm.module.css";
 
 const RegisterForm = () => {
   const [email, setEmail] = useState('');
@@ -14,7 +15,7 @@ const RegisterForm = () => {
     e.preventDefault();
 
     if (!name || !email || !password) {
-      setError("All fields are necessary.");
+      setError("כל השדות הכרחיים.");
       return;
     }
 
@@ -40,27 +41,30 @@ const RegisterForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} >
+    <form onSubmit={handleSubmit} className={styles.form}>
       <input
         type="text"
         onChange={(e) => setName(e.target.value)}
         placeholder="שם מלא"
         required
+        className={styles.input}
       />
       <input
         type="email"
         onChange={(e) => setEmail(e.target.value)}
         placeholder="אימייל"
         required
+        className={styles.input}
       />
       <input
         type="password"
         onChange={(e) => setPassword(e.target.value)}
         placeholder="סיסמה"
         required
+        className={styles.input}
       />
-      <button type="submit">הרשמה</button>
-      {error && <p>{error}</p>}
+      <button type="submit" className={styles.button}>הרשמה</button>
+      {error && <p className={styles.error}>{error}</p>}
     </form>
   );
 };
