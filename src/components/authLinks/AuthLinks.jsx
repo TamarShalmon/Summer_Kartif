@@ -1,11 +1,13 @@
 "use client";
 import Link from "next/link";
 import styles from "./authLinks.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
+import AuthModal from "../../modals/authModal/AuthModal"
 
 const AuthLinks = () => {
   const [open, setOpen] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const { status } = useSession();
 
   const handleLinkClick = () => {
@@ -16,6 +18,14 @@ const AuthLinks = () => {
     signOut();
     setOpen(false);
   };
+
+  useEffect(() => {
+    const hasVisited = localStorage.getItem('hasVisited');
+    if (!hasVisited && status === "unauthenticated") {
+      setShowModal(true);
+      localStorage.setItem('hasVisited', 'true');
+    }
+  }, [status]);
 
   return (
     <>
@@ -52,11 +62,12 @@ const AuthLinks = () => {
               <Link href="/userDashboard" onClick={handleLinkClick} >ההמלצות שלי</Link>
               <span className={styles.links} onClick={handleSignOut}>
                 התנתק
-              </span>
+        </span>
             </>
           )}
         </div>
       )}
+      {showModal && <AuthModal onClose={() => setShowModal(false)} />}
     </>
   );
 };

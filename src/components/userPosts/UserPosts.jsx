@@ -5,7 +5,7 @@ import Pagination from "../pagination/Pagination";
 import Card from "../card/Card";
 import Link from "next/link";
 import { Fredoka } from 'next/font/google'
-import Modal from "../modal/Modal";
+import Modal from "../../modals/confirmModal/Modal";
 
 const fredoka = Fredoka({
   subsets: ['latin'],

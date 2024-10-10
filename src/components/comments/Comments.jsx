@@ -7,7 +7,7 @@ import useSWR from "swr";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { Fredoka } from 'next/font/google';
-import Modal from "../modal/Modal"; // ייבוא המודל
+import Modal from "../../modals/confirmModal/Modal"; 
 
 const fredoka = Fredoka({
   subsets: ['latin'],
