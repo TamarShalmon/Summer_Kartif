@@ -8,14 +8,24 @@ import ThemeToggle from "../themeToggle/ThemeToggle";
 const Navbar = () => {
   return (
     <div className={styles.container}>
-      <Link href="/" className={styles.logo} >
-        <Image src="/logo.png" alt="logo" width={300} height={80} className={styles.logoImage} />
-      </Link>
 
       <div className={styles.links}>
-        <Link href="/" className={styles.link}>דף הבית</Link>
-        <AuthLinks />
+        <Link href="/" className={styles.logo} >
+          <Image src="/logo.png" alt="logo" width={300} height={80} className={styles.logoImage} />
+        </Link>
+        <Link href="/" className={styles.link}>
+          דף הבית
+        </Link>
+        <Link href="/write" className={styles.link}>
+          פרסום המלצה
+        </Link>
+        <Link href="/userDashboard" className={styles.link}>
+          ההמלצות שלי
+        </Link>
       </div>
+
+      <AuthLinks />
+      
     </div>
   );
 };

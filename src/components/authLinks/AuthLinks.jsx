@@ -30,43 +30,33 @@ const AuthLinks = () => {
   return (
     <>
       {status === "unauthenticated" ? (
-        <Link href="/login" className={styles.link}>
+        <Link href="/login" className={`${styles.link} ${styles.authButton}`}>
           התחבר
         </Link>
       ) : (
-        <>
-          <Link href="/write" className={styles.link}>
-            פרסום המלצה
-          </Link>
-          <Link href="/userDashboard" className={styles.link}>
-            ההמלצות שלי
-          </Link>
-          <span className={styles.link} onClick={signOut}>
-            התנתק
-          </span>
-        </>
+        <span className={`${styles.link} ${styles.authButton}`} onClick={signOut}>
+          התנתק
+        </span>
       )}
       <div className={`${styles.burger} ${open ? styles.open : ''}`} onClick={() => setOpen(!open)}>
         <div className={styles.line}></div>
         <div className={styles.line}></div>
         <div className={styles.line}></div>
       </div>
-      {open && (
-        <div className={styles.responsiveMenu}>
-          <Link href="/" onClick={handleLinkClick}>דף הבית</Link>
-          {status === "unauthenticated" ? (
-            <Link href="/login" onClick={handleLinkClick}>התחבר</Link>
-          ) : (
-            <>
-              <Link href="/write" onClick={handleLinkClick}>פרסם המלצה</Link>
-              <Link href="/userDashboard" onClick={handleLinkClick} >ההמלצות שלי</Link>
-              <span className={styles.links} onClick={handleSignOut}>
-                התנתק
-        </span>
-            </>
-          )}
-        </div>
-      )}
+      <div className={`${styles.responsiveMenu} ${open ? styles.open : ''}`}>
+        <Link href="/" onClick={handleLinkClick}>דף הבית</Link>
+        <Link href="/write" onClick={handleLinkClick}>פרסם המלצה</Link>
+        <Link href="/userDashboard" onClick={handleLinkClick}>ההמלצות שלי</Link>
+        {status === "unauthenticated" ? (
+          <Link href="/login">
+            התחבר
+          </Link>
+        ) : (
+          <span onClick={signOut}>
+            התנתק
+          </span>
+        )}
+      </div>
       {showModal && <AuthModal onClose={() => setShowModal(false)} />}
     </>
   );

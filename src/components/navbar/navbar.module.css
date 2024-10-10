@@ -20,6 +20,7 @@
 .links {
   display: flex;
   align-items: center;
+  align-items: flex-end;
   gap: 20px;
   font-size: 22px;
   font-weight: bold;
@@ -39,8 +40,8 @@
     text-align: left;
   }
   .links {
-    font-size: 16px;
-    gap: 9px;
+    font-size: 20px;
+    gap: 7px;
   }
 }
 

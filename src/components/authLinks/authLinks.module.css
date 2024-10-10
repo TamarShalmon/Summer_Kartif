@@ -1,3 +1,20 @@
+/* authLinks.module.css */
+.authButton {
+  background-color: #BC9F8B;
+  border-radius: 5px;
+  padding: 8px 16px;
+  font-size: 18px;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  height: 93%;
+  background-color: #9C7D6A;
+}
+
+.authButton:hover {
+  background-color: #8d7160;
+}
+
 .link {
   cursor: pointer;
   font-size: 22px;
@@ -8,16 +25,15 @@
   cursor: pointer;
 }
 
-
 .burger {
   width: 28px;
-  height: 25px;
+  height: 30px;
   display: none;
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
   position: relative;
-  padding-bottom: 2.5px;
+  padding-bottom: 7px;
 }
 
 .line {
@@ -28,7 +44,7 @@
 }
 
 .burger.open .line:nth-child(1) {
-  transform: rotate(45deg) translate(8px, 8px);
+  transform: translateY(11px) rotate(45deg);
 }
 
 .burger.open .line:nth-child(2) {
@@ -36,23 +52,30 @@
 }
 
 .burger.open .line:nth-child(3) {
-  transform: rotate(-45deg) translate(8px, -8px);
+  transform: translateY(-11px) rotate(-45deg);
 }
 
 .responsiveMenu {
-  position: absolute;
+  position: fixed;
   top: 85px;
-  left: 0;
+  left: -40%;
   background-color: var(--bg);
   height: calc(100vh - 85px);
-  width: 100%;
+  width: 40%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 50px;
-  font-size: 36px;
+  justify-content: flex-start;
+  gap: 17px;
+  font-size: 20px;
   z-index: 999;
+  align-items: center;
+  padding-top: 25px;
+  font-weight: 800;
+  transition: left 0.3s ease-in-out;
+}
+
+.responsiveMenu.open {
+  left: 0;
 }
 
 @media screen and (max-width: 1280px) {
@@ -62,16 +85,16 @@
 }
 
 @media screen and (max-width: 1024px) {
-
   .link {
-    font-size: 16px;
+    font-size: 22px;
     gap: 9px;
   }
 }
 
 @media screen and (max-width: 768px) {
   .link {
-    font-size: 16px;
+    font-size: 20px;
+    padding: 5px 14px;
   }
 }
 
@@ -82,5 +105,10 @@
 
   .link {
     display: none;
+  }
+
+  .responsiveMenu {
+    width: 40%;
+    left: -40%;
   }
 }
