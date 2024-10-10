@@ -9,8 +9,7 @@
 .logo {
   display: flex;
   align-items: flex-end;
-  margin-bottom: -5px; /* הוספת מרווח שלילי לתיקון יישור הלוגו */
-
+  margin-bottom: -5px;
 }
 
 .logoImage {
@@ -19,7 +18,6 @@
 
 .links {
   display: flex;
-  align-items: center;
   align-items: flex-end;
   gap: 20px;
   font-size: 22px;
@@ -28,9 +26,13 @@
   padding-bottom: 2px;
 }
 
+.link {
+  text-decoration: none;
+  color: inherit;
+}
+
 @media screen and (max-width: 1280px) {
   .links {
-    font-size: 22px;
     gap: 15px;
   }
 }
@@ -39,9 +41,10 @@
   .logo {
     text-align: left;
   }
+
   .links {
-    font-size: 20px;
-    gap: 7px;
+    font-size: 18px;
+    gap: 8px;
   }
 }
 
@@ -51,8 +54,8 @@
     gap: 9px;
   }
 
-  .betaText {
-    font-size: 18px;
+  .link:not(.logo) {
+    display: none;
   }
 }
 
@@ -62,7 +65,5 @@
     gap: 6px;
   }
 
-  .link {
-    display: none;
-  }
+
 }

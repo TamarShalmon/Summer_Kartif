@@ -1,50 +1,87 @@
-/* authLinks.module.css */
 .authButton {
-  background-color: #BC9F8B;
+  background-color: #9C7D6A;
   border-radius: 5px;
   padding: 8px 16px;
   font-size: 18px;
-  transition: background-color 0.3s;
-  display: flex;
+  transition: all 0.3s ease;
+  /* שינינו ל-all כדי שהאנימציה תחול גם על השינוי בגודל */
+  display: inline-flex;
+  /* שינינו ל-inline-flex כדי שיתרחב לפי התוכן */
+  flex-direction: column;
   align-items: center;
-  height: 93%;
-  background-color: #9C7D6A;
+  justify-content: center;
+  height: auto;
+  /* שינינו ל-auto כדי שהגובה יתאים לתוכן */
+  cursor: pointer;
+  min-height: 93%;
+  /* הוספנו min-height במקום height קבוע */
+  white-space: nowrap;
+  /* מונע שבירת שורות בטקסט */
 }
 
 .authButton:hover {
   background-color: #8d7160;
 }
 
+.authButtonContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.authButtonUser {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 20px;
+}
+
+.authButtonAction {
+  font-size: 16px;
+  text-align: center;
+}
+
 .link {
-  cursor: pointer;
   font-size: 22px;
   font-weight: bold;
+  text-decoration: none;
+  color: inherit;
 }
-
-.links {
-  cursor: pointer;
-}
-
 .burger {
   width: 28px;
-  height: 30px;
+  height: 22px; 
   display: none;
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
   position: relative;
-  padding-bottom: 7px;
+  margin-bottom: 7px;
 }
 
 .line {
   width: 100%;
-  height: 2px;
+  height: 2px; 
   background-color: var(--textColor);
   transition: all 0.3s ease;
+  position: absolute;
+  left: 0;
+}
+
+.line:nth-child(1) {
+  top: 0;
+}
+
+.line:nth-child(2) {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.line:nth-child(3) {
+  bottom: 0;
 }
 
 .burger.open .line:nth-child(1) {
-  transform: translateY(11px) rotate(45deg);
+  transform: translateY(10px) rotate(45deg);
 }
 
 .burger.open .line:nth-child(2) {
@@ -52,7 +89,7 @@
 }
 
 .burger.open .line:nth-child(3) {
-  transform: translateY(-11px) rotate(-45deg);
+  transform: translateY(-10px) rotate(-45deg);
 }
 
 .responsiveMenu {
@@ -69,13 +106,27 @@
   font-size: 20px;
   z-index: 999;
   align-items: center;
-  padding-top: 25px;
   font-weight: 800;
   transition: left 0.3s ease-in-out;
 }
 
 .responsiveMenu.open {
   left: 0;
+}
+
+.authShow {
+  height: 140px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #B5CFB7;
+}
+
+.image {
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 @media screen and (max-width: 1280px) {
@@ -87,7 +138,12 @@
 @media screen and (max-width: 1024px) {
   .link {
     font-size: 22px;
-    gap: 9px;
+  }
+
+
+  .responsiveMenu {
+    width: 40%;
+    left: -40%;
   }
 }
 
@@ -96,6 +152,14 @@
     font-size: 20px;
     padding: 5px 14px;
   }
+
+  .authButton {
+    display: none;
+  }
+
+  .burger {
+    display: flex;
+  }
 }
 
 @media screen and (max-width: 640px) {
@@ -103,7 +167,7 @@
     display: flex;
   }
 
-  .link {
+  .link:not(.authButton) {
     display: none;
   }
 
