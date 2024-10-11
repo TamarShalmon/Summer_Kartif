@@ -1,22 +1,18 @@
 .authButton {
   background-color: #9C7D6A;
   border-radius: 5px;
-  padding: 8px 16px;
+  padding: 3px 10px;
   font-size: 18px;
   transition: all 0.3s ease;
-  /* שינינו ל-all כדי שהאנימציה תחול גם על השינוי בגודל */
   display: inline-flex;
-  /* שינינו ל-inline-flex כדי שיתרחב לפי התוכן */
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: auto;
-  /* שינינו ל-auto כדי שהגובה יתאים לתוכן */
+  flex-direction: row;
+  /* height: auto; */
   cursor: pointer;
-  min-height: 93%;
-  /* הוספנו min-height במקום height קבוע */
+  /* min-height: 93%; */
   white-space: nowrap;
-  /* מונע שבירת שורות בטקסט */
+  gap: 5px;
+  align-items: center;
+  margin-bottom: 8px;
 }
 
 .authButton:hover {
@@ -39,6 +35,62 @@
 .authButtonAction {
   font-size: 16px;
   text-align: center;
+}
+
+.authButton {
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(156, 125, 106, 0.9); 
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+  font-family: inherit;
+}
+
+.authButton:hover .dropdown {
+  opacity: 1;
+  visibility: visible;
+}
+
+.dropdownItem {
+  padding: 10px 15px;
+  white-space: nowrap;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  font-size: 16px;
+  color: white; 
+  transition: background-color 0.2s;
+  font-family: inherit;
+
+}
+
+.dropdownItem:hover {
+  background-color: rgba(141, 113, 96, 0.8); 
+}
+
+.dropdown::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 0 10px 10px 10px;
+  border-style: solid;
+  border-color: transparent transparent rgba(156, 125, 106, 0.9) transparent;
 }
 
 .link {

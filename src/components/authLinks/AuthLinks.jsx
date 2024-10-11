@@ -32,16 +32,23 @@ const AuthLinks = () => {
     if (status === "unauthenticated") {
       return (
         <Link href="/login" className={`${styles.link} ${styles.authButton}`}>
-          <span className={styles.authButtonContent}>התחברות</span>
+          <img
+            src={"/user.png"}
+            className={styles.image}
+            width={25}
+            height={25}
+            alt="User"
+          />
+          <span className={styles.authButtonContent}>כניסה</span>
         </Link>
       );
     }
     return (
-      <div className={`${styles.link} ${styles.authButton}`} onClick={handleSignOut}>
+      <div className={`${styles.link} ${styles.authButton}`}>
         <span className={styles.authButtonContent}>
           <span className={styles.authButtonUser}>
             <Image
-              src={session?.user?.image || "/user.png"}
+              src={"/user.png"}
               alt=""
               width={35}
               height={35}
@@ -49,23 +56,20 @@ const AuthLinks = () => {
             />
             {session?.user?.name}
           </span>
-          <span className={styles.authButtonAction}>
-            התנתקות
-          </span>
         </span>
+        <div className={styles.dropdown}>
+          <button onClick={handleSignOut} className={styles.dropdownItem}>התנתק</button>
+        </div>
       </div>
     );
   };
 
   const renderAuthShow = () => {
     if (status === "unauthenticated") {
-      return <Link href="/login">התחברות</Link>;
+      return <Link href="/login" onClick={handleLinkClick}>כניסה</Link>;
     }
     return (
-      <div onClick={handleSignOut}>
-        <div style={{ fontSize: "18px", textAlign: "center" }}>{session?.user?.name}</div>
-        <div style={{ paddingTop: "8px", textAlign: "center" }}>התנתקות</div>
-      </div>
+      <div style={{ fontSize: "18px", textAlign: "center" }}>{session?.user?.name}</div>
     );
   };
 
@@ -81,7 +85,7 @@ const AuthLinks = () => {
         <div className={styles.authShow}>
           <div>
             <Image
-              src={session?.user?.image || "/user.png"}
+              src={"/user.png"}
               alt=""
               width={50}
               height={50}
@@ -93,7 +97,9 @@ const AuthLinks = () => {
         <Link href="/" onClick={handleLinkClick}>דף הבית</Link>
         <Link href="/write" onClick={handleLinkClick}>פרסם המלצה</Link>
         <Link href="/userDashboard" onClick={handleLinkClick}>ההמלצות שלי</Link>
-      </div>
+        {status === "authenticated" && (
+          <Link href="#" onClick={handleSignOut}>התנתק</Link>
+        )}1      </div>
       {showModal && <AuthModal onClose={() => setShowModal(false)} />}
     </>
   );

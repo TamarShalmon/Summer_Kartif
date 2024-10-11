@@ -14,10 +14,10 @@ const Navbar = () => {
           <Image src="/logo.png" alt="logo" width={300} height={80} className={styles.logoImage} />
         </Link>
         <Link href="/" className={styles.link}>
-          דף הבית
+          דף הבית<span style={{ color: "#9c7d6a", fontSize: "28px", marginRight: "8px" }}> |</span>
         </Link>
         <Link href="/write" className={styles.link}>
-          פרסום המלצה
+          פרסום המלצה<span style={{ color: "#9c7d6a", fontSize: "28px", marginRight: "15px" }}>|</span>
         </Link>
         <Link href="/userDashboard" className={styles.link}>
           ההמלצות שלי
@@ -25,7 +25,7 @@ const Navbar = () => {
       </div>
 
       <AuthLinks />
-      
+
     </div>
   );
 };
