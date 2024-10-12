@@ -99,7 +99,8 @@ const AuthLinks = () => {
         <Link href="/userDashboard" onClick={handleLinkClick}>ההמלצות שלי</Link>
         {status === "authenticated" && (
           <Link href="#" onClick={handleSignOut}>התנתק</Link>
-        )}1      </div>
+        )}
+      </div>
       {showModal && <AuthModal onClose={() => setShowModal(false)} />}
     </>
   );

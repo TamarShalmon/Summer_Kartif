@@ -49,10 +49,25 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 992px){
   .links {
     font-size: 16px;
-    gap: 9px;
+    gap: 6px;
+  }
+}
+
+@media screen and (max-width: 820px){
+  .links {
+    font-size: 16px;
+    gap: 6px;
+  }
+}
+
+
+@media screen and (max-width: 810px) {
+  .links {
+    font-size: 14px;
+    gap: 4px;
   }
 
   .link:not(.logo) {

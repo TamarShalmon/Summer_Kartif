@@ -14,13 +14,14 @@ const Navbar = () => {
           <Image src="/logo.png" alt="logo" width={300} height={80} className={styles.logoImage} />
         </Link>
         <Link href="/" className={styles.link}>
-          דף הבית<span style={{ color: "#9c7d6a", fontSize: "28px", marginRight: "8px" }}> |</span>
+          דף הבית<span style={{ color: "#9c7d6a", fontSize: "28px", marginRight: "2px" }}> |</span>
         </Link>
         <Link href="/write" className={styles.link}>
-          פרסום המלצה<span style={{ color: "#9c7d6a", fontSize: "28px", marginRight: "15px" }}>|</span>
+          פרסום המלצה<span style={{ color: "#9c7d6a", fontSize: "28px", marginRight: "8px" }}>|</span>
         </Link>
         <Link href="/userDashboard" className={styles.link}>
           ההמלצות שלי
+          <span style={{ color: "transparent", fontSize: "28px", marginRight: "8px"}}>|</span>
         </Link>
       </div>
 
