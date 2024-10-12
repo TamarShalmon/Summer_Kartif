@@ -24,9 +24,7 @@ export default function RootLayout({ children }) {
     <html lang="he" dir="rtl" className={fredoka.variable}>
       <head>
         {/* הוספת תמונה לשיתוף בקישורים */}
-        <meta property="og:image" content="https://res.cloudinary.com/dnfqzyh4r/image/upload/v1728775343/kartif/categoreis/favicon_pnfc5t.ico" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
+        <meta property="og:image" content="https://cdn-icons-png.flaticon.com/512/3114/3114886.png" />
       </head>
       <body className={fredoka.variable} >
         <AuthProvider>
