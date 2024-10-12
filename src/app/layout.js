@@ -17,19 +17,17 @@ const fredoka = Fredoka({
 export const metadata = {
   title: "קטיפניקים ממליצים",
   description: "המקומות הכי שווים דרך חוויות של החברים מהישוב",
-  images: [
-    {
-      url: 'https://res.cloudinary.com/dnfqzyh4r/image/upload/v1728775343/kartif/categoreis/favicon_pnfc5t.ico',
-      width: 800,
-      height: 600,
-      alt: 'תיאור התמונה',
-    }
-  ]
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="he" dir="rtl" className={fredoka.variable}>
+      <head>
+        {/* הוספת תמונה לשיתוף בקישורים */}
+        <meta property="og:image" content="https://res.cloudinary.com/dnfqzyh4r/image/upload/v1728775343/kartif/categoreis/favicon_pnfc5t.ico" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+      </head>
       <body className={fredoka.variable} >
         <AuthProvider>
           <ThemeContextProvider>
