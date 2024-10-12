@@ -17,11 +17,14 @@ const fredoka = Fredoka({
 export const metadata = {
   title: "קטיפניקים ממליצים",
   description: "המקומות הכי שווים דרך חוויות של החברים מהישוב",
-  icons: {
-    icon: [
-      { url: '../app/favicon.ico', type: 'image/svg+xml' },
-    ],
-  }
+  images: [
+    {
+      url: '../app/favicon.ico',
+      width: 800,
+      height: 600,
+      alt: 'תיאור התמונה',
+    }
+  ]
 };
 
 export default function RootLayout({ children }) {
