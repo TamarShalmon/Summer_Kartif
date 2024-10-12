@@ -19,7 +19,7 @@ export const metadata = {
   description: "המקומות הכי שווים דרך חוויות של החברים מהישוב",
   images: [
     {
-      url: '../app/favicon.ico',
+      url: 'https://res.cloudinary.com/dnfqzyh4r/image/upload/v1728775343/kartif/categoreis/favicon_pnfc5t.ico',
       width: 800,
       height: 600,
       alt: 'תיאור התמונה',
