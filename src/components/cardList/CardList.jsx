@@ -2,6 +2,7 @@ import styles from "./cardList.module.css";
 import Pagination from "../pagination/Pagination";
 import Card from "../card/Card";
 import prisma from "@/utils/connect";
+import Link from "next/link";
 
 const CardList = async ({ page, cat, region }) => {
   const POST_PER_PAGE = 9;
@@ -44,7 +45,10 @@ const CardList = async ({ page, cat, region }) => {
               <Card item={item} key={item.id} className={styles.post} />
             ))
           ) : (
-            <p>אין המלצות להצגה</p>
+            <>
+              <p>כרגע אין המלצות להצגה, תהיו הראשונים לפרסם!</p>
+              <Link href="/write" onClick={handleLinkClick}>פרסם המלצה</Link>
+            </>
           )}
         </div>
         <Pagination page={page} hasPrev={hasPrev} hasNext={hasNext} cat={cat} region={region} />
