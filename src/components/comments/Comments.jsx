@@ -52,7 +52,7 @@ const Comments = ({ postSlug }) => {
   };
 
   const handleDeleteClick = (commentId) => {
-    console.log("Opening modal for comment:", commentId);
+    // console.log("Opening modal for comment:", commentId);
     setCommentToDelete(commentId);
     setIsModalOpen(true);
   };
