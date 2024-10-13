@@ -45,10 +45,7 @@ const CardList = async ({ page, cat, region }) => {
               <Card item={item} key={item.id} className={styles.post} />
             ))
           ) : (
-            <>
-              <p>כרגע אין המלצות להצגה, תהיו הראשונים לפרסם!</p>
-              <Link href="/write" onClick={handleLinkClick}>פרסם המלצה</Link>
-            </>
+            <p>כרגע אין המלצות להצגה, תהיו הראשונים לפרסם!</p>
           )}
         </div>
         <Pagination page={page} hasPrev={hasPrev} hasNext={hasNext} cat={cat} region={region} />
