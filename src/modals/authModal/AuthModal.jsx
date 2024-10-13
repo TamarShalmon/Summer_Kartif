@@ -29,9 +29,11 @@ const AuthModal = ({ onClose }) => {
             <div className={styles.modal}>
                 <button className={styles.closeButton} onClick={handleClose}>×</button>
                 <h3>?שנתחבר</h3>
-                <p className={styles.title} >גם ניכר אותך טוב יותר וגם תיפתח לך גישה מהירה ופשוטה לכל האפשרויות והפיצ'רים שלנו</p>
+                <p className={styles.title} >
+                😉 כדי שתוכלו לשתף ולהגיב על המלצות
+                </p>
                 <Link href="/login" className={styles.loginButton} onClick={handleLogin}>
-                    להתחברות
+                   <strong>להתחברות</strong> 
                 </Link>
             </div>
         </div>
