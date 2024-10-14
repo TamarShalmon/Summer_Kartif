@@ -7,7 +7,7 @@ import useSWR from "swr";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { Fredoka } from 'next/font/google';
-import Modal from "../../modals/confirmModal/Modal"; 
+import Modal from "../../modals/confirmModal/Modal";
 
 const fredoka = Fredoka({
   subsets: ['latin'],
@@ -111,15 +111,15 @@ const Comments = ({ postSlug }) => {
             : data?.map((item) => (
               <div className={styles.comment} key={item.id}>
                 <div className={styles.user}>
-                  {item?.user?.image && (
-                    <Image
-                    src={item?.user?.image || "https://cdn-icons-png.flaticon.com/512/17827/17827162.png"}
+                  {/* {item?.user?.image && ( */}
+                  <Image
+                    src={item?.user?.image || "/user.png"}
                     alt=""
-                      width={50}
-                      height={50}
-                      className={styles.image}
-                    />
-                  )}
+                    width={50}
+                    height={50}
+                    className={styles.image}
+                  />
+                  {/* )} */}
                   <div className={styles.userInfo}>
                     <span className={styles.username}>{item.user.name}</span>
                     <span className={styles.date}>{formatDate(item.createdAt)}</span>
@@ -138,7 +138,7 @@ const Comments = ({ postSlug }) => {
 
       {isModalOpen && (
         <Modal
-          isOpen={isModalOpen}  
+          isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           onConfirm={handleDeleteConfirm}
           message="בטוחים שברצונכם למחוק תגובה זו?"
