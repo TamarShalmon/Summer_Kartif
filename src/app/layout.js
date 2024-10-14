@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
     <html lang="he" dir="rtl" className={fredoka.variable}>
       <head>
         <meta property="og:image" content="https://cdn-icons-png.flaticon.com/512/3114/3114886.png" />
-        <meta name="msapplication-TileImage" content="https://cdn-icons-png.flaticon.com/512/3114/3114886.png" />
+        <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3114/3114886.png"/>
       </head>
       <body className={fredoka.variable} >
         <AuthProvider>
