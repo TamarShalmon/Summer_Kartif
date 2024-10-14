@@ -81,26 +81,29 @@ const AuthLinks = () => {
         <div className={styles.line}></div>
         <div className={styles.line}></div>
       </div>
-      <div className={`${styles.responsiveMenu} ${open ? styles.open : ''}`}>
-        <div className={styles.authShow}>
-          <div>
-            <Image
-              src={"/user.png"}
-              alt=""
-              width={50}
-              height={50}
-              className={styles.image}
-            />
+      <div className={open ? styles.overlay : ""}>
+        <div className={`${styles.responsiveMenu} ${open ? styles.open : ''}`}>
+          <div className={styles.authShow}>
+            <div>
+              <Image
+                src={"/user.png"}
+                alt=""
+                width={50}
+                height={50}
+                className={styles.image}
+              />
+            </div>
+            <div>{renderAuthShow()}</div>
           </div>
-          <div>{renderAuthShow()}</div>
+          <Link href="/" onClick={handleLinkClick}>דף הבית</Link>
+          <Link href="/write" onClick={handleLinkClick}>פרסם המלצה</Link>
+          <Link href="/userDashboard" onClick={handleLinkClick}>ההמלצות שלי</Link>
+          {status === "authenticated" && (
+            <Link href="#" onClick={handleSignOut}>התנתק</Link>
+          )}
         </div>
-        <Link href="/" onClick={handleLinkClick}>דף הבית</Link>
-        <Link href="/write" onClick={handleLinkClick}>פרסם המלצה</Link>
-        <Link href="/userDashboard" onClick={handleLinkClick}>ההמלצות שלי</Link>
-        {status === "authenticated" && (
-          <Link href="#" onClick={handleSignOut}>התנתק</Link>
-        )}
       </div>
+
       {showModal && <AuthModal onClose={() => setShowModal(false)} />}
     </>
   );

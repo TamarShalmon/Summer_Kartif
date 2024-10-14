@@ -106,8 +106,9 @@
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
-  position: relative;
+  position: absolute;
   margin-bottom: 7px;
+  left: 20px; 
 }
 
 .line {
@@ -160,6 +161,16 @@
   align-items: center;
   font-weight: 800;
   transition: left 0.3s ease-in-out;
+}
+
+.overlay {
+  position: fixed;
+  top: 85px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
 }
 
 .responsiveMenu.open {
