@@ -22,8 +22,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="he" dir="rtl" className={fredoka.variable}>
       <head>
-        {/* הוספת תמונה לשיתוף בקישורים */}
         <meta property="og:image" content="https://cdn-icons-png.flaticon.com/512/3114/3114886.png" />
+        <meta name="msapplication-TileImage" content="https://cdn-icons-png.flaticon.com/512/3114/3114886.png" />
       </head>
       <body className={fredoka.variable} >
         <AuthProvider>
