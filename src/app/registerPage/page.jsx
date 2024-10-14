@@ -6,7 +6,7 @@ const RegisterPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <h1 className={styles.title}>הרשמה</h1>
+        <p className={styles.title}>הרשמה</p>
         <RegisterForm />
         <p className={styles.loginLink}>
           כבר יש לכם חשבון? <Link href="/login">התחברו כאן</Link>

@@ -6,7 +6,6 @@
   font-size: 24px;
   margin-bottom: 20px;
   margin-top: 20px;
-
 }
 
 .posts {
@@ -29,7 +28,7 @@
   background-color: #97b299;
   border-radius: 5px;
   padding: 6px 10px;
-  font-size: 17px;
+  font-size: 18px;
   transition: all 0.3s ease;
   display: inline-flex;
   flex-direction: row;
@@ -38,5 +37,5 @@
   gap: 5px;
   align-items: center;
   margin-top: 8px;
-  font-weight: 600;
+  font-weight: 500;
 }

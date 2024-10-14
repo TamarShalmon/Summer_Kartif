@@ -38,7 +38,7 @@ const CardList = async ({ page, cat, region }) => {
 
     return (
       <div className={styles.container}>
-        <h1 className={styles.title}>המלצות אחרונות</h1>
+        <p className={styles.title}>המלצות אחרונות</p>
         <div className={styles.posts}>
           {posts && posts.length > 0 ? (
             posts.map((item) => (
@@ -46,7 +46,7 @@ const CardList = async ({ page, cat, region }) => {
             ))
           ) : (
             <div className={styles.div}>כרגע אין המלצות להצגה, תהיו הראשונים לפרסם!
-              <br />  <Link href="/write" className={styles.button} >פרסם המלצה</Link>
+              <br />  <Link href="/write" className={styles.button} >פרסום המלצה</Link>
             </div>
           )}
         </div>

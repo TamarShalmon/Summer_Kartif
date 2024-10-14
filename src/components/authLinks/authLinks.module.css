@@ -95,7 +95,7 @@
 
 .link {
   font-size: 22px;
-  font-weight: bold;
+  /* font-weight: bold; */
   text-decoration: none;
   color: inherit;
   position: absolute;
@@ -162,7 +162,7 @@
   font-size: 20px;
   z-index: 999;
   align-items: center;
-  font-weight: 800;
+  font-weight: 500;
   transition: left 0.3s ease-in-out;
 }
 

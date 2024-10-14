@@ -10,7 +10,7 @@
 
 .input {
   font-size: 2.5rem;
-  padding: 1rem 0;
+  padding: 1rem 10px;
   border: none;
   /* border-bottom: 2px solid #6b6a69; */
   outline: none;
@@ -43,7 +43,7 @@
 
 .select:nth-child(2),
 .select:nth-child(3) {
-  font-weight: bold;
+  font-weight: 500;
 }
 
 .select:focus {
@@ -68,7 +68,7 @@
   resize: vertical;
   outline: none;
   font-family: var(--font-fredoka); 
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 
 .textArea::placeholder {
@@ -176,7 +176,7 @@
   border-radius: 0.5rem;
   cursor: pointer;
   font-size: 1rem;
-  font-weight: bold;
+  /* font-weight: bold; */
   transition: background-color 0.3s ease;
   font-family: var(--font-fredoka); 
 }

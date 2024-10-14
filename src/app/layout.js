@@ -9,7 +9,7 @@ import FooterTamar from "@/components/footerTamar/FooterTamar";
 
 const fredoka = Fredoka({
   subsets: ['latin'],
-  weight: ['300'],
+  weight: ['300', '400', '500', '600', '700'], // Add the weights you need
   variable: '--font-fredoka',
 })
 

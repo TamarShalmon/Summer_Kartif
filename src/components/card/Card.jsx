@@ -22,7 +22,7 @@ const Card = ({ item }) => {
             <br />{item.catSlug} | {item.region}<br />
             </span>
           </div>
-          <h2 className={styles.title}>{item.title}</h2>
+          <p className={styles.title}>{item.title}</p>
           {/* <p className={styles.desc}>{item.desc.substring(0, 60)}</p> */}
           <div className={styles.desc} dangerouslySetInnerHTML={{ __html: item?.desc.substring(0, 60) }} />
           <div className={styles.link}>
