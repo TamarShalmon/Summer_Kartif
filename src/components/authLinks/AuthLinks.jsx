@@ -96,7 +96,7 @@ const AuthLinks = () => {
             <div>{renderAuthShow()}</div>
           </div>
           <Link href="/" onClick={handleLinkClick}>דף הבית</Link>
-          <Link href="/write" onClick={handleLinkClick}>פרסם המלצה</Link>
+          <Link href="/write" onClick={handleLinkClick}>פרסום המלצה</Link>
           <Link href="/userDashboard" onClick={handleLinkClick}>ההמלצות שלי</Link>
           {status === "authenticated" && (
             <Link href="#" onClick={handleSignOut}>התנתק</Link>
