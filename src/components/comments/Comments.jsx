@@ -113,8 +113,8 @@ const Comments = ({ postSlug }) => {
                 <div className={styles.user}>
                   {item?.user?.image && (
                     <Image
-                      src={item.user.image}
-                      alt=""
+                    src={item?.user?.image || "https://cdn-icons-png.flaticon.com/512/17827/17827162.png"}
+                    alt=""
                       width={50}
                       height={50}
                       className={styles.image}

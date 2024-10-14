@@ -48,7 +48,7 @@ const SinglePage = async ({ params }) => {
           </div>
         </div>
       </div>
-      <h1 className={styles.title}>{data?.title}</h1>
+      <p className={styles.title}>{data?.title}</p>
       <span className={styles.username}>
         {data?.user?.name || "Unknown User"}{" "}
       </span>
