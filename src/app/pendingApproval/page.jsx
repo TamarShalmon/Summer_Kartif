@@ -23,7 +23,7 @@ const PendingApprovalPage = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>החשבון שלך ממתין לאישור - אנחנו כבר כמעט שם!</h1>
+      <p className={styles.title}>החשבון שלך ממתין לאישור - אנחנו כבר כמעט שם!</p>
       <p className={styles.desc}>
         <br /><b>ברוך הבא ל"קטיפניקים ממליצים"!</b> 
         <br />חשבונך נוצר בהצלחה וכעת מחכה לאישור מהצוות. 
