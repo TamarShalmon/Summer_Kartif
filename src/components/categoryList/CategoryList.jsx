@@ -14,7 +14,7 @@ const CategoryList = () => {
     const fetchData = async () => {
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/categories`, {
-        cache: "default", // You can also try "default" or "no-store"
+          cache: "default", // You can also try "default" or "no-store"
         });
         if (!res.ok) {
           throw new Error("Failed to fetch data");
@@ -60,8 +60,10 @@ const CategoryList = () => {
                 <Image
                   src={`${item.img}`}
                   alt=""
-                  width={300}
-                  height={200}
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  style={{ width: 'auto', height: '300px' }}
                   className={styles.image}
                 />
               )}
