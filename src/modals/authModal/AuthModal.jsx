@@ -28,7 +28,7 @@ const AuthModal = ({ onClose }) => {
         <div className={`${styles.modalOverlay} ${isClosing ? styles.closing : ''}`}>
             <div className={styles.modal} dir='rtl'>
                 <button className={styles.closeButton} onClick={handleClose}>×</button>
-                <h3 style={{ fontWeight: "500" }}>?שנתחבר</h3>
+                <h3 style={{ fontWeight: "500" }}>שנתחבר?</h3>
                 <p className={styles.title} >
                     כדי שתוכלו לשתף ולהגיב על המלצות 😉
                 </p>
