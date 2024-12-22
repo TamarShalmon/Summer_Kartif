@@ -1,10 +1,11 @@
 "use client"
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./categoryList.module.css";
 import Link from "next/link";
 import Image from "next/image";
 
-const CategoryList = ({ limit = 11 }) => {
+
+const CategoryList = ({ limit = 20 }) => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [isSticky, setIsSticky] = useState(false);

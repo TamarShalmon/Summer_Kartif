@@ -1,0 +1,122 @@
+.container {
+  max-width: 1200px;
+}
+
+.categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 0 10px;
+}
+
+.category {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 270px;
+  width: 90%; 
+  margin: 0 auto;
+}
+
+.category:hover {
+  transform: translateY(-5px);
+}
+
+.image {
+  /* width: 300px; */
+  /* height: 200px; */
+  object-fit: cover;
+}
+
+.categoryTitle {
+  position: absolute;
+  top: 18px;
+  left: 24px;
+  right: 24px;
+  background-color: rgb(255 255 255 / 79%);
+  color: black;
+  padding: 10px;
+  text-align: center;
+  /* font-weight: bold; */
+  font-size: 27px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  min-height: 45px;
+  height: auto;
+  max-height: 75px;
+  overflow: hidden;
+}
+
+.stickyCategories {
+  position: fixed;
+  top: 85px; /* Adjust this value to match your navbar height */
+  left: 0;
+  right: 0;
+  background-color: #B5CFB7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+  z-index: 99;
+}
+
+.stickyCategories.visible {
+  transform: translateY(0);
+}
+
+.stickyCategory {
+  padding: 5px 10px;
+  margin: 0 5px;
+  background-color: #E7E8D8;
+  border-radius: 5px;
+  font-size: 14px;
+  color: black;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.stickyCategory:hover {
+  background-color: #d1d2c4;
+}
+
+@media screen and (max-width: 768px) {
+  .categories {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+  
+  .category {
+    height: 200px;
+    width: 95%;
+  }
+
+  .categoryTitle {
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    min-height: 35px;
+    max-height: 60px;
+  }
+
+  .stickyCategories {
+    flex-wrap: wrap;
+  }
+
+  .stickyCategory {
+    margin: 2px;
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .categories {
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  }
+}
