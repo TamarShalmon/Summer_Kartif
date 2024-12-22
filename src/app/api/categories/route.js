@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export const GET = async () => {
   try {
     const categories = await prisma.category.findMany({
-      take: 10,
+      take: 11,
       select: {
         slug: true,
         title: true,
