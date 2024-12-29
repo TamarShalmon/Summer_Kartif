@@ -4,7 +4,7 @@ import styles from "./categoryList.module.css";
 import Link from "next/link";
 import Image from "next/image";
 
-const CategoryList = ({ limit = 11 }) => {
+const CategoryList = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [isSticky, setIsSticky] = useState(false);
@@ -14,7 +14,7 @@ const CategoryList = ({ limit = 11 }) => {
     const fetchData = async () => {
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/categories`, {
-          cache: "default", 
+          cache: "default",
         });
         if (!res.ok) {
           throw new Error("Failed to fetch data");
@@ -46,14 +46,11 @@ const CategoryList = ({ limit = 11 }) => {
   if (!data) return <div>טוען קטגוריות...</div>;
   if (!Array.isArray(data)) return <div>Data is not an array</div>;
 
-  // הגבלת הקטגוריות המוצגות
-  const limitedData = limit ? data.slice(0, limit) : data;
-
   return (
     <>
       <div className={styles.container} ref={categoryListRef}>
         <div className={styles.categories}>
-          {limitedData.map((item, index) => (
+          {data.map((item, index) => (
             <Link
               href={`/blog?cat=${item.slug}`}
               className={styles.category}
@@ -76,7 +73,7 @@ const CategoryList = ({ limit = 11 }) => {
         </div>
       </div>
       <div className={`${styles.stickyCategories} ${isSticky ? styles.visible : ''}`}>
-        {limitedData.map((item, index) => (
+        {data.map((item, index) => (
           <Link
             href={`/blog?cat=${item.slug}`}
             className={styles.stickyCategory}
