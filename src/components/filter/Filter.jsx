@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter, useSearchParams } from 'next/navigation';
 import styles from "./filter.module.css";
 import { Fredoka } from 'next/font/google';
+import { regions, professionals } from '@/constants/data';
 
 const fredoka = Fredoka({
     subsets: ['latin'],
@@ -16,32 +17,6 @@ const Filter = ({ initialRegion, initialProfessional, cat }) => {
 
     const router = useRouter();
     const searchParams = useSearchParams();
-
-    const professionals = [
-        "חשמלאי",
-        "נגר",
-        "הנדימן",
-        "טכנאי מחשבים",
-        "עורך דין",
-        "רופא",
-    ];
-
-    const regions = [
-        "כרמי קטיף והסביבה 😎",
-        "חרמון גולן ועמק החולה",
-        "גליל עליון וגליל מערבי",
-        "גליל תחתון",
-        "חיפה והכרמל",
-        "עמק יזרעאל ועמק המעיינות",
-        "בנימין שומרון ובקעת הירדן",
-        "השרון",
-        "גוש דן ומישור החוף הדרומי",
-        "ירושלים והסביבה",
-        "מדבר יהודה וים המלח",
-        "נגב",
-        "מצפה רמון והערבה",
-        "אילת",
-    ];
 
     const handleRegionChange = (e) => {
         const newRegion = e.target.value;
@@ -75,7 +50,6 @@ const Filter = ({ initialRegion, initialProfessional, cat }) => {
 
     return (
         <div className={fredoka.className}>
-
             <div className={styles.filterContainer}>
                 {cat === "בעלי מקצוע" ? (
                     <>
@@ -119,9 +93,8 @@ const Filter = ({ initialRegion, initialProfessional, cat }) => {
                         ))}
                     </select>
                 )}
-
             </div>
-        </div >
+        </div>
     );
 };
 

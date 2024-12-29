@@ -1,11 +1,13 @@
 "use client"
-import Image from "next/image";
 import styles from "./writePage.module.css";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { CldUploadButton } from "next-cloudinary"
 import { Fredoka } from 'next/font/google'
+import CategoryFields from '../categoryFields/CategoryFields';
+import ImageUpload from '../imageUpload/ImageUpload';
+import { regions } from '../../constants/data';
+
 
 const fredoka = Fredoka({
   subsets: ['latin'],
@@ -13,32 +15,32 @@ const fredoka = Fredoka({
   variable: '--font-fredoka',
 })
 
-
 const WritePage = () => {
   const { status } = useSession();
   const router = useRouter();
 
-  const [file, setFile] = useState(null);
-  const [media, setMedia] = useState("");
-  const [value, setValue] = useState("");
+  // Basic post data
   const [title, setTitle] = useState("");
+  const [value, setValue] = useState("");
   const [catSlug, setCatSlug] = useState("");
+  const [region, setRegion] = useState("");
 
-  const [imageUrl, setImageUrl] = useState("");
-  const [publicId, setPublicId] = useState("");
-
+  // Images state
   const [images, setImages] = useState([]);
   const [mainImageIndex, setMainImageIndex] = useState(0);
 
-  const [categories, setCategories] = useState([]);
-  const [professional, setProfessional] = useState("");
-
+  // UI state
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [categories, setCategories] = useState([]);
 
-  const [region, setRegion] = useState("");
-  const [regions, setRegions] = useState([]);
+  // Professional fields
+  const [professional, setProfessional] = useState("");
+  const [serviceType, setServiceType] = useState("");
+  const [serviceCost, setServiceCost] = useState("");
+  const [contactDetails, setContactDetails] = useState("");
 
+  // Activity fields
   const [entryFee, setEntryFee] = useState("");
   const [parking, setParking] = useState("");
   const [shadedSeating, setShadedSeating] = useState("");
@@ -47,11 +49,6 @@ const WritePage = () => {
   const [difficulty, setDifficulty] = useState("");
   const [duration, setDuration] = useState("");
   const [season, setSeason] = useState("");
-  const [contactDetails, setContactDetails] = useState("");
-  const [serviceType, setServiceType] = useState("");
-  const [serviceCost, setServiceCost] = useState("");
-
-
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -70,127 +67,73 @@ const WritePage = () => {
     fetchCategories();
   }, []);
 
-  useEffect(() => {
-    // Fetch regions or use a predefined list
-    setRegions([
-      "כרמי קטיף והסביבה 😎",
-      "חרמון גולן ועמק החולה",
-      "גליל עליון וגליל מערבי",
-      "גליל תחתון",
-      "חיפה והכרמל",
-      "עמק יזרעאל ועמק המעיינות",
-      "בנימין שומרון ובקעת הירדן",
-      "השרון",
-      "גוש דן ומישור החוף הדרומי",
-      "ירושלים והסביבה",
-      "מדבר יהודה וים המלח",
-      "נגב",
-      "מצפה רמון והערבה",
-      "אילת",
-    ]);
-  }, []);
-
-  useEffect(() => {
-    const uploadToCloudinary = async () => {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", "your_upload_preset");
-
-
-      try {
-        const response = await fetch(
-          "https://api.cloudinary.com/v1_1/your_cloud_name/image/upload",
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
-        const data = await response.json();
-        setMedia(data.secure_url);
-      } catch (error) {
-        console.error("Error uploading to Cloudinary", error);
-      }
-    };
-
-
-    if (file) {
-      uploadToCloudinary();
-    }
-  }, [file]);
-
-
   if (status === "loading") {
     return <div className={styles.loading}>Loading...</div>;
   }
-
 
   if (status === "unauthenticated") {
     router.push("/");
     router.refresh("/");
   }
-
-
-  const slugify = (str) =>
-    str
-      .toLowerCase()
-      .trim()
-      .replace(/[^\w\s-]/g, "")
-      .replace(/[\s_-]+/g, "-")
-      .replace(/^-+|-+$/g, "");
-
+  const validateForm = () => {
+    if (!title.trim()) {
+      setError("** יש להזין כותרת");
+      return false;
+    }
+    if (!catSlug) {
+      setError("** יש לבחור קטגוריה");
+      return false;
+    }
+    if (!value.trim()) {
+      setError("** יש להזין תוכן");
+      return false;
+    }
+    if (!region) {
+      setError("** יש לבחור אזור");
+      return false;
+    }
+    if (catSlug === "בעלי מקצוע" && !professional) {
+      setError("** יש לבחור בעל מקצוע");
+      return false;
+    }
+    return true;
+  };
 
   const handleSubmit = async () => {
     setError("");
     setSuccessMessage("");
 
-    if (!title.trim()) {
-      setError("** יש להזין כותרת");
-      return;
-    }
-    if (!catSlug) {
-      setError("** יש לבחור קטגוריה");
-      return;
-    }
-    if (!value.trim()) {
-      setError("** יש להזין תוכן");
-      return;
-    }
-    if (!region) {
-      setError("** יש לבחור אזור");
-      return;
-    }
-    if (catSlug === "בעלי מקצוע" && !professional) {
-      setError("** יש לבחור בעל מקצוע");
-      return;
-    }
+    if (!validateForm()) return;
 
     try {
+      const postData = {
+        title,
+        desc: value,
+        mainImage: images[mainImageIndex]?.url,
+        additionalImages: images.map(img => img.url),
+        slug: title,
+        catSlug,
+        region,
+        professional: catSlug === "בעלי מקצוע" ? professional : undefined,
+        entryFee,
+        parking,
+        shadedSeating,
+        waterDepth,
+        recommendedGear,
+        difficulty,
+        duration,
+        season,
+        contactDetails,
+        serviceType,
+        serviceCost,
+      };
+
       const res = await fetch("/api/posts", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          title,
-          desc: value,
-          mainImage: images[mainImageIndex]?.url,
-          additionalImages: images.map(img => img.url),
-          slug: title,
-          catSlug,
-          region,
-          professional: catSlug === "בעלי מקצוע" ? professional : undefined,
-          entryFee,
-          parking,
-          shadedSeating,
-          waterDepth,
-          recommendedGear,
-          difficulty,
-          duration,
-          season,
-          contactDetails,
-          serviceType,
-          serviceCost,
-        }),
+        body: JSON.stringify(postData),
       });
 
       if (!res.ok) {
@@ -199,116 +142,14 @@ const WritePage = () => {
 
       const data = await res.json();
       setSuccessMessage("ההמלצה מתפרסמת, אנא המתן");
-      // console.log("Post created:", data);
       router.push(`/posts/${data.slug}`);
       router.refresh();
-
 
     } catch (error) {
       console.error("Error creating post:", error);
       setError("אירעה שגיאה בעת יצירת הפוסט. נא לנסות שוב.");
     }
   };
-
-  const renderCategorySpecificFields = () => {
-    switch (catSlug) {
-      case "בעלי מקצוע":
-        return (
-          <>
-            <select
-              className={styles.select}
-              onChange={(e) => setProfessional(e.target.value)}
-              value={professional}
-              required
-            >
-              <option value="">בחר בעל מקצוע</option>
-              <option value="חשמלאי">חשמלאי</option>
-              <option value="אינסטלטור">אינסטלטור</option>
-              <option value="נגר">נגר</option>
-              <option value="טכנאי מחשבים">טכנאי מחשבים</option>
-              <option value="מיזוג אוויר">טכנאי מיזוג אוויר</option>
-              <option value="שיפוצניק">שיפוצניק</option>
-              <option value="צבעי">צבעי</option>
-            </select>
-            <input className={styles.select} type="text" placeholder="סוג השירות שקיבלתם" value={serviceType} onChange={(e) => setServiceType(e.target.value)} />
-            <input className={styles.select} type="text" placeholder="פרטי קשר, טלפון/אתר" value={contactDetails} onChange={(e) => setContactDetails(e.target.value)} />
-            <input className={styles.select} type="text" placeholder="עלות השירות" value={serviceCost} onChange={(e) => setServiceCost(e.target.value)} />
-          </>
-        );
-      case "מעיינות":
-        return (
-          <>
-            <input className={styles.select} type="text" placeholder="באיזו עונה טיילתם?" value={season} onChange={(e) => setSeason(e.target.value)} />
-            <input className={styles.select} type="text" placeholder="מה עומק המים?" value={waterDepth} onChange={(e) => setWaterDepth(e.target.value)} />
-            <input className={styles.select} type="text" placeholder="האם יש מקומות ישיבה מוצלים?" value={shadedSeating} onChange={(e) => setShadedSeating(e.target.value)} />
-            <input className={styles.select} type="text" placeholder="איזה ציוד הייתם ממליצים להביא?" value={recommendedGear} onChange={(e) => setRecommendedGear(e.target.value)} />
-            <input className={styles.select} type="text" placeholder="כניסה בתשלום? כמה?" value={entryFee} onChange={(e) => setEntryFee(e.target.value)} />
-            <input className={styles.select} type="text" placeholder="הסדרי חניה" value={parking} onChange={(e) => setParking(e.target.value)} />
-          </>
-        );
-      case "מסלולי טיול":
-        return (
-          <>
-            <input className={styles.select} type="text" placeholder="דרגת קושי, מתאים למשפחות?" value={difficulty} onChange={(e) => setDifficulty(e.target.value)} />
-            <input className={styles.select} type="text" placeholder="משך המסלול" value={duration} onChange={(e) => setDuration(e.target.value)} />
-            <input className={styles.select} type="text" placeholder="באיזו עונה טיילתם?" value={season} onChange={(e) => setSeason(e.target.value)} />
-            <input className={styles.select} type="text" placeholder="איזה ציוד הייתם ממליצים להביא?" value={recommendedGear} onChange={(e) => setRecommendedGear(e.target.value)} />
-            <input className={styles.select} type="text" placeholder="הכניסה בתשלום? כמה?" value={entryFee} onChange={(e) => setEntryFee(e.target.value)} />
-            <input className={styles.select} type="text" placeholder="הסדרי חניה" value={parking} onChange={(e) => setParking(e.target.value)} />
-          </>
-        );
-      case "תערוכות":
-      case "אטרקציות":
-        return (
-          <>
-            <input className={styles.select} type="text" placeholder="לאיזה טווח גילאים מתאים?" value={difficulty} onChange={(e) => setDifficulty(e.target.value)} />
-            <input className={styles.select} type="text" placeholder="כניסה בתשלום? כמה?" value={entryFee} onChange={(e) => setEntryFee(e.target.value)} />
-            <input className={styles.select} type="text" placeholder="הסדרי חניה" value={parking} onChange={(e) => setParking(e.target.value)} />
-          </>
-        );
-      case "קטיף":
-        return (
-          <>
-            <input className={styles.select} type="text" placeholder="באיזו עונה טיילתם?" value={season} onChange={(e) => setSeason(e.target.value)} />
-            <input className={styles.select} type="text" placeholder="כניסה בתשלום? כמה?" value={entryFee} onChange={(e) => setEntryFee(e.target.value)} />
-            <input className={styles.select} type="text" placeholder="הסדרי חניה" value={parking} onChange={(e) => setParking(e.target.value)} />
-          </>
-        );
-      default:
-        return null;
-    }
-  };
-
-  const handleImageUpload = (result) => {
-    const info = result.info;
-    if ("secure_url" in info && "public_id" in info) {
-      const url = info.secure_url;
-      const public_id = info.public_id;
-      setImages(prev => [...prev, { url, public_id }]);
-    }
-  };
-
-
-
-
-  const removeImage = (index) => {
-    setImages(prev => prev.filter((_, i) => i !== index));
-    if (mainImageIndex === index) {
-      setMainImageIndex(0);
-    } else if (mainImageIndex > index) {
-      setMainImageIndex(prev => prev - 1);
-    }
-  };
-
-
-
-  const setMainImage = (index) => {
-    setMainImageIndex(index);
-  };
-
-
-  // console.log(title)
-
 
   return (
     <div className={fredoka.className}>
@@ -334,7 +175,6 @@ const WritePage = () => {
           ))}
         </select>
 
-
         <select
           className={styles.select}
           onChange={(e) => setRegion(e.target.value)}
@@ -349,7 +189,34 @@ const WritePage = () => {
           ))}
         </select>
 
-        {renderCategorySpecificFields()}
+        <CategoryFields
+          catSlug={catSlug}
+          professional={professional}
+          setProfessional={setProfessional}
+          season={season}
+          setSeason={setSeason}
+          waterDepth={waterDepth}
+          setWaterDepth={setWaterDepth}
+          shadedSeating={shadedSeating}
+          setShadedSeating={setShadedSeating}
+          recommendedGear={recommendedGear}
+          setRecommendedGear={setRecommendedGear}
+          entryFee={entryFee}
+          setEntryFee={setEntryFee}
+          parking={parking}
+          setParking={setParking}
+          difficulty={difficulty}
+          setDifficulty={setDifficulty}
+          duration={duration}
+          setDuration={setDuration}
+          contactDetails={contactDetails}
+          setContactDetails={setContactDetails}
+          serviceType={serviceType}
+          setServiceType={setServiceType}
+          serviceCost={serviceCost}
+          setServiceCost={setServiceCost}
+        />
+
 
         <div className={styles.editor}>
           <textarea
@@ -360,30 +227,12 @@ const WritePage = () => {
           />
         </div>
 
-
-        <div className={styles.imageUploadSection}>
-          <CldUploadButton
-            uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
-            onSuccess={handleImageUpload}
-            className={styles.uploadButton}
-          >
-            {<strong>צרפו תמונות</strong>}
-            {<span> (עד 10mb לכל תמונה) </span>}
-          </CldUploadButton>
-
-
-          <div className={styles.imagePreviewContainer}>
-            {images.map((image, index) => (
-              <div key={image.public_id} className={styles.imagePreview}>
-                <Image src={image.url} alt="" width={100} height={100} />
-                <button onClick={() => removeImage(index)}>מחק</button>
-                <button onClick={() => setMainImage(index)} disabled={index === mainImageIndex}>
-                  {index === mainImageIndex ? 'תמונה ראשית ' : 'הגדר כראשית'}
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
+        <ImageUpload
+          images={images}
+          setImages={setImages}
+          mainImageIndex={mainImageIndex}
+          setMainImageIndex={setMainImageIndex}
+        />
 
         {error && <div className={styles.error}>{error}</div>}
         {successMessage && <div className={styles.success}>{successMessage}</div>}

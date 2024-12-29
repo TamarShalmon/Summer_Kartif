@@ -1,0 +1,21 @@
+.select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    background-color: #fafafa;
+    color: var(--textColor);
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    font-family: var(--font-fredoka);
+  }
+  
+  .select:focus {
+    border-color: var(--textColor);
+    outline: none;
+  }
+  
+  @media (max-width: 768px) {
+    .select {
+      width: 100%;
+    }
+  }
