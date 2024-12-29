@@ -9,7 +9,7 @@ import Modal from "../../modals/confirmModal/Modal";
 
 const fredoka = Fredoka({
   subsets: ['latin'],
-  weight: ['300'],
+  weight: ['300', '400', '500'],
   variable: '--font-fredoka',
 })
 
@@ -84,12 +84,12 @@ const UserPosts = ({ page, post }) => {
   return (
     <div className={fredoka.className}>
       <div className={styles.container}>
-        <h1 className={styles.title}>ההמלצות שלי</h1>
+        <p className={styles.title}>ההמלצות שלי</p>
         <div className={styles.posts}>
           {posts && posts.length > 0 ? (
             posts.map((item) => (
               <div key={item.id} className={styles.postWrapper}>
-                <Card item={item} className={styles.posts} />
+                <Card item={item} key={item.id} />
                 <Link href={`/edit-post/${item.slug}`} className={`${styles.button} ${styles.editButton}`}>
                   עריכה
                 </Link>

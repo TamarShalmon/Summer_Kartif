@@ -24,6 +24,7 @@ const EditPost = ({ post }) => {
     const [mainImageIndex, setMainImageIndex] = useState(0);
 
     const [categories, setCategories] = useState([]);
+    const [professional, setProfessional] = useState("");
 
     const [error, setError] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
@@ -39,6 +40,10 @@ const EditPost = ({ post }) => {
     const [difficulty, setDifficulty] = useState("");
     const [duration, setDuration] = useState("");
     const [season, setSeason] = useState("");
+    const [contactDetails, setContactDetails] = useState("");
+    const [serviceType, setServiceType] = useState("");
+    const [serviceCost, setServiceCost] = useState("");
+
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -71,6 +76,9 @@ const EditPost = ({ post }) => {
         setDifficulty(post.difficulty || "");
         setDuration(post.duration || "");
         setSeason(post.season || "");
+        setServiceCost(post.serviceCost || "");
+        setServiceType(post.serviceType || "");
+        setContactDetails(post.contactDetails || "");
     }, [post]);
 
     useEffect(() => {
@@ -121,6 +129,10 @@ const EditPost = ({ post }) => {
             setError("** יש לבחור אזור");
             return;
         }
+        if (catSlug === "בעלי מקצוע" && !professional) {
+            setError("** יש לבחור בעל מקצוע");
+            return;
+        }
 
         try {
             const res = await fetch(`/api/posts/${post.slug}`, {
@@ -135,6 +147,7 @@ const EditPost = ({ post }) => {
                     additionalImages: images.map(img => img.url),
                     catSlug,
                     region,
+                    professional: catSlug === "בעלי מקצוע" ? professional : undefined,
                     postId: post.id,
                     entryFee,
                     parking,
@@ -144,6 +157,9 @@ const EditPost = ({ post }) => {
                     difficulty,
                     duration,
                     season,
+                    contactDetails,
+                    serviceType,
+                    serviceCost,
                 }),
             });
 
@@ -191,6 +207,30 @@ const EditPost = ({ post }) => {
 
     const renderCategorySpecificFields = () => {
         switch (catSlug) {
+            case "בעלי מקצוע":
+                return (
+                    <>
+                        <select
+                            className={styles.select}
+                            onChange={(e) => setProfessional(e.target.value)}
+                            value={professional}
+                            required
+                        >
+                            <option value="">בחר בעל מקצוע</option>
+                            <option value="חשמלאי">חשמלאי</option>
+                            <option value="אינסטלטור">אינסטלטור</option>
+                            <option value="נגר">נגר</option>
+                            <option value="טכנאי מחשבים">טכנאי מחשבים</option>
+                            <option value="מיזוג אוויר">טכנאי מיזוג אוויר</option>
+                            <option value="שיפוצניק">שיפוצניק</option>
+                            <option value="צבעי">צבעי</option>
+                        </select>
+                        <input className={styles.select} type="text" placeholder="סוג השירות שקיבלתם" value={serviceType} onChange={(e) => setServiceType(e.target.value)} />
+                        <input className={styles.select} type="text" placeholder="פרטי קשר, טלפון/אתר" value={contactDetails} onChange={(e) => setContactDetails(e.target.value)} />
+                        <input className={styles.select} type="text" placeholder="עלות השירות" value={serviceCost} onChange={(e) => setServiceCost(e.target.value)} />
+
+                    </>
+                );
             case "מעיינות":
                 return (
                     <>

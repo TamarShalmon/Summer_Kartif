@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 
-const CategoryList = ({ limit = 20 }) => {
+const CategoryListTest = ({ limit = 20 }) => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [isSticky, setIsSticky] = useState(false);
@@ -91,4 +91,4 @@ const CategoryList = ({ limit = 20 }) => {
   );
 };
 
-export default CategoryList;
+export default CategoryListTest;

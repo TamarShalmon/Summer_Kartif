@@ -11,7 +11,7 @@ const fredoka = Fredoka({
   variable: '--font-fredoka',
 })
 
-const Pagination = ({ page, hasPrev, hasNext, cat }) => {
+const Pagination = ({ page, hasPrev, hasNext, cat, region, professional }) => {
   const router = useRouter();
 
   return (
@@ -19,14 +19,14 @@ const Pagination = ({ page, hasPrev, hasNext, cat }) => {
       <button
         className={styles.button}
         disabled={!hasPrev}
-        onClick={() => router.push(`?page=${page - 1}&cat=${cat}`)} 
+        onClick={() => router.push(`?page=${page - 1}&cat=${cat}&region=${region}&professional=${professional}`)} 
       >
         הקודם
       </button>
       <button
         disabled={!hasNext}
         className={styles.button}
-        onClick={() => router.push(`?page=${page + 1}&cat=${cat}`)}
+        onClick={() => router.push(`?page=${page + 1}&cat=${cat}&region=${region}&professional=${professional}`)}
       >
         הבא
       </button>

@@ -1,16 +1,25 @@
 import CardList from "@/components/cardList/CardList";
 import styles from "./blogPage.module.css";
-import RegionFilter from "@/components/regionFilter/RegionFilter";
+import Filter from "@/components/filter/Filter";
 
 const BlogPage = ({ searchParams }) => {
   const page = parseInt(searchParams.page) || 1;
-  const { cat, region } = searchParams;
+  const { cat, region, professional } = searchParams;
 
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>{cat}</h1>
-      <RegionFilter initialRegion={region} />
-      <CardList page={page} cat={cat} region={region} />
+      <Filter
+        initialRegion={region}
+        initialProfessional={professional}
+        cat={cat}
+      />
+      <CardList
+        page={page}
+        cat={cat}
+        region={region}
+        professional={professional}
+      />
     </div>
   );
 };

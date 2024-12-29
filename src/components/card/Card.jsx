@@ -16,15 +16,18 @@ const Card = ({ item }) => {
         <div className={styles.textContainer}>
           <div className={styles.detail}>
             <span className={styles.date}>
-              {formattedDate} -{" "}{item.user.name}
+              {formattedDate} - {item.user.name}
             </span>
             <span className={styles.category}>
-            <br />{item.catSlug} | {item.region}<br />
+              <br />
+              {item.catSlug} | {item.professional}
+              {item.professional && <br />}
+              {item.region}
             </span>
           </div>
           <p className={styles.title}>{item.title}</p>
           {/* <p className={styles.desc}>{item.desc.substring(0, 60)}</p> */}
-          <div className={styles.desc} dangerouslySetInnerHTML={{ __html: item?.desc.substring(0, 60) }} />
+          <div className={styles.desc} dangerouslySetInnerHTML={{ __html: item?.desc.substring(0, 65) }} />
           <div className={styles.link}>
             קרא עוד...
           </div>

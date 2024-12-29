@@ -11,6 +11,7 @@ export const GET = async (req) => {
   const page = searchParams.get("page");
   const cat = searchParams.get("cat");
   const region = searchParams.get("region");
+  const professional = searchParams.get("professional");
 
 
   const POST_PER_PAGE = 9;
@@ -21,6 +22,7 @@ export const GET = async (req) => {
     where: {
       ...(cat && { catSlug: cat }),
       ...(region && { region }),
+      ...(professional && { professional }),
 
     },
     orderBy: {
@@ -92,6 +94,7 @@ export const POST = async (req) => {
         userEmail: session.user.email,
         mainImage: mainImage,
         additionalImages: body.additionalImages || [],
+        professional: body.professional || null,
         entryFee: body.entryFee || null,
         parking: body.parking || null,
         shadedSeating: body.shadedSeating || null,
@@ -100,6 +103,9 @@ export const POST = async (req) => {
         difficulty: body.difficulty || null,
         duration: body.duration || null,
         season: body.season || null,
+        serviceCost: body.serviceCost || null,
+        serviceType: body.serviceType || null,
+        contactDetails: body.contactDetails || null,
       },
     });
 

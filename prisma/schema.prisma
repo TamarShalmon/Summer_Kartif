@@ -81,6 +81,7 @@ model Post {
   user             User      @relation(fields: [userEmail], references: [email])
   comments         Comment[]
   region           String?
+  professional     String?
   entryFee         String?
   parking          String?
   shadedSeating    String?
@@ -89,6 +90,9 @@ model Post {
   difficulty       String?
   duration         String?
   season           String?
+  contactDetails   String?   
+  serviceType      String?   
+  serviceCost      String?  
 }
 
 model Comment {

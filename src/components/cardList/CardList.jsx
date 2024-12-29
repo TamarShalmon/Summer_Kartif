@@ -4,7 +4,7 @@ import Card from "../card/Card";
 import prisma from "@/utils/connect";
 import Link from "next/link";
 
-const CardList = async ({ page, cat, region }) => {
+const CardList = async ({ page, cat, region, professional }) => {
   const POST_PER_PAGE = 9;
 
   const query = {
@@ -13,6 +13,7 @@ const CardList = async ({ page, cat, region }) => {
     where: {
       ...(cat && { catSlug: cat }),
       ...(region && { region }),
+      ...(professional && { professional }), 
     },
     orderBy: {
       createdAt: 'desc',
@@ -42,7 +43,7 @@ const CardList = async ({ page, cat, region }) => {
         <div className={styles.posts}>
           {posts && posts.length > 0 ? (
             posts.map((item) => (
-              <Card item={item} key={item.id} className={styles.post} />
+              <Card item={item} key={item.id} />
             ))
           ) : (
             <div className={styles.div}>כרגע אין המלצות להצגה, תהיו הראשונים לפרסם!
@@ -50,7 +51,7 @@ const CardList = async ({ page, cat, region }) => {
             </div>
           )}
         </div>
-        <Pagination page={page} hasPrev={hasPrev} hasNext={hasNext} cat={cat} region={region} />
+        <Pagination page={page} hasPrev={hasPrev} hasNext={hasNext} cat={cat} region={region} professional={professional} />
       </div>
     );
   } catch (err) {

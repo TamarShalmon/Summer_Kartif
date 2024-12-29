@@ -88,7 +88,26 @@ export const PUT = async (req, { params }) => {
     const body = await req.json();
     // console.log("Received body:", body); // Log the received data
 
-    const { title, desc, catSlug, mainImage, additionalImages, region, entryFee, parking, shadedSeating, waterDepth, recommendedGear, difficulty, duration, season } = body;
+    const {
+      title,
+      desc,
+      catSlug,
+      mainImage,
+      additionalImages,
+      region,
+      professional,
+      entryFee,
+      parking,
+      shadedSeating,
+      waterDepth,
+      recommendedGear,
+      difficulty,
+      duration,
+      season,
+      contactDetails,
+      serviceType,
+      serviceCost,
+    } = body;
 
     const post = await prisma.post.findUnique({
       where: { slug },
@@ -128,6 +147,7 @@ export const PUT = async (req, { params }) => {
         mainImage: updatedMainImage,
         additionalImages,
         region,
+        professional,
         entryFee,
         parking,
         shadedSeating,
@@ -136,6 +156,9 @@ export const PUT = async (req, { params }) => {
         difficulty,
         duration,
         season,
+        contactDetails,
+        serviceType,
+        serviceCost,
       },
     });
 

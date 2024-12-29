@@ -43,7 +43,7 @@ const SinglePage = async ({ params }) => {
               </div>
               )} */}
             <div className={styles.userTextContainer}>
-              <div className={styles.cat}><strong>{data?.catSlug}</strong>{" | "}{data?.region}</div>
+              <div className={styles.cat}><strong>{data?.catSlug}</strong>{" | "}{data?.professional}{" | "}{data?.region}</div>
             </div>
           </div>
         </div>
@@ -63,6 +63,9 @@ const SinglePage = async ({ params }) => {
           {data?.recommendedGear && <div className={styles.description}><b>ציוד מומלץ:</b> {data.recommendedGear}</div>}
           {data?.entryFee && <div className={styles.description}><b>כניסה בתשלום:</b> {data.entryFee}</div>}
           {data?.parking && <div className={styles.description}><b>הסדרי חניה:</b> {data.parking}</div>}
+          {data?.serviceType && <div className={styles.description}><b>סוג השירות:</b> {data.serviceType}</div>}
+          {data?.contactDetails && <div className={styles.description}><b>פרטי קשר:</b> {data.contactDetails}</div>}
+          {data?.serviceCost && <div className={styles.description}><b>עלות השירות:</b> {data.serviceCost}</div>}
           <div className={styles.description}>
             {data?.desc ?
               data.desc.split('\n').map((paragraph, index) => (
