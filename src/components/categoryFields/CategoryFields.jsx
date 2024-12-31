@@ -1,10 +1,20 @@
-import { professionals } from '../../constants/data';
 import styles from './CategoryFields.module.css';
 
 const CategoryFields = ({
     catSlug,
-    professional,
-    setProfessional,
+
+    // Professional fields
+    selectedProfessional,
+    setSelectedProfessional,
+    professionalList,
+    serviceType,
+    setServiceType,
+    serviceCost,
+    setServiceCost,
+    contactDetails,
+    setContactDetails,
+
+    // Activity details
     season,
     setSeason,
     waterDepth,
@@ -21,12 +31,7 @@ const CategoryFields = ({
     setDifficulty,
     duration,
     setDuration,
-    contactDetails,
-    setContactDetails,
-    serviceType,
-    setServiceType,
-    serviceCost,
-    setServiceCost
+
 }) => {
     switch (catSlug) {
         case "בעלי מקצוע":
@@ -34,14 +39,14 @@ const CategoryFields = ({
                 <>
                     <select
                         className={styles.select}
-                        onChange={(e) => setProfessional(e.target.value)}
-                        value={professional}
+                        onChange={(e) => setSelectedProfessional(e.target.value)}
+                        value={selectedProfessional}
                         required
                     >
                         <option value="">בחר בעל מקצוע</option>
-                        {professionals.map((pro) => (
-                            <option key={pro} value={pro}>
-                                {pro}
+                        {professionalList?.map((professional) => (
+                            <option key={professional.id} value={professional.title}>
+                                {professional.title}
                             </option>
                         ))}
                     </select>

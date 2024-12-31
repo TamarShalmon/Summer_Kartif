@@ -68,6 +68,7 @@ const CategoryList = () => {
                 />
               )}
               <span className={styles.categoryTitle}>{item.title}</span>
+              {index === 11 && <span className={styles.newBadge}>חדש</span>}
             </Link>
           ))}
         </div>

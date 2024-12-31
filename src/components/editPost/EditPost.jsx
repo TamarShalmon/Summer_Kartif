@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { Fredoka } from 'next/font/google';
 import styles from "./editPost.module.css";
-import { regions } from '../../constants/data';
 import CategoryFields from '../../components/categoryFields/CategoryFields';
 import ImageUpload from '../../components/imageUpload/ImageUpload';
 
@@ -19,22 +18,26 @@ const EditPost = ({ post }) => {
     const router = useRouter();
 
     // Basic post data
-    const [title, setTitle] = useState("");
-    const [value, setValue] = useState("");
-    const [catSlug, setCatSlug] = useState("");
-    const [region, setRegion] = useState("");
+    const [postTitle, setPostTitle] = useState("");
+    const [postContent, setPostContent] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [selectedRegion, setSelectedRegion] = useState("");
+
+    // Lists data
+    const [categoryList, setCategoryList] = useState([]);
+    const [regionList, setRegionList] = useState([]);
+    const [professionalList, setProfessionalList] = useState([]);
 
     // Images state
-    const [images, setImages] = useState([]);
+    const [imageList, setImageList] = useState([]);
     const [mainImageIndex, setMainImageIndex] = useState(0);
 
     // UI state
     const [error, setError] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
-    const [categories, setCategories] = useState([]);
 
     // Professional fields
-    const [professional, setProfessional] = useState("");
+    const [selectedProfessional, setSelectedProfessional] = useState("");
     const [serviceType, setServiceType] = useState("");
     const [serviceCost, setServiceCost] = useState("");
     const [contactDetails, setContactDetails] = useState("");
@@ -51,13 +54,13 @@ const EditPost = ({ post }) => {
 
     // Initialize form with post data
     useEffect(() => {
-        setTitle(post.title || "");
-        setValue(post.desc || "");
-        setCatSlug(post.catSlug || "");
-        setRegion(post.region || "");
-        setImages(post.additionalImages?.map(url => ({ url })) || []);
+        setPostTitle(post.title || "");
+        setPostContent(post.desc || "");
+        setSelectedCategory(post.catSlug || "");
+        setSelectedRegion(post.region || "");
+        setImageList(post.additionalImages?.map(url => ({ url })) || []);
         setMainImageIndex(post.mainImageIndex || 0);
-        setProfessional(post.professional || "");
+        setSelectedProfessional(post.professional || "");
         setEntryFee(post.entryFee || "");
         setParking(post.parking || "");
         setShadedSeating(post.shadedSeating || "");
@@ -66,26 +69,41 @@ const EditPost = ({ post }) => {
         setDifficulty(post.difficulty || "");
         setDuration(post.duration || "");
         setSeason(post.season || "");
-        setServiceCost(post.serviceCost || "");
         setServiceType(post.serviceType || "");
+        setServiceCost(post.serviceCost || "");
         setContactDetails(post.contactDetails || "");
     }, [post]);
 
+    // Fetch all required data
     useEffect(() => {
-        const fetchCategories = async () => {
+        const fetchData = async () => {
             try {
-                const res = await fetch("/api/categories");
-                if (!res.ok) {
-                    throw new Error(`HTTP error! status: ${res.status}`);
+                const [categoriesRes, regionsRes, professionalsRes] = await Promise.all([
+                    fetch("/api/categories"),
+                    fetch("/api/regions"),
+                    fetch("/api/professionals")
+                ]);
+
+                if (!categoriesRes.ok || !regionsRes.ok || !professionalsRes.ok) {
+                    throw new Error("Failed to fetch data");
                 }
-                const data = await res.json();
-                setCategories(data);
+
+                const [categoriesData, regionsData, professionalsData] = await Promise.all([
+                    categoriesRes.json(),
+                    regionsRes.json(),
+                    professionalsRes.json()
+                ]);
+
+                setCategoryList(categoriesData);
+                setRegionList(regionsData);
+                setProfessionalList(professionalsData);
             } catch (error) {
-                console.error("Error fetching categories:", error);
+                console.error("Error fetching data:", error);
+                setError("אירעה שגיאה בטעינת הנתונים");
             }
         };
 
-        fetchCategories();
+        fetchData();
     }, []);
 
     if (status === "loading") {
@@ -98,23 +116,23 @@ const EditPost = ({ post }) => {
     }
 
     const validateForm = () => {
-        if (!title.trim()) {
+        if (!postTitle.trim()) {
             setError("** יש להזין כותרת");
             return false;
         }
-        if (!catSlug) {
+        if (!selectedCategory) {
             setError("** יש לבחור קטגוריה");
             return false;
         }
-        if (!value.trim()) {
+        if (!postContent.trim()) {
             setError("** יש להזין תוכן");
             return false;
         }
-        if (!region) {
+        if (!selectedRegion) {
             setError("** יש לבחור אזור");
             return false;
         }
-        if (catSlug === "בעלי מקצוע" && !professional) {
+        if (selectedCategory === "בעלי מקצוע" && !selectedProfessional) {
             setError("** יש לבחור בעל מקצוע");
             return false;
         }
@@ -129,13 +147,13 @@ const EditPost = ({ post }) => {
 
         try {
             const postData = {
-                title,
-                desc: value,
-                mainImage: images[mainImageIndex]?.url,
-                additionalImages: images.map(img => img.url),
-                catSlug,
-                region,
-                professional: catSlug === "בעלי מקצוע" ? professional : undefined,
+                title: postTitle,
+                desc: postContent,
+                mainImage: imageList[mainImageIndex]?.url,
+                additionalImages: imageList.map(img => img.url),
+                catSlug: selectedCategory,
+                region: selectedRegion,
+                professional: selectedCategory === "בעלי מקצוע" ? selectedProfessional : undefined,
                 postId: post.id,
                 entryFee,
                 parking,
@@ -185,18 +203,18 @@ const EditPost = ({ post }) => {
                     type="text"
                     placeholder="תנו כותרת"
                     className={styles.input}
-                    onChange={(e) => setTitle(e.target.value)}
-                    value={title}
+                    onChange={(e) => setPostTitle(e.target.value)}
+                    value={postTitle}
                 />
 
                 <select
                     className={styles.select}
-                    onChange={(e) => setCatSlug(e.target.value)}
-                    value={catSlug}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    value={selectedCategory}
                     required
                 >
-                    <option value="">בחר קטגוריה</option>
-                    {categories.map((category) => (
+                    <option value="">בחרו קטגוריה</option>
+                    {categoryList?.map((category) => (
                         <option key={category.slug} value={category.slug}>
                             {category.title}
                         </option>
@@ -205,22 +223,23 @@ const EditPost = ({ post }) => {
 
                 <select
                     className={styles.select}
-                    onChange={(e) => setRegion(e.target.value)}
-                    value={region}
+                    onChange={(e) => setSelectedRegion(e.target.value)}
+                    value={selectedRegion}
                     required
                 >
-                    <option value="">בחר אזור</option>
-                    {regions.map((r) => (
-                        <option key={r} value={r}>
-                            {r}
+                    <option value="">בחרו אזור</option>
+                    {regionList?.map((region) => (
+                        <option key={region.id} value={region.title}>
+                            {region.title}
                         </option>
                     ))}
                 </select>
 
                 <CategoryFields
-                    catSlug={catSlug}
-                    professional={professional}
-                    setProfessional={setProfessional}
+                    catSlug={selectedCategory}
+                    selectedProfessional={selectedProfessional}
+                    setSelectedProfessional={setSelectedProfessional}
+                    professionalList={professionalList}
                     season={season}
                     setSeason={setSeason}
                     waterDepth={waterDepth}
@@ -248,15 +267,15 @@ const EditPost = ({ post }) => {
                 <div className={styles.editor}>
                     <textarea
                         className={styles.textArea}
-                        value={value}
-                        onChange={(e) => setValue(e.target.value)}
+                        value={postContent}
+                        onChange={(e) => setPostContent(e.target.value)}
                         placeholder="על מה תמליצו?"
                     />
                 </div>
 
                 <ImageUpload
-                    images={images}
-                    setImages={setImages}
+                    images={imageList}
+                    setImages={setImageList}
                     mainImageIndex={mainImageIndex}
                     setMainImageIndex={setMainImageIndex}
                 />

@@ -104,3 +104,13 @@ model Comment {
   postSlug  String
   post      Post     @relation(fields: [postSlug], references: [slug])
 }
+
+model regionList {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+}
+
+model professionalList {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+}
