@@ -61,7 +61,6 @@ export const DELETE = async (req, { params }) => {
     await prisma.post.delete({
       where: { slug },
     });
-    router.refresh("/");
 
     return new NextResponse(JSON.stringify({ message: "Post Deleted!" }, { status: 200 }));
   } catch (err) {

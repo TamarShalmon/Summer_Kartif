@@ -1,5 +1,6 @@
 "use client"
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./userPosts.module.css";
 import Pagination from "../pagination/Pagination";
 import Card from "../card/Card";
@@ -29,6 +30,8 @@ const fetchData = async (page) => {
 };
 
 const UserPosts = ({ page, post }) => {
+  const router = useRouter();
+
   const [posts, setPosts] = useState([]);
   const [count, setCount] = useState(0);
 
@@ -70,6 +73,7 @@ const UserPosts = ({ page, post }) => {
         const data = await res.json();
         console.log(data.message); // Log the success message
 
+        router.refresh("/");
         setPosts(posts.filter(post => post.slug !== postToDelete));
         setIsModalOpen(false);
         setPostToDelete(null);

@@ -1,9 +1,9 @@
 "use client"
-import styles from "./writePage.module.css";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { Fredoka } from 'next/font/google'
+import { Fredoka } from 'next/font/google';
+import styles from "./postForm.module.css";
 import CategoryFields from '../categoryFields/CategoryFields';
 import ImageUpload from '../imageUpload/ImageUpload';
 
@@ -11,9 +11,9 @@ const fredoka = Fredoka({
   subsets: ['latin'],
   weight: ['300'],
   variable: '--font-fredoka',
-})
+});
 
-const WritePage = () => {
+const PostForm = ({ post, mode = 'create' }) => {
   const { status } = useSession();
   const router = useRouter();
 
@@ -52,25 +52,56 @@ const WritePage = () => {
   const [duration, setDuration] = useState("");
   const [season, setSeason] = useState("");
 
+  // Initialize form with post data if in edit mode
+  useEffect(() => {
+    if (mode === 'edit' && post) {
+      setPostTitle(post.title || "");
+      setPostContent(post.desc || "");
+      setSelectedCategory(post.catSlug || "");
+      setSelectedRegion(post.region || "");
+      setImageList(post.additionalImages?.map(url => ({ url })) || []);
+      setMainImageIndex(post.mainImageIndex || 0);
+      setSelectedProfessional(post.professional || "");
+      setEntryFee(post.entryFee || "");
+      setParking(post.parking || "");
+      setShadedSeating(post.shadedSeating || "");
+      setWaterDepth(post.waterDepth || "");
+      setRecommendedGear(post.recommendedGear || "");
+      setDifficulty(post.difficulty || "");
+      setDuration(post.duration || "");
+      setSeason(post.season || "");
+      setServiceType(post.serviceType || "");
+      setServiceCost(post.serviceCost || "");
+      setContactDetails(post.contactDetails || "");
+    }
+  }, [post, mode]);
+
+  // Fetch all required data
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const categoriesRes = await fetch("/api/categories");
-        if (!categoriesRes.ok) throw new Error(`HTTP error! status: ${categoriesRes.status}`);
-        const categoriesData = await categoriesRes.json();
+        const [categoriesRes, regionsRes, professionalsRes] = await Promise.all([
+          fetch("/api/categories"),
+          fetch("/api/regions"),
+          fetch("/api/professionals")
+        ]);
+
+        if (!categoriesRes.ok || !regionsRes.ok || !professionalsRes.ok) {
+          throw new Error("Failed to fetch data");
+        }
+
+        const [categoriesData, regionsData, professionalsData] = await Promise.all([
+          categoriesRes.json(),
+          regionsRes.json(),
+          professionalsRes.json()
+        ]);
+
         setCategoryList(categoriesData);
-
-        const regionsRes = await fetch("/api/regions");
-        if (!regionsRes.ok) throw new Error(`HTTP error! status: ${regionsRes.status}`);
-        const regionsData = await regionsRes.json();
         setRegionList(regionsData);
-
-        const professionalsRes = await fetch("/api/professionals");
-        if (!professionalsRes.ok) throw new Error(`HTTP error! status: ${professionalsRes.status}`);
-        const professionalsData = await professionalsRes.json();
         setProfessionalList(professionalsData);
       } catch (error) {
         console.error("Error fetching data:", error);
+        setError("אירעה שגיאה בטעינת הנתונים");
       }
     };
 
@@ -78,7 +109,7 @@ const WritePage = () => {
   }, []);
 
   if (status === "loading") {
-    return <div className={styles.loading}>Loading...</div>;
+    return <div className={styles.loading}>טוען...</div>;
   }
 
   if (status === "unauthenticated") {
@@ -122,10 +153,10 @@ const WritePage = () => {
         desc: postContent,
         mainImage: imageList[mainImageIndex]?.url,
         additionalImages: imageList.map(img => img.url),
-        slug: postTitle,
         catSlug: selectedCategory,
         region: selectedRegion,
         professional: selectedCategory === "בעלי מקצוע" ? selectedProfessional : undefined,
+        ...(mode === 'edit' && { postId: post.id }),
         entryFee,
         parking,
         shadedSeating,
@@ -139,8 +170,15 @@ const WritePage = () => {
         serviceCost,
       };
 
-      const res = await fetch("/api/posts", {
-        method: "POST",
+      if (mode === 'create') {
+        postData.slug = postTitle;
+      }
+
+      const url = mode === 'edit' ? `/api/posts/${post.slug}` : '/api/posts';
+      const method = mode === 'edit' ? 'PUT' : 'POST';
+
+      const res = await fetch(url, {
+        method,
         headers: {
           "Content-Type": "application/json",
         },
@@ -150,14 +188,18 @@ const WritePage = () => {
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 
       const data = await res.json();
-      setSuccessMessage("ההמלצה מתפרסמת, אנא המתן");
+      setSuccessMessage(mode === 'edit' ? "ההמלצה מתעדכנת, אנא המתן" : "ההמלצה מתפרסמת, אנא המתן");
       router.push(`/posts/${data.slug}`);
       router.refresh();
 
     } catch (error) {
-      console.error("Error creating post:", error);
-      setError("אירעה שגיאה בעת יצירת הפוסט. נא לנסות שוב.");
+      console.error(`Error ${mode === 'edit' ? 'updating' : 'creating'} post:`, error);
+      setError(`אירעה שגיאה בעת ${mode === 'edit' ? 'עדכון' : 'יצירת'} הפוסט. נא לנסות שוב.`);
     }
+  };
+
+  const handleCancel = () => {
+    router.push("/userDashboard");
   };
 
   return (
@@ -168,7 +210,10 @@ const WritePage = () => {
           placeholder="תנו כותרת"
           className={styles.input}
           onChange={(e) => setPostTitle(e.target.value)}
+          value={postTitle}
+          maxLength={25}
         />
+
 
         <select
           className={styles.select}
@@ -177,7 +222,7 @@ const WritePage = () => {
           required
         >
           <option value="">בחרו קטגוריה</option>
-          {categoryList.map((category) => (
+          {categoryList?.map((category) => (
             <option key={category.slug} value={category.slug}>
               {category.title}
             </option>
@@ -246,12 +291,19 @@ const WritePage = () => {
         {error && <div className={styles.error}>{error}</div>}
         {successMessage && <div className={styles.success}>{successMessage}</div>}
 
-        <button className={styles.publish} onClick={handleSubmit}>
-          פרסום המלצה
-        </button>
+        <div className={styles.buttonContainer}>
+          <button className={styles.publish} onClick={handleSubmit}>
+            {mode === 'edit' ? 'עדכן המלצה' : 'פרסום המלצה'}
+          </button>
+          {mode === 'edit' && (
+            <button className={styles.cancel} onClick={handleCancel}>
+              ביטול עריכה
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
-export default WritePage;
+export default PostForm;

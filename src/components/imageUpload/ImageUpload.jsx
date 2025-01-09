@@ -1,6 +1,6 @@
 import { CldUploadButton } from "next-cloudinary";
 import Image from "next/image";
-import styles from '@/components/imageUpload/ImageUpload.module.css';
+import styles from './ImageUpload.module.css';
 
 const ImageUpload = ({ 
   images, 
@@ -26,10 +26,6 @@ const ImageUpload = ({
     }
   };
 
-  const setMainImage = (index) => {
-    setMainImageIndex(index);
-  };
-
   return (
     <div className={styles.imageUploadSection}>
       <CldUploadButton
@@ -37,21 +33,32 @@ const ImageUpload = ({
         onSuccess={handleImageUpload}
         className={styles.uploadButton}
       >
-        {<strong>צרפו תמונות</strong>}
-        {<span> (עד 10mb לכל תמונה) </span>}
+        <strong>צרפו תמונות</strong>
+        <span> (עד 10mb לכל תמונה) </span>
       </CldUploadButton>
 
       <div className={styles.imagePreviewContainer}>
         {images.map((image, index) => (
-          <div key={image.public_id} className={styles.imagePreview}>
+          <div 
+            key={image.public_id || index} 
+            className={`${styles.imagePreview} ${index === mainImageIndex ? styles.mainImage : ''}`}
+          >
             <Image src={image.url} alt="" width={100} height={100} />
-            <button onClick={() => removeImage(index)}>מחק</button>
-            <button 
-              onClick={() => setMainImage(index)} 
-              disabled={index === mainImageIndex}
-            >
-              {index === mainImageIndex ? 'תמונה ראשית ' : 'הגדר כראשית'}
-            </button>
+            <div className={styles.imageControls}>
+              <button 
+                className={styles.removeButton}
+                onClick={() => removeImage(index)}
+              >
+                מחק
+              </button>
+              <button 
+                className={`${styles.mainButton} ${index === mainImageIndex ? styles.isMain : ''}`}
+                onClick={() => setMainImageIndex(index)} 
+                disabled={index === mainImageIndex}
+              >
+                {index === mainImageIndex ? 'תמונה ראשית' : 'הגדר כראשית'}
+              </button>
+            </div>
           </div>
         ))}
       </div>

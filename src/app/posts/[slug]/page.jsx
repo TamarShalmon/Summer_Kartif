@@ -43,7 +43,11 @@ const SinglePage = async ({ params }) => {
               </div>
               )} */}
             <div className={styles.userTextContainer}>
-              <div className={styles.cat}><strong>{data?.catSlug}</strong>{" | "}{data?.professional}{" | "}{data?.region}</div>
+              <div className={styles.cat}>
+                <strong>{data?.catSlug}</strong>
+                {data?.professional && <>{" | "}{data.professional}</>}
+                {" | "}{data?.region}
+              </div>
             </div>
           </div>
         </div>

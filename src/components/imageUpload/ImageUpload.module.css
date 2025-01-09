@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    margin: 1rem 0;
 }
 
 .uploadButton {
@@ -14,7 +15,10 @@
     transition: background-color 0.3s ease;
     font-size: 1rem;
     font-family: var(--font-fredoka);
-    /* font-weight: bold; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
 }
 
 .uploadButton:hover:not(:disabled) {
@@ -37,6 +41,11 @@
     border-radius: 0.5rem;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    aspect-ratio: 1;
+}
+
+.imagePreview.mainImage {
+    border: 2px solid #1a8917;
 }
 
 .imagePreview img {
@@ -45,27 +54,47 @@
     object-fit: cover;
 }
 
-.imagePreview button {
+.imageControls {
     position: absolute;
-    bottom: 0.5rem;
-    left: 0.5rem;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+}
+
+.removeButton,
+.mainButton {
     padding: 0.25rem 0.5rem;
-    background-color: rgba(0, 0, 0, 0.6);
-    color: white;
     border: none;
     border-radius: 0.25rem;
     font-size: 0.8rem;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #000;
 }
 
-.imagePreview button:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+.removeButton:hover {
+    background-color: #ff4444;
+    color: white;
 }
 
-.imagePreview button:last-child {
-    left: auto;
-    right: 0.5rem;
+.mainButton:hover:not(:disabled) {
+    background-color: #1a8917;
+    color: white;
+}
+
+.mainButton.isMain {
+    background-color: #1a8917;
+    color: white;
+}
+
+.mainButton:disabled {
+    opacity: 0.7;
+    cursor: default;
 }
 
 @media (max-width: 768px) {
@@ -73,7 +102,8 @@
         grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     }
 
-    .imagePreview img {
-        height: 120px;
+    .imageControls {
+        flex-direction: column;
+        gap: 0.5rem;
     }
 }
