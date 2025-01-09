@@ -1,4 +1,4 @@
-import PostForm from "@/components/postForm/PostForm";
+import PostForm from "@/components/postForm/postForm/PostForm";
 import { getAuthSession } from "@/utils/auth";
 import { redirect } from "next/navigation";
 
